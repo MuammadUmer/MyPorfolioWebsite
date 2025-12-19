@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "innova-care",
+    "title": "Innova Care – Home Care System",
+    "role": "Lead Backend & Architecture",
+    "company": "F3 Technologies",
+    "period": "2021–Present",
+    "domain": "Healthcare",
+    "summary": "Upgraded a legacy home care system to a modern, event-driven, cloud-native platform.",
+    "techStack": ["Node.js", "Google Cloud Functions", "Firebase Firestore", ".NET", "SQL"],
+    "highlights": [
+      "Designed event-driven synchronization between SQL and Firestore",
+      "Implemented offline-first workflows for caregivers",
+      "Introduced automated testing and CI/CD pipelines"
+    ]
+  },
+  {
+    "slug": "myindici",
+    "title": "MyIndici – Patient Portal",
+    "role": "Backend Engineer",
+    "company": "F3 Technologies",
+    "period": "2020–2022",
+    "domain": "Healthcare",
+    "summary": "Patient portal supporting appointments, prescriptions, and secure communication.",
+    "techStack": ["Node.js", "REST APIs", "SQL Server", "React"],
+    "highlights": [
+      "Built secure REST APIs for patient records and appointments",
+      "Optimized queries and caching for high-traffic use",
+      "Collaborated with frontend team on API contracts"
+    ]
+  },
+  {
+    "slug": "bio-scan",
+    "title": "Bio Scan – Medical Imaging Platform",
+    "role": "Full Stack Engineer",
+    "company": "F3 Technologies",
+    "period": "2020–2021",
+    "domain": "Healthcare",
+    "summary": "Platform for managing and reviewing diagnostic imaging and reports.",
+    "techStack": ["Node.js", "React", "AWS", "NoSQL"],
+    "highlights": [
+      "Developed secure upload and retrieval APIs for imaging data",
+      "Improved reliability and monitoring for critical workloads",
+      "Worked closely with clinicians to refine workflows"
+    ]
+  },
+  {
+    "slug": "ask-cyphen",
+    "title": "Ask Cyphen – AI Assistant",
+    "role": "Backend & Integration Engineer",
+    "company": "F3 Technologies",
+    "period": "2023–Present",
+    "domain": "AI",
+    "summary": "AI-powered assistant providing contextual answers and automation.",
+    "techStack": ["Node.js", "REST APIs", "AI/LLM APIs", "Cloud Functions"],
+    "highlights": [
+      "Integrated multiple AI providers behind a unified API",
+      "Implemented observability and rate limiting for external calls",
+      "Collaborated on prompt design and safety mechanisms"
+    ]
+  },
+  {
+    "slug": "eizhar",
+    "title": "Eizhar – Property Management Platform",
+    "role": "Lead Engineer",
+    "company": "F3 Technologies",
+    "period": "2022–Present",
+    "domain": "Real Estate",
+    "summary": "End-to-end platform for managing properties, tenants, and billing.",
+    "techStack": ["Node.js", "React", "PostgreSQL", "Message Queues"],
+    "highlights": [
+      "Designed multi-tenant architecture for property portfolios",
+      "Implemented reliable billing and invoicing workflows",
+      "Led code reviews and mentoring for junior engineers"
+    ]
+  },
+  {
+    "slug": "logistics-platform",
+    "title": "Logistics & Tracking Platform",
+    "role": "Backend Engineer",
+    "company": "Freelance",
+    "period": "2020",
+    "domain": "Logistics",
+    "summary": "Custom logistics solution with tracking, routing, and notifications.",
+    "techStack": ["Node.js", "Express", "MongoDB", "React Native"],
+    "highlights": [
+      "Implemented real-time tracking APIs for drivers and shipments",
+      "Designed notification workflows using third-party SMS and email providers",
+      "Delivered production-ready mobile and web APIs under tight timelines"
+    ]
+  }
+]

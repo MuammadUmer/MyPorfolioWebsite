@@ -1,0 +1,36 @@
+[
+  {
+    "company": "Euroko International",
+    "role": "Software Engineer",
+    "location": "Pakistan",
+    "period": "2019",
+    "responsibilities": [
+      "Worked on foundational backend services and internal tools",
+      "Collaborated with senior engineers on API design and implementation",
+      "Gained experience with .NET and SQL-based systems"
+    ]
+  },
+  {
+    "company": "Freelance",
+    "role": "Software Engineer",
+    "location": "Remote",
+    "period": "2020",
+    "responsibilities": [
+      "Delivered web and mobile applications for small businesses",
+      "Gathered requirements directly from clients and translated them into technical designs",
+      "Owned full lifecycle of projects from planning to deployment"
+    ]
+  },
+  {
+    "company": "F3 Technologies",
+    "role": "Software Engineer / Lead",
+    "location": "Sharjah – Remote",
+    "period": "Oct 2020 – Present",
+    "responsibilities": [
+      "Focused on RESTful API development using Node.js",
+      "Led React.js and React Native teams across multiple products",
+      "Managed NoSQL and SQL databases and data migrations",
+      "Contributed to architecture, reliability, and DevOps practices"
+    ]
+  }
+]

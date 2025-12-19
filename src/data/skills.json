@@ -1,0 +1,68 @@
+[
+  {
+    "category": "Backend & APIs",
+    "items": [
+      "Node.js",
+      "Express",
+      "ASP.NET Web API",
+      "RESTful API design",
+      "Serverless architectures"
+    ]
+  },
+  {
+    "category": "Frontend & Mobile",
+    "items": [
+      "React",
+      "Next.js",
+      "React Native",
+      "TypeScript",
+      "Responsive UI design"
+    ]
+  },
+  {
+    "category": "Cloud & DevOps",
+    "items": [
+      "Google Cloud Platform",
+      "Firebase",
+      "AWS",
+      "Azure",
+      "CI/CD pipelines"
+    ]
+  },
+  {
+    "category": "Databases",
+    "items": [
+      "SQL Server",
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "Firebase Firestore"
+    ]
+  },
+  {
+    "category": "Blockchain",
+    "items": [
+      "Solidity",
+      "Smart contract integration",
+      "Web3.js / ethers.js"
+    ]
+  },
+  {
+    "category": "Testing & Documentation",
+    "items": [
+      "Jest",
+      "React Testing Library",
+      "Postman",
+      "API documentation"
+    ]
+  },
+  {
+    "category": "Tools",
+    "items": [
+      "Git",
+      "GitHub",
+      "Jira",
+      "VS Code"
+    ]
+  }
+]
