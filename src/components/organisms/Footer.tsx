@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
             <span className="hidden sm:inline">Email</span>
           </a>
           <a
-            href="https://linkedin.com/in/muhammad-umer"
+            href="https://linkedin.com/in/muhammad-umer-07180911b"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
