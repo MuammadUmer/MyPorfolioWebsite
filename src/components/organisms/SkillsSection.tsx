@@ -1,6 +1,4 @@
 import * as React from 'react';
-import Heading from '@/components/atoms/Heading';
-import Text from '@/components/atoms/Text';
 import type { SkillCategory } from '@/lib/types/content';
 
 export interface SkillsSectionProps {
@@ -11,36 +9,38 @@ const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
   return (
     <section
       id="mu-skills__skills-grid__section--primary"
-      className="mx-auto w-full max-w-5xl px-4 py-10 md:px-6 md:py-12"
+      className="py-20"
     >
-      <Heading as="h1" className="mb-6 text-3xl font-semibold">
-        Skills
-      </Heading>
-      <div className="grid gap-4 md:grid-cols-2">
-        {categories.map((category) => (
-          <article
-            key={category.category}
-            className="rounded-lg border border-border bg-background/80 p-4"
-          >
-            <Heading as="h2" className="mb-2 text-lg font-semibold">
-              {category.category}
-            </Heading>
-            {category.items?.length ? (
-              <ul className="flex flex-wrap gap-1 text-sm">
-                {category.items.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-full border border-border bg-background px-2 py-0.5 text-foreground/80"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <Text muted>No skills listed.</Text>
-            )}
-          </article>
-        ))}
+      <div className="mx-auto w-full max-w-5xl px-4 md:px-6">
+        <div className="animate-fade-in-up mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Skills</h1>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2">
+          {categories.map((category) => (
+            <article
+              key={category.category}
+              className="animate-fade-in-up rounded-lg border border-border bg-card/80 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5"
+            >
+              <h2 className="text-lg font-semibold mb-4">
+                {category.category}
+              </h2>
+              {category.items?.length ? (
+                <div className="flex flex-wrap gap-2">
+                  {category.items.map((item) => (
+                    <span
+                      key={item}
+                      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono border border-border bg-muted/50 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground">No skills listed.</p>
+              )}
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );

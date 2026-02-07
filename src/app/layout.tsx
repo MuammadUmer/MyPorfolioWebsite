@@ -40,7 +40,7 @@ export default function RootLayout({
             <Header />
             <main
               id="mu-global__layout__section--main"
-              className="flex-1 bg-background text-foreground"
+              className="flex-1 pt-16 bg-background text-foreground"
             >
               {children}
             </main>

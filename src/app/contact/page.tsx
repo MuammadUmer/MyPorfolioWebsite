@@ -7,9 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  return (
-    <div className="mx-auto max-w-5xl px-4 py-10 md:px-6">
-      <ContactForm />
-    </div>
-  );
+  return <ContactForm />;
 }

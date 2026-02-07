@@ -7,15 +7,15 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const baseClasses =
-  'inline-flex items-center justify-center rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent focus-visible:ring-offset-background disabled:opacity-60 disabled:cursor-not-allowed';
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50';
 
 const variantClasses: Record<NonNullable<ButtonProps['variant']>, string> = {
   primary:
-    'bg-accent text-background hover:bg-accent/90 border border-transparent',
+    'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25',
   secondary:
-    'bg-background text-foreground border border-border hover:bg-background/80',
+    'border-2 border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:border-primary',
   ghost:
-    'bg-transparent text-foreground hover:bg-background/70 border border-transparent',
+    'hover:bg-accent/10 hover:text-foreground bg-transparent text-foreground',
 };
 
 const sizeClasses: Record<NonNullable<ButtonProps['size']>, string> = {

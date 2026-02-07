@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import Text from '@/components/atoms/Text';
 import type { Project } from '@/lib/types/content';
 import ProjectCard from '@/components/molecules/ProjectCard';
 
@@ -45,78 +44,82 @@ const ProjectsGrid: React.FC<ProjectsGridProps> = ({ projects }) => {
     <section
       id="mu-projects__projects-grid__section--primary"
       aria-label="Projects list and filters"
-      className="mt-8 space-y-6"
+      className="mt-8"
     >
-      <div className="flex flex-wrap gap-4 rounded-lg border border-border bg-background/80 p-4">
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="mu-projects__filters__select--domain"
-            className="text-sm font-medium text-foreground"
-          >
-            Filter by domain
-          </label>
-          <select
-            id="mu-projects__filters__select--domain"
-            className="h-9 rounded-md border border-border bg-background px-3 text-sm text-foreground"
-            value={domainFilter}
-            onChange={(event) => setDomainFilter(event.target.value)}
-          >
-            <option value="all">All domains</option>
-            {domains.map((domain) => (
-              <option key={domain} value={domain}>
-                {domain}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className="animate-fade-in-up mb-8 p-4 rounded-lg border border-border bg-card/50" style={{ animationDelay: '0.2s' }}>
+        <div className="flex flex-wrap gap-4">
+          <div className="flex-1 min-w-[200px]">
+            <label
+              htmlFor="mu-projects__filters__select--domain"
+              className="text-xs text-muted-foreground uppercase tracking-wider mb-2 block"
+            >
+              Domain
+            </label>
+            <select
+              id="mu-projects__filters__select--domain"
+              className="h-9 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground"
+              value={domainFilter}
+              onChange={(event) => setDomainFilter(event.target.value)}
+            >
+              <option value="all">All domains</option>
+              {domains.map((domain) => (
+                <option key={domain} value={domain}>
+                  {domain}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="mu-projects__filters__select--role"
-            className="text-sm font-medium text-foreground"
-          >
-            Filter by role
-          </label>
-          <select
-            id="mu-projects__filters__select--role"
-            className="h-9 rounded-md border border-border bg-background px-3 text-sm text-foreground"
-            value={roleFilter}
-            onChange={(event) => setRoleFilter(event.target.value)}
-          >
-            <option value="all">All roles</option>
-            {roles.map((role) => (
-              <option key={role} value={role}>
-                {role}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className="flex-1 min-w-[200px]">
+            <label
+              htmlFor="mu-projects__filters__select--role"
+              className="text-xs text-muted-foreground uppercase tracking-wider mb-2 block"
+            >
+              Role
+            </label>
+            <select
+              id="mu-projects__filters__select--role"
+              className="h-9 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground"
+              value={roleFilter}
+              onChange={(event) => setRoleFilter(event.target.value)}
+            >
+              <option value="all">All roles</option>
+              {roles.map((role) => (
+                <option key={role} value={role}>
+                  {role}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="mu-projects__sort__field--order"
-            className="text-sm font-medium text-foreground"
-          >
-            Sort by
-          </label>
-          <select
-            id="mu-projects__sort__field--order"
-            className="h-9 rounded-md border border-border bg-background px-3 text-sm text-foreground"
-            value={sortBy}
-            onChange={(event) =>
-              setSortBy(event.target.value as 'title-asc' | 'title-desc')
-            }
-          >
-            <option value="title-asc">Title (A–Z)</option>
-            <option value="title-desc">Title (Z–A)</option>
-          </select>
+          <div className="flex-1 min-w-[200px]">
+            <label
+              htmlFor="mu-projects__sort__field--order"
+              className="text-xs text-muted-foreground uppercase tracking-wider mb-2 block"
+            >
+              Sort by
+            </label>
+            <select
+              id="mu-projects__sort__field--order"
+              className="h-9 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground"
+              value={sortBy}
+              onChange={(event) =>
+                setSortBy(event.target.value as 'title-asc' | 'title-desc')
+              }
+            >
+              <option value="title-asc">Title A–Z</option>
+              <option value="title-desc">Title Z–A</option>
+            </select>
+          </div>
         </div>
       </div>
 
       {visibleProjects.length === 0 ? (
-        <Text muted>No projects match the selected filters.</Text>
+        <div className="text-center py-12 text-muted-foreground">
+          No projects found matching your filters.
+        </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           {visibleProjects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}

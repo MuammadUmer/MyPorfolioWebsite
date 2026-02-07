@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import Heading from '@/components/atoms/Heading';
-import Text from '@/components/atoms/Text';
 import ProjectsGrid from '@/components/organisms/ProjectsGrid';
 import { getProjects } from '@/lib/services/content';
 import { getCanonicalUrl } from '@/lib/seo/site';
@@ -37,20 +35,24 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 md:px-6">
-      <Heading as="h1" className="text-2xl font-semibold md:text-3xl">
-        Projects
-      </Heading>
-      <Text muted className="mt-2 max-w-2xl text-base">
-        Selected projects that showcase backend architecture, APIs, cloud-native design, and cross-functional
-        collaboration across healthcare, real estate, AI, and logistics.
-      </Text>
+    <section className="py-20">
+      <div className="mx-auto max-w-5xl px-4 md:px-6">
+        <div className="animate-fade-in-up mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+            Projects
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-2xl">
+            Selected projects that showcase backend architecture, APIs, cloud-native design, and cross-functional
+            collaboration across healthcare, real estate, AI, and logistics.
+          </p>
+        </div>
 
-      <ProjectsGrid projects={projects} />
+        <ProjectsGrid projects={projects} />
 
-      <script type="application/ld+json" suppressHydrationWarning>
-        {JSON.stringify(jsonLd)}
-      </script>
-    </div>
+        <script type="application/ld+json" suppressHydrationWarning>
+          {JSON.stringify(jsonLd)}
+        </script>
+      </div>
+    </section>
   );
 }

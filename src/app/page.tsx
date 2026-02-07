@@ -10,13 +10,11 @@ export default function HomePage() {
   const totalProjects = projects.length;
 
   return (
-    <div className="flex justify-center px-4 py-8 md:px-6 md:py-12">
-      <HeroSection
-        featuredProjects={featuredProjects}
-        yearsExperience={YEARS_EXPERIENCE}
-        totalProjects={totalProjects}
-        domains={DOMAINS}
-      />
-    </div>
+    <HeroSection
+      featuredProjects={featuredProjects}
+      yearsExperience={YEARS_EXPERIENCE}
+      totalProjects={totalProjects}
+      domains={DOMAINS}
+    />
   );
 }

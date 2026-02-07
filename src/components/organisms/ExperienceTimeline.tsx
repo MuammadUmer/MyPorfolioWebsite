@@ -1,6 +1,4 @@
 import * as React from 'react';
-import Heading from '@/components/atoms/Heading';
-import Text from '@/components/atoms/Text';
 import type { Experience } from '@/lib/types/content';
 
 export interface ExperienceTimelineProps {
@@ -11,35 +9,58 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ items }) => {
   return (
     <section
       id="mu-experience__timeline__section--primary"
-      className="mx-auto w-full max-w-5xl px-4 py-10 md:px-6 md:py-12"
+      className="py-20"
     >
-      <Heading as="h1" className="mb-6 text-3xl font-semibold">
-        Experience
-      </Heading>
-      <ol className="space-y-6 border-l border-border pl-4 md:pl-6">
-        {items.map((item) => (
-          <li key={`${item.company}-${item.period}`} className="relative pl-4">
-            <span className="absolute -left-1.5 top-1 h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
-            <Heading as="h3" className="text-lg font-semibold">
-              {item.role}
-            </Heading>
-            <Text muted className="text-sm">
-              {item.company}
-              {item.location ? ` · ${item.location}` : ''}
-            </Text>
-            <Text muted className="mt-1 text-xs uppercase tracking-wide">
-              {item.period}
-            </Text>
-            {item.responsibilities?.length ? (
-              <ul className="mt-2 list-disc space-y-1 pl-4 text-sm text-foreground/80">
-                {item.responsibilities.map((resp) => (
-                  <li key={resp}>{resp}</li>
-                ))}
-              </ul>
-            ) : null}
-          </li>
-        ))}
-      </ol>
+      <div className="mx-auto w-full max-w-3xl px-4 md:px-6">
+        <div className="animate-fade-in-up mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Experience</h1>
+        </div>
+
+        <div className="relative">
+          {/* Timeline line */}
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-border ml-[7px]" />
+
+          <div className="space-y-12">
+            {items.map((item, index) => (
+              <div
+                key={`${item.company}-${item.period}`}
+                className="animate-fade-in-up relative pl-10"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {/* Timeline dot */}
+                <div className="absolute left-0 top-2 w-4 h-4 rounded-full bg-primary border-4 border-background" />
+
+                <div className="space-y-3">
+                  <div>
+                    <h3 className="text-xl font-semibold">{item.role}</h3>
+                    <p className="text-muted-foreground">
+                      {item.company}
+                      {item.location ? ` · ${item.location}` : ''}
+                    </p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mt-1">
+                      {item.period}
+                    </p>
+                  </div>
+
+                  {item.responsibilities?.length ? (
+                    <ul className="space-y-2">
+                      {item.responsibilities.map((resp) => (
+                        <li
+                          key={resp}
+                          className="text-muted-foreground flex items-start gap-2"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2 flex-shrink-0" />
+                          {resp}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Heading from '@/components/atoms/Heading';
-import Text from '@/components/atoms/Text';
 import { getProjects, getProjectBySlug } from '@/lib/services/content';
 import type { Project } from '@/lib/types/content';
 import { getCanonicalUrl } from '@/lib/seo/site';
+import AppLink from '@/components/atoms/Link';
 
 interface ProjectPageProps {
   params: { slug: string };
@@ -69,63 +68,80 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
   const jsonLd = buildProjectJsonLd(project as Project);
 
   return (
-    <article
-      id={`mu-projects-${project!.slug}__case-study__section--primary`}
-      className="mx-auto max-w-5xl px-4 py-10 md:px-6"
-    >
-      <Heading as="h1" className="text-2xl font-semibold md:text-3xl">
-        {project!.title}
-      </Heading>
-      <Text muted className="mt-2 text-sm md:text-base">
-        {project!.role}
-        {project!.company ? ` · ${project!.company}` : ''}
-        {project!.period ? ` · ${project!.period}` : ''}
-        {project!.domain ? ` · ${project!.domain}` : ''}
-      </Text>
+    <section className="py-20">
+      <article
+        id={`mu-projects-${project!.slug}__case-study__section--primary`}
+        className="mx-auto max-w-3xl px-4 md:px-6"
+      >
+        {/* Back button */}
+        <div className="animate-fade-in-up mb-8" style={{ animationDelay: '0s' }}>
+          <AppLink
+            href="/projects"
+            variant="muted"
+            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            ← Back to Projects
+          </AppLink>
+        </div>
 
-      <section className="mt-6 space-y-4">
-        <Heading as="h2" className="text-lg font-semibold">
-          Overview
-        </Heading>
-        <Text muted>{project!.summary}</Text>
-      </section>
+        {/* Title */}
+        <div className="animate-fade-in-up mb-12" style={{ animationDelay: '0.1s' }}>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+            {project!.title}
+          </h1>
+          <p className="text-muted-foreground">
+            {project!.role}
+            {project!.company ? ` · ${project!.company}` : ''}
+            {project!.period ? ` · ${project!.period}` : ''}
+            {project!.domain ? ` · ${project!.domain}` : ''}
+          </p>
+        </div>
 
-      {project!.highlights && project!.highlights.length > 0 && (
-        <section className="mt-8 space-y-4">
-          <Heading as="h2" className="text-lg font-semibold">
-            Key contributions
-          </Heading>
-          <ul className="list-disc space-y-2 pl-5 text-sm md:text-base">
-            {project!.highlights.map((item) => (
-              <li key={item} className="text-foreground/80">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+        {/* Overview */}
+        <div className="animate-fade-in-up mb-12" style={{ animationDelay: '0.2s' }}>
+          <h2 className="text-xl font-semibold mb-4">Overview</h2>
+          <p className="text-lg text-muted-foreground">{project!.summary}</p>
+        </div>
 
-      {project!.techStack && project!.techStack.length > 0 && (
-        <section className="mt-8 space-y-3">
-          <Heading as="h2" className="text-lg font-semibold">
-            Tech stack
-          </Heading>
-          <div className="flex flex-wrap gap-2">
-            {project!.techStack.map((tech) => (
-              <span
-                key={tech}
-                className="rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-foreground/80"
-              >
-                {tech}
-              </span>
-            ))}
+        {/* Key Contributions */}
+        {project!.highlights && project!.highlights.length > 0 && (
+          <div className="animate-fade-in-up mb-12" style={{ animationDelay: '0.3s' }}>
+            <h2 className="text-xl font-semibold mb-4">Key Contributions</h2>
+            <ul className="space-y-3">
+              {project!.highlights.map((item) => (
+                <li
+                  key={item}
+                  className="text-muted-foreground flex items-start gap-3"
+                >
+                  <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
-        </section>
-      )}
+        )}
 
-      <script type="application/ld+json" suppressHydrationWarning>
-        {JSON.stringify(jsonLd)}
-      </script>
-    </article>
+        {/* Tech Stack */}
+        {project!.techStack && project!.techStack.length > 0 && (
+          <div className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            <h2 className="text-xl font-semibold mb-4">Tech Stack</h2>
+            <div className="flex flex-wrap gap-2">
+              {project!.techStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="inline-flex items-center px-3 py-1 rounded-full text-sm font-mono border border-border bg-muted/50 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <script type="application/ld+json" suppressHydrationWarning>
+          {JSON.stringify(jsonLd)}
+        </script>
+      </article>
+    </section>
   );
 }

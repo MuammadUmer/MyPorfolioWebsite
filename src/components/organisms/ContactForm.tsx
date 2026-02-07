@@ -1,8 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import Heading from '@/components/atoms/Heading';
-import Text from '@/components/atoms/Text';
+import { Send } from 'lucide-react';
 import Button from '@/components/atoms/Button';
 import VisuallyHidden from '@/components/atoms/VisuallyHidden';
 import { trackEvent } from '@/lib/analytics';
@@ -20,6 +19,11 @@ interface ContactFormErrors {
   message?: string;
 }
 
+interface SubmitResult {
+  status: 'ok' | 'error';
+  message: string;
+}
+
 const initialState: ContactFormState = {
   name: '',
   email: '',
@@ -32,9 +36,9 @@ const MIN_MESSAGE_LENGTH = 20;
 const ContactForm: React.FC = () => {
   const [values, setValues] = React.useState<ContactFormState>(initialState);
   const [errors, setErrors] = React.useState<ContactFormErrors>({});
-  const [formError, setFormError] = React.useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = React.useState<string | null>(null);
+  const [submitResult, setSubmitResult] = React.useState<SubmitResult | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   const validate = React.useCallback((state: ContactFormState): ContactFormErrors => {
     const nextErrors: ContactFormErrors = {};
@@ -43,19 +47,19 @@ const ContactForm: React.FC = () => {
     const trimmedMessage = state.message.trim();
 
     if (!trimmedName) {
-      nextErrors.name = 'Name is required';
+      nextErrors.name = 'Name is required.';
     }
 
     if (!trimmedEmail) {
-      nextErrors.email = 'Email is required';
+      nextErrors.email = 'Email is required.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-      nextErrors.email = 'Please enter a valid email address';
+      nextErrors.email = 'Please enter a valid email address.';
     }
 
     if (!trimmedMessage) {
-      nextErrors.message = 'Message is required';
+      nextErrors.message = 'Message is required.';
     } else if (trimmedMessage.length < MIN_MESSAGE_LENGTH) {
-      nextErrors.message = `Message must be at least ${MIN_MESSAGE_LENGTH} characters`;
+      nextErrors.message = `Message must be at least ${MIN_MESSAGE_LENGTH} characters.`;
     }
 
     return nextErrors;
@@ -68,13 +72,16 @@ const ContactForm: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setFormError(null);
-    setSuccessMessage(null);
+    const form = event.currentTarget;
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const company = (form.elements.namedItem('company') as HTMLInputElement).value;
+    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
 
-    const nextErrors = validate(values);
-    setErrors(nextErrors);
+    const validationErrors = validate(values);
+    setErrors(validationErrors);
 
-    if (Object.keys(nextErrors).length > 0) {
+    if (Object.keys(validationErrors).length > 0) {
       trackEvent('contact_submit_failure', {
         actionId: 'act-contact__form__submit-contact',
         reason: 'client_validation_error',
@@ -83,200 +90,215 @@ const ContactForm: React.FC = () => {
     }
 
     setIsSubmitting(true);
+    setSubmitResult(null);
 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: values.name.trim(),
-          email: values.email.trim(),
-          company: values.company.trim() || null,
-          message: values.message.trim(),
+          name,
+          email,
+          company,
+          message,
           actionId: 'act-contact__form__submit-contact',
         }),
       });
 
       const data = await response.json();
 
-      if (!response.ok) {
-        const code = (data && data.code) || 'INTERNAL_ERROR';
-        setFormError(data && data.message ? data.message : 'Something went wrong. Please try again.');
+      if (response.ok) {
+        setSubmitResult({ status: 'ok', message: data.message ?? 'Thank you for reaching out. I will get back to you soon.' });
+        trackEvent('contact_submit_success', {
+          actionId: 'act-contact__form__submit-contact',
+        });
+        setIsSubmitted(true);
+        form.reset();
+      } else {
+        setSubmitResult({ status: 'error', message: data.message ?? 'Something went wrong. Please try again.' });
         trackEvent('contact_submit_failure', {
           actionId: 'act-contact__form__submit-contact',
-          status: response.status,
-          code,
+          reason: data.code ?? 'server_error',
         });
-        return;
       }
-
-      setValues(initialState);
-      setErrors({});
-      setSuccessMessage(data && data.message ? data.message : 'Thank you for your message.');
-      trackEvent('contact_submit_success', {
-        actionId: 'act-contact__form__submit-contact',
-      });
-    } catch (error) {
-      setFormError('Something went wrong. Please try again.');
-      trackEvent('contact_submit_failure', {
-        actionId: 'act-contact__form__submit-contact',
-        reason: 'network_error',
-      });
+    } catch {
+      setSubmitResult({ status: 'error', message: 'Network error. Please try again later.' });
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  if (isSubmitted && submitResult?.status === 'ok') {
+    return (
+      <section
+        id="mu-contact__form__section--primary"
+        className="py-20"
+      >
+        <div className="mx-auto w-full max-w-xl px-4 md:px-6">
+          <div className="animate-fade-in-up text-center py-12 px-6 rounded-xl border border-border bg-card">
+            <svg className="w-16 h-16 text-primary mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h2 className="text-2xl font-bold mb-2">Message Sent!</h2>
+            <p className="text-muted-foreground mb-6">
+              {submitResult.message}
+            </p>
+            <Button
+              variant="primary"
+              onClick={() => { setIsSubmitted(false); setSubmitResult(null); }}
+            >
+              Send Another Message
+            </Button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       id="mu-contact__form__section--primary"
-      className="mx-auto w-full max-w-2xl rounded-xl border border-border bg-background/80 px-4 py-8 md:px-6"
-      aria-labelledby="mu-contact__form__heading--title"
+      className="py-20"
     >
-      <Heading as="h1" id="mu-contact__form__heading--title" className="text-2xl font-semibold md:text-3xl">
-        Contact
-      </Heading>
-      <Text muted className="mt-2 text-sm md:text-base">
-        Share a bit about what you are hiring for, timelines, and how I can help. I will reply as soon as I can.
-      </Text>
-
-      <form className="mt-6 space-y-5" noValidate onSubmit={handleSubmit}>
-        <div className="space-y-1">
-          <label
-            htmlFor="mu-contact__form__field--name"
-            className="text-sm font-medium text-foreground"
-          >
-            Name
-          </label>
-          <input
-            id="mu-contact__form__field--name"
-            name="name"
-            type="text"
-            autoComplete="name"
-            className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground"
-            value={values.name}
-            onChange={handleChange}
-            aria-invalid={errors.name ? 'true' : undefined}
-            aria-describedby={errors.name ? 'mu-contact__form__error--name' : undefined}
-          />
-          {errors.name && (
-            <p
-              id="mu-contact__form__error--name"
-              className="text-xs text-red-600"
-            >
-              {errors.name}
-            </p>
-          )}
-        </div>
-
-        <div className="space-y-1">
-          <label
-            htmlFor="mu-contact__form__field--email"
-            className="text-sm font-medium text-foreground"
-          >
-            Email
-          </label>
-          <input
-            id="mu-contact__form__field--email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground"
-            value={values.email}
-            onChange={handleChange}
-            aria-invalid={errors.email ? 'true' : undefined}
-            aria-describedby={errors.email ? 'mu-contact__form__error--email' : undefined}
-          />
-          {errors.email && (
-            <p
-              id="mu-contact__form__error--email"
-              className="text-xs text-red-600"
-            >
-              {errors.email}
-            </p>
-          )}
-        </div>
-
-        <div className="space-y-1">
-          <label
-            htmlFor="mu-contact__form__field--company"
-            className="text-sm font-medium text-foreground"
-          >
-            Company (optional)
-          </label>
-          <input
-            id="mu-contact__form__field--company"
-            name="company"
-            type="text"
-            autoComplete="organization"
-            className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground"
-            value={values.company}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="space-y-1">
-          <label
-            htmlFor="mu-contact__form__field--message"
-            className="text-sm font-medium text-foreground"
-          >
-            Message
-          </label>
-          <textarea
-            id="mu-contact__form__field--message"
-            name="message"
-            rows={5}
-            className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground"
-            value={values.message}
-            onChange={handleChange}
-            aria-invalid={errors.message ? 'true' : undefined}
-            aria-describedby={errors.message ? 'mu-contact__form__error--message' : undefined}
-          />
-          <Text muted className="text-xs">
-            Please include enough context so I can respond with something useful.
-          </Text>
-          {errors.message && (
-            <p
-              id="mu-contact__form__error--message"
-              className="text-xs text-red-600"
-            >
-              {errors.message}
-            </p>
-          )}
-        </div>
-
-        {formError && (
-          <p className="text-sm text-red-600" role="alert">
-            {formError}
+      <div className="mx-auto w-full max-w-xl px-4 md:px-6">
+        <div className="animate-fade-in-up mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Contact</h1>
+          <p className="text-muted-foreground text-lg">
+            Share a bit about what you are hiring for, timelines, and how I can help. I will reply as soon as I can.
           </p>
+        </div>
+
+        {submitResult && submitResult.status === 'error' && (
+          <div
+            role="alert"
+            className="mb-4 rounded-md p-3 text-sm bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
+          >
+            {submitResult.message}
+          </div>
         )}
 
-        {successMessage && (
-          <p className="text-sm text-green-700" role="status">
-            {successMessage}
-          </p>
-        )}
-
-        <div className="mt-4 flex items-center gap-3">
-          <Button
-            id="mu-contact__form__btn--submit"
-            actionId="act-contact__form__submit-contact"
-            type="submit"
-            variant="primary"
-            disabled={isSubmitting}
+        <div className="animate-fade-in-up rounded-xl border border-border bg-card p-6 sm:p-8" style={{ animationDelay: '0.2s' }}>
+          <form
+            id="mu-contact__form__form--primary"
+            onSubmit={handleSubmit}
+            noValidate
+            className="space-y-6"
           >
-            {isSubmitting ? 'Sending…' : 'Send message'}
-          </Button>
+            <div className="space-y-2">
+              <label htmlFor="contact-name" className="text-sm font-medium text-foreground">
+                Name <span aria-hidden="true">*</span>
+                <VisuallyHidden>(required)</VisuallyHidden>
+              </label>
+              <input
+                id="contact-name"
+                name="name"
+                type="text"
+                placeholder="Your name"
+                required
+                value={values.name}
+                onChange={handleChange}
+                aria-describedby={errors.name ? 'contact-name-error' : undefined}
+                className={`h-10 w-full rounded-md border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                  errors.name ? 'border-destructive' : 'border-border'
+                }`}
+              />
+              {errors.name && (
+                <p id="contact-name-error" className="text-sm text-destructive">
+                  {errors.name}
+                </p>
+              )}
+            </div>
 
-          <VisuallyHidden>
-            <span aria-live="polite">
-              {isSubmitting ? 'Sending message' : successMessage || formError || ''}
-            </span>
-          </VisuallyHidden>
+            <div className="space-y-2">
+              <label htmlFor="contact-email" className="text-sm font-medium text-foreground">
+                Email <span aria-hidden="true">*</span>
+                <VisuallyHidden>(required)</VisuallyHidden>
+              </label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                required
+                value={values.email}
+                onChange={handleChange}
+                aria-describedby={errors.email ? 'contact-email-error' : undefined}
+                className={`h-10 w-full rounded-md border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                  errors.email ? 'border-destructive' : 'border-border'
+                }`}
+              />
+              {errors.email && (
+                <p id="contact-email-error" className="text-sm text-destructive">
+                  {errors.email}
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="contact-company" className="text-sm font-medium text-foreground">
+                Company
+              </label>
+              <input
+                id="contact-company"
+                name="company"
+                type="text"
+                placeholder="Your company (optional)"
+                value={values.company}
+                onChange={handleChange}
+                className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="contact-message" className="text-sm font-medium text-foreground">
+                Message <span aria-hidden="true">*</span>
+                <VisuallyHidden>(required)</VisuallyHidden>
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows={5}
+                placeholder="Tell me about your project or opportunity..."
+                required
+                value={values.message}
+                onChange={handleChange}
+                aria-describedby={errors.message ? 'contact-message-error' : 'contact-message-hint'}
+                className={`w-full rounded-md border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                  errors.message ? 'border-destructive' : 'border-border'
+                }`}
+              />
+              {errors.message ? (
+                <p id="contact-message-error" className="text-sm text-destructive">
+                  {errors.message}
+                </p>
+              ) : (
+                <p id="contact-message-hint" className="text-xs text-muted-foreground">
+                  Please include enough context so I can respond with something useful.
+                </p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              disabled={isSubmitting}
+              id="mu-contact__form__btn--submit"
+              actionId="act-contact__form__submit-contact"
+              className="w-full shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
+            >
+              {isSubmitting ? (
+                <span>Sending...</span>
+              ) : (
+                <>
+                  <Send className="mr-2 h-4 w-4" />
+                  Send Message
+                </>
+              )}
+            </Button>
+          </form>
         </div>
-      </form>
+      </div>
     </section>
   );
 };
