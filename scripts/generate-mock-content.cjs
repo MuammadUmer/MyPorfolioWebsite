@@ -59,7 +59,6 @@ function main() {
   writeJson('projects.json', generateProjects());
   writeJson('experience.json', generateExperience());
   writeJson('skills.json', generateSkills());
-  // eslint-disable-next-line no-console
   console.log('Mock content generated in src/data/*.json');
 }
 

@@ -10,7 +10,7 @@ jest.mock('@/lib/analytics', () => ({
 describe('ContactForm', () => {
   beforeEach(() => {
     trackEventMock.mockClear();
-    (global as any).fetch = jest.fn();
+    (global as unknown as { fetch: jest.Mock }).fetch = jest.fn();
   });
 
   it('shows validation errors when required fields are missing', async () => {
@@ -23,14 +23,14 @@ describe('ContactForm', () => {
     expect(screen.getByText(/email is required/i)).toBeInTheDocument();
     expect(screen.getByText(/message is required/i)).toBeInTheDocument();
 
-    expect((global as any).fetch).not.toHaveBeenCalled();
+    expect((global as unknown as { fetch: jest.Mock }).fetch).not.toHaveBeenCalled();
     expect(trackEventMock).toHaveBeenCalledWith('contact_submit_failure',
       expect.objectContaining({ actionId: 'act-contact__form__submit-contact', reason: 'client_validation_error' })
     );
   });
 
   it('submits successfully when form is valid', async () => {
-    (global as any).fetch = jest.fn().mockResolvedValue({
+    (global as unknown as { fetch: jest.Mock }).fetch = jest.fn().mockResolvedValue({
       ok: true,
       status: 200,
       json: async () => ({
@@ -58,7 +58,7 @@ describe('ContactForm', () => {
       expect(screen.getByText(/thank you for reaching out/i)).toBeInTheDocument();
     });
 
-    expect((global as any).fetch).toHaveBeenCalledTimes(1);
+    expect((global as unknown as { fetch: jest.Mock }).fetch).toHaveBeenCalledTimes(1);
     expect(trackEventMock).toHaveBeenCalledWith(
       'contact_submit_success',
       expect.objectContaining({ actionId: 'act-contact__form__submit-contact' })

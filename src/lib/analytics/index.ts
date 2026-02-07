@@ -14,7 +14,6 @@ export function trackEvent(eventName: string, payload?: AnalyticsEventPayload): 
   };
 
   if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line no-console
     console.info('[analytics]', enhancedPayload);
   }
 

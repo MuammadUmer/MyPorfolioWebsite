@@ -85,7 +85,7 @@ export async function POST(request: Request): Promise<Response> {
         },
       }
     );
-  } catch (error) {
+  } catch {
     return new Response(
       JSON.stringify({
         code: 'INTERNAL_ERROR',

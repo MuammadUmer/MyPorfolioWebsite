@@ -1,7 +1,7 @@
 import { POST } from '@/app/api/contact/route';
 
 async function readJson(response: Response) {
-  return response.json() as Promise<any>;
+  return response.json() as Promise<Record<string, unknown>>;
 }
 
 describe('POST /api/contact', () => {
