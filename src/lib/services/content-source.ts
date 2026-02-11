@@ -51,7 +51,7 @@ const jsonService: ContentService = {
     return match ?? null;
   },
   async getExperience() {
-    return experienceData as Experience[];
+    return [...(experienceData as Experience[])].reverse();
   },
   async getSkillCategories() {
     return skillsData as SkillCategory[];

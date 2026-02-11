@@ -3,7 +3,7 @@
     "company": "Euroko International",
     "role": "Software Engineer",
     "location": "Pakistan",
-    "period": "2019",
+    "period": "May 2019 – Dec 2019",
     "responsibilities": [
       "Worked on foundational backend services and internal tools",
       "Collaborated with senior engineers on API design and implementation",
@@ -12,20 +12,35 @@
   },
   {
     "company": "Freelance",
-    "role": "Software Engineer",
+    "role": "Full Stack Developer",
     "location": "Remote",
-    "period": "2020",
+    "period": "Jan 2020 – Oct 2020",
     "responsibilities": [
-      "Delivered web and mobile applications for small businesses",
-      "Gathered requirements directly from clients and translated them into technical designs",
-      "Owned full lifecycle of projects from planning to deployment"
+      "Designed, developed, and deployed smart contracts on Solana and Ethereum for NFT buying and selling platforms",
+      "Implemented secure blockchain transaction logic ensuring reliability and efficiency",
+      "Developed responsive web applications using React.js",
+      "Integrated cryptocurrency wallets to enable seamless and secure blockchain interactions",
+      "Managed full development lifecycle including requirement gathering, architecture design, development, testing, and deployment"
+    ]
+  },
+  {
+    "company": "Mobile Technologies",
+    "role": "Senior Backend Developer",
+    "location": "Pakistan",
+    "period": "2020 – 2023",
+    "responsibilities": [
+      "Built and maintained Node.js REST APIs with a focus on clean architecture, validation, and versioning",
+      "Designed integrations and background jobs (queues/schedulers) to automate data sync and operational workflows",
+      "Improved database reliability and performance through indexing, query tuning, and migration planning across SQL/NoSQL stores",
+      "Partnered with product and frontend teams to define API contracts, reduce latency, and improve end-to-end user flows",
+      "Mobile Technologies operated as a subsidiary of F3 Technologies"
     ]
   },
   {
     "company": "F3 Technologies",
     "role": "Software Engineer / Lead",
     "location": "Sharjah – Remote",
-    "period": "Oct 2020 – Present",
+    "period": "2023 – Present",
     "responsibilities": [
       "Focused on RESTful API development using Node.js",
       "Led React.js and React Native teams across multiple products",

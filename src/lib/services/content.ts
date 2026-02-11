@@ -20,7 +20,7 @@ export function getProjectBySlug(slug: string): Project | undefined {
 }
 
 export function getExperience(): Experience[] {
-  return experienceData as Experience[];
+  return [...(experienceData as Experience[])].reverse();
 }
 
 export function getSkillCategories(): SkillCategory[] {
