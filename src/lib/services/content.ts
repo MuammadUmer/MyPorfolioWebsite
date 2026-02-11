@@ -8,7 +8,15 @@ export function getProjects(): Project[] {
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {
-  return (projectsData as Project[]).find((project) => project.slug === slug);
+  const normalizedSlug = decodeURIComponent(slug)
+    .trim()
+    .replace(/^\/+|\/+$/g, '')
+    .replace(/\.+$/g, '')
+    .toLowerCase();
+
+  return (projectsData as Project[]).find(
+    (project) => project.slug.trim().toLowerCase() === normalizedSlug
+  );
 }
 
 export function getExperience(): Experience[] {

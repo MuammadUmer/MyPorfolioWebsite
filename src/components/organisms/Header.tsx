@@ -55,7 +55,7 @@ const Header: React.FC = () => {
         <div className="flex items-center gap-2">
           <AppLink
             href="/"
-            className="text-xl font-bold tracking-tight text-primary hover:text-primary/90"
+            className="inline-flex items-center gap-1 text-xl font-bold tracking-tight text-primary hover:text-primary/90"
             aria-label="Go to home"
             id="mu-global__header__link--brand"
           >
@@ -76,7 +76,7 @@ const Header: React.FC = () => {
                 href={item.href}
                 variant="nav"
                 aria-current={isActive ? 'page' : undefined}
-                className={`px-3 py-2 text-sm rounded-md transition-colors ${
+                className={`inline-flex items-center gap-1 px-3 py-2 text-sm rounded-md transition-colors ${
                   isActive
                     ? 'text-foreground font-medium'
                     : 'text-muted-foreground hover:text-foreground'
@@ -134,7 +134,7 @@ const Header: React.FC = () => {
                   href={item.href}
                   variant="nav"
                   aria-current={isActive ? 'page' : undefined}
-                  className={`px-3 py-3 text-sm rounded-md transition-colors ${
+                  className={`inline-flex items-center gap-1 px-3 py-3 text-sm rounded-md transition-colors ${
                     isActive
                       ? 'text-foreground font-medium bg-muted'
                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'

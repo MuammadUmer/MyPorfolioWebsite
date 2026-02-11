@@ -6,7 +6,7 @@ export default function NotFound() {
       <div className="text-center animate-fade-in-up">
         <h1 className="mb-4 text-4xl font-bold">404</h1>
         <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
-        <AppLink href="/" className="text-primary underline hover:text-primary/90">
+        <AppLink href="/" className="inline-flex items-center gap-1 text-primary underline hover:text-primary/90">
           Return to Home
         </AppLink>
       </div>

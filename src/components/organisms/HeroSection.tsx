@@ -11,6 +11,18 @@ import { trackEvent } from '@/lib/analytics';
 import type { Project } from '@/lib/types/content';
 import { useI18n } from '@/lib/i18n/use-i18n';
 
+function getFeaturedTitle(title: string): string {
+  return title.split(' – ')[0] ?? title;
+}
+
+function formatFeaturedTechLabel(label: string): string {
+  const normalized = label.trim().toLowerCase();
+  if (normalized === 'google cloud functions') return 'Cloud Functions';
+  if (normalized === 'firebase firestore') return 'Firestore';
+  if (normalized === 'at/llm apis') return 'AI/LLM APIs';
+  return label;
+}
+
 export interface HeroSectionProps {
   featuredProjects: Project[];
   yearsExperience: number;
@@ -174,7 +186,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 href="/CV.pdf"
                 variant="muted"
                 id="mu-home__hero__link--download-cv"
-                className="inline-flex items-center text-muted-foreground hover:text-foreground"
+                className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground"
               >
                 <Download className="mr-2 h-4 w-4" />
                 {t('home.hero.cta.downloadCv')}
@@ -224,24 +236,23 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                       className="animate-fade-in-up p-4 rounded-lg border border-border bg-background/50 transition-all duration-300 hover:border-primary/50 hover:bg-background/80"
                       style={{ animationDelay: `${0.5 + index * 0.1}s` }}
                     >
-                      <Heading as="h3" className="text-base font-semibold text-foreground group-hover:text-primary transition-colors">
-                        {project.title}
-                      </Heading>
-                      <Text muted className="mt-1 text-xs">
+                      <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                        {getFeaturedTitle(project.title)}
+                      </h4>
+                      <p className="text-xs text-muted-foreground mb-2">
                         {project.role}
                         {project.company ? ` · ${project.company}` : ''}
-                        {project.domain ? ` · ${project.domain}` : ''}
-                      </Text>
-                      <Text muted className="mt-1 text-sm">
+                      </p>
+                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                         {project.summary}
-                      </Text>
-                      <div className="mt-3 flex flex-wrap gap-1.5">
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
                         {project.techStack.slice(0, 4).map((tech) => (
                           <span
                             key={tech}
                             className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono border border-border bg-muted/50 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
                           >
-                            {tech}
+                            {formatFeaturedTechLabel(tech)}
                           </span>
                         ))}
                       </div>

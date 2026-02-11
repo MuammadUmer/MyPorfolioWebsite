@@ -15,14 +15,14 @@ const AppLink: React.FC<React.PropsWithChildren<AppLinkProps>> = ({
   ...rest
 }) => {
   const base =
-    'inline-flex items-center gap-1 font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background';
+    'font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:ring-offset-background';
 
   const variantClass =
     variant === 'nav'
       ? 'text-sm text-foreground/70 hover:text-foreground'
       : variant === 'muted'
       ? 'text-sm text-foreground/70 hover:text-foreground'
-      : 'text-sm text-accent hover:text-accent/90';
+      : 'text-sm text-primary hover:text-primary/90';
 
   const classes = [base, variantClass, className].filter(Boolean).join(' ');
 

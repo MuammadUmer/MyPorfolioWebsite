@@ -1,12 +1,19 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import { getProjects, getProjectBySlug } from '@/lib/services/content';
 import type { Project } from '@/lib/types/content';
 import { getCanonicalUrl } from '@/lib/seo/site';
 import AppLink from '@/components/atoms/Link';
+import { ArrowLeft } from 'lucide-react';
+
+export const dynamicParams = true;
 
 interface ProjectPageProps {
   params: { slug: string };
+}
+
+function normalizeSlug(rawSlug: string): string {
+  const decoded = decodeURIComponent(rawSlug);
+  return decoded.replace(/\.+$/, '');
 }
 
 export async function generateStaticParams() {
@@ -15,7 +22,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-  const project = getProjectBySlug(params.slug);
+  const project = getProjectBySlug(normalizeSlug(params.slug));
 
   if (!project) {
     return {
@@ -59,10 +66,23 @@ function buildProjectJsonLd(project: Project) {
 }
 
 export default function ProjectDetailPage({ params }: ProjectPageProps) {
-  const project = getProjectBySlug(params.slug);
+  const project = getProjectBySlug(normalizeSlug(params.slug));
 
   if (!project) {
-    notFound();
+    return (
+      <section className="py-20">
+        <div className="mx-auto max-w-3xl px-4 md:px-6 text-center">
+          <h1 className="text-2xl font-bold mb-4">Project not found</h1>
+          <AppLink
+            href="/projects"
+            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+            Back to Projects
+          </AppLink>
+        </div>
+      </section>
+    );
   }
 
   const jsonLd = buildProjectJsonLd(project as Project);
@@ -80,7 +100,8 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
             variant="muted"
             className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            ← Back to Projects
+            <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+            Back to Projects
           </AppLink>
         </div>
 
