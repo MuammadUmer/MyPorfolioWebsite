@@ -198,7 +198,7 @@ const ContactForm: React.FC = () => {
                 value={values.name}
                 onChange={handleChange}
                 aria-describedby={errors.name ? 'contact-name-error' : undefined}
-                className={`h-10 w-full rounded-md border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                className={`h-10 w-full rounded-md border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
                   errors.name ? 'border-destructive' : 'border-border'
                 }`}
               />
@@ -223,7 +223,7 @@ const ContactForm: React.FC = () => {
                 value={values.email}
                 onChange={handleChange}
                 aria-describedby={errors.email ? 'contact-email-error' : undefined}
-                className={`h-10 w-full rounded-md border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                className={`h-10 w-full rounded-md border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
                   errors.email ? 'border-destructive' : 'border-border'
                 }`}
               />
@@ -245,7 +245,7 @@ const ContactForm: React.FC = () => {
                 placeholder="Your company (optional)"
                 value={values.company}
                 onChange={handleChange}
-                className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
               />
             </div>
 
@@ -263,7 +263,7 @@ const ContactForm: React.FC = () => {
                 value={values.message}
                 onChange={handleChange}
                 aria-describedby={errors.message ? 'contact-message-error' : 'contact-message-hint'}
-                className={`w-full rounded-md border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                className={`w-full rounded-md border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
                   errors.message ? 'border-destructive' : 'border-border'
                 }`}
               />

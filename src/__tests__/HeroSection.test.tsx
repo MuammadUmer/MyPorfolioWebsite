@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import HeroSection from '@/components/organisms/HeroSection';
 import type { Project } from '@/lib/types/content';
 
@@ -23,6 +23,22 @@ const sampleProjects: Project[] = [
 ];
 
 describe('HeroSection', () => {
+  const flushTypewriter = () => {
+    for (let i = 0; i < 100; i += 1) {
+      act(() => {
+        jest.runOnlyPendingTimers();
+      });
+    }
+  };
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   it('renders hero title, subtitle and primary CTA', () => {
     render(
       <HeroSection
@@ -33,9 +49,9 @@ describe('HeroSection', () => {
       />
     );
 
-    expect(
-      screen.getByRole('heading', { name: /muhammad umer/i })
-    ).toBeInTheDocument();
+    flushTypewriter();
+
+    expect(screen.getByText(/muhammad umer/i)).toBeInTheDocument();
 
     const primaryCta = screen.getByRole('button', {
       name: /view projects/i,
@@ -54,7 +70,9 @@ describe('HeroSection', () => {
       />
     );
 
-    expect(screen.getByText(/years of experience/i)).toBeInTheDocument();
+    flushTypewriter();
+
+    expect(screen.getByText(/years experience/i)).toBeInTheDocument();
     expect(screen.getByText(/projects delivered/i)).toBeInTheDocument();
     expect(screen.getByText(/innova care/i)).toBeInTheDocument();
 
@@ -71,6 +89,8 @@ describe('HeroSection', () => {
         domains={['Healthcare']}
       />
     );
+
+    flushTypewriter();
 
     const button = getByRole('button', { name: /view projects/i });
     fireEvent.click(button);

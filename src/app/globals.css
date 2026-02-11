@@ -1,83 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @import "tailwindcss";
 
 :root {
   /* Base design tokens */
-  --color-bg: #ffffff;
-  --color-bg-alt: #f9fafb;
-  --color-surface: #ffffff;
-  --color-text: #111827;
-  --color-muted: #6b7280;
-  --color-accent: #2563eb;
-  --color-border: #e5e7eb;
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+
+  --primary: 217 91% 60%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 222 47% 11%;
+
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
+
+  --accent: 217 91% 60%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 217 91% 60%;
+
+  --radius: 0.5rem;
+
+  --gradient-start: 217 91% 60%;
+  --gradient-end: 199 89% 48%;
+  --glass-bg: 0 0% 100% / 0.8;
+  --glass-border: 220 13% 91% / 0.5;
+
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+
+  --color-bg: hsl(var(--background));
+  --color-bg-alt: hsl(var(--background));
+  --color-surface: hsl(var(--background));
+  --color-text: hsl(var(--foreground));
+  --color-muted: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-border: hsl(var(--border));
   --color-success: #16a34a;
   --color-danger: #dc2626;
-  --color-card: #ffffff;
-  --color-card-foreground: #111827;
-  --color-primary: #2563eb;
-  --color-primary-foreground: #ffffff;
-  --color-muted-bg: #f9fafb;
-  --color-muted-foreground: #6b7280;
-  --color-destructive: #dc2626;
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-muted-bg: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-destructive: hsl(var(--destructive));
 
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 .dark {
-  --color-bg: #020617;
-  --color-bg-alt: #020617;
-  --color-surface: #020617;
-  --color-text: #e5e7eb;
-  --color-muted: #9ca3af;
-  --color-accent: #38bdf8;
-  --color-border: #1f2937;
+  --background: 222 84% 3%;
+  --foreground: 220 13% 91%;
+
+  --card: 222 47% 6%;
+  --card-foreground: 220 13% 91%;
+
+  --popover: 222 47% 6%;
+  --popover-foreground: 220 13% 91%;
+
+  --primary: 199 89% 62%;
+  --primary-foreground: 222 84% 3%;
+
+  --secondary: 217 33% 12%;
+  --secondary-foreground: 220 13% 91%;
+
+  --muted: 217 33% 12%;
+  --muted-foreground: 220 9% 64%;
+
+  --accent: 199 89% 62%;
+  --accent-foreground: 222 84% 3%;
+
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 217 33% 17%;
+  --input: 217 33% 17%;
+  --ring: 199 89% 62%;
+
+  --gradient-start: 199 89% 62%;
+  --gradient-end: 217 91% 60%;
+  --glass-bg: 222 47% 6% / 0.8;
+  --glass-border: 217 33% 17% / 0.5;
+
+  --sidebar-background: 240 5.9% 10%;
+  --sidebar-foreground: 240 4.8% 95.9%;
+  --sidebar-primary: 224.3 76.3% 48%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 240 4.8% 95.9%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+
+  --color-bg: hsl(var(--background));
+  --color-bg-alt: hsl(var(--background));
+  --color-surface: hsl(var(--background));
+  --color-text: hsl(var(--foreground));
+  --color-muted: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-border: hsl(var(--border));
   --color-success: #22c55e;
   --color-danger: #f97316;
-  --color-card: #0b1120;
-  --color-card-foreground: #e5e7eb;
-  --color-primary: #38bdf8;
-  --color-primary-foreground: #020617;
-  --color-muted-bg: #0b1120;
-  --color-muted-foreground: #9ca3af;
-  --color-destructive: #f97316;
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-muted-bg: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-destructive: hsl(var(--destructive));
 }
 
 @theme inline {
-  --color-background: var(--color-bg);
-  --color-foreground: var(--color-text);
-  --color-accent: var(--color-accent);
-  --color-border: var(--color-border);
-  --color-card: var(--color-card);
-  --color-card-foreground: var(--color-card-foreground);
-  --color-primary: var(--color-primary);
-  --color-primary-foreground: var(--color-primary-foreground);
-  --color-muted: var(--color-muted-bg);
-  --color-muted-foreground: var(--color-muted-foreground);
-  --color-destructive: var(--color-destructive);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-accent: hsl(var(--accent));
+  --color-border: hsl(var(--border));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-destructive: hsl(var(--destructive));
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --color-bg: #020617;
-    --color-bg-alt: #020617;
-    --color-surface: #020617;
-    --color-text: #e5e7eb;
-    --color-muted: #9ca3af;
-    --color-accent: #38bdf8;
-    --color-border: #1f2937;
-    --color-success: #22c55e;
-    --color-danger: #f97316;
-    --color-card: #0b1120;
-    --color-card-foreground: #e5e7eb;
-    --color-primary: #38bdf8;
-    --color-primary-foreground: #020617;
-    --color-muted-bg: #0b1120;
-    --color-muted-foreground: #9ca3af;
-    --color-destructive: #f97316;
-  }
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 html {
@@ -131,15 +198,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Glassmorphism utility */
 .glass {
-  background-color: color-mix(in srgb, var(--color-bg) 80%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+  background-color: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid hsl(var(--border) / 0.5);
 }
 
 /* Dot pattern background */
 .dot-pattern {
-  background-image: radial-gradient(color-mix(in srgb, var(--color-muted) 15%, transparent) 1px, transparent 1px);
+  background-image: radial-gradient(hsl(var(--muted-foreground) / 0.15) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -147,10 +214,10 @@ h1, h2, h3, h4, h5, h6 {
 .animated-gradient {
   background: linear-gradient(
     -45deg,
-    color-mix(in srgb, var(--color-primary) 15%, transparent),
-    color-mix(in srgb, var(--color-accent) 10%, transparent),
-    color-mix(in srgb, var(--color-primary) 5%, transparent),
-    color-mix(in srgb, var(--color-accent) 15%, transparent)
+    hsl(var(--primary) / 0.15),
+    hsl(var(--accent) / 0.1),
+    hsl(var(--primary) / 0.05),
+    hsl(var(--accent) / 0.15)
   );
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
@@ -164,11 +231,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Glow effects */
 .glow {
-  box-shadow: 0 0 40px -10px color-mix(in srgb, var(--color-primary) 40%, transparent);
+  box-shadow: 0 0 40px -10px hsl(var(--primary) / 0.4);
 }
 
 .glow-subtle {
-  box-shadow: 0 0 60px -15px color-mix(in srgb, var(--color-primary) 20%, transparent);
+  box-shadow: 0 0 60px -15px hsl(var(--primary) / 0.2);
 }
 
 /* Fade-in-up animation */

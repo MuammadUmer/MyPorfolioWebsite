@@ -36,7 +36,7 @@ export default function ProjectsPage() {
 
   return (
     <section className="py-20">
-      <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
+      <div className="mx-auto w-full max-w-5xl px-4 md:px-6">
         <div className="animate-fade-in-up mb-12">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
             Projects

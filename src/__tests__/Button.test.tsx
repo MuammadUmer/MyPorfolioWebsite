@@ -15,7 +15,7 @@ describe('Button', () => {
       </Button>
     );
     const btn = screen.getByRole('button', { name: 'Secondary' });
-    expect(btn.className).toContain('bg-background');
+    expect(btn.className).toContain('bg-transparent');
     expect(btn.className).toContain('h-11');
   });
 

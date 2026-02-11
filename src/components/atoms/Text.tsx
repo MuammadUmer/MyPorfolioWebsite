@@ -11,7 +11,7 @@ const Text: React.FC<React.PropsWithChildren<TextProps>> = ({
   ...rest
 }) => {
   const base = 'text-sm md:text-base';
-  const color = muted ? 'text-foreground/70' : 'text-foreground';
+  const color = muted ? 'text-muted-foreground' : 'text-foreground';
   const classes = [base, color, className].filter(Boolean).join(' ');
 
   return (

@@ -3,8 +3,6 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Download, Mail } from 'lucide-react';
-import Heading from '@/components/atoms/Heading';
-import Text from '@/components/atoms/Text';
 import Button from '@/components/atoms/Button';
 import AppLink from '@/components/atoms/Link';
 import { trackEvent } from '@/lib/analytics';
@@ -161,7 +159,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 variant="primary"
                 size="lg"
                 onClick={handlePrimaryCta}
-                className="shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                className="rounded-full shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
               >
                 {t('home.hero.cta.viewProjects')}
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -177,7 +175,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                   });
                   router.push('/contact');
                 }}
-                className="border-2 border-primary/50 hover:bg-primary/10 hover:border-primary"
+                className="rounded-full border-2 border-primary/50 hover:bg-primary/10 hover:border-primary"
               >
                 <Mail className="mr-2 h-4 w-4" />
                 {t('home.hero.cta.contact')}
