@@ -135,7 +135,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 <Typewriter text="Muhammad Umer" delay={80} />
               </h1>
               <p className="text-xl sm:text-2xl text-primary font-medium">
-                Senior Software Engineer
+                Lead Software Engineer
               </p>
             </div>
 
@@ -184,6 +184,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 href="/CV.pdf"
                 variant="muted"
                 id="mu-home__hero__link--download-cv"
+                download="Muhammad-Umer-CV.pdf"
                 className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground"
               >
                 <Download className="mr-2 h-4 w-4" />

@@ -1,8 +1,8 @@
 const paragraphs = [
-  "I'm Muhammad Umer, a senior software engineer focused on backend APIs, cloud and serverless architectures, React/Next.js, and React Native, with experience across healthcare, real estate, AI, and logistics.",
-  "I enjoy designing reliable, observable systems with clear boundaries and well-documented contracts. Much of my recent work has been around event-driven architectures, offline-first experiences, and integrating third-party APIs.",
-  "As a lead engineer, I value pragmatic architecture, strong code review culture, and mentoring teammates. I prefer small, well-tested increments, automated CI/CD, and clear communication with stakeholders.",
-  "Day to day, I like working closely with product and design, writing clear tickets and documentation, and keeping a healthy balance between shipping quickly and planning for the next iteration.",
+  "I'm Muhammad Umer, a Senior Full Stack Engineer based in Riyadh, Saudi Arabia, with 7+ years of experience designing and delivering scalable, high-performance web and mobile applications. I specialise in Node.js backend APIs, cloud-native architectures on GCP, and cross-platform frontends with React.js and React Native.",
+  "My background spans healthcare, real estate, logistics, AI, and blockchain — giving me the ability to quickly understand domain requirements and translate them into reliable, maintainable systems. Notable projects include Innova Care (offline-first home care on GCP), MyIndici (New Zealand's top-20 patient portal), Bio Scan (AI-powered vital sign monitoring), Ask Cyphen (Kibana + ChatGPT threat analytics), and Eizhar (property management platform).",
+  "I have hands-on experience architecting event-driven systems with Pub/Sub, designing offline-first experiences with SQL↔Firestore synchronisation, and deploying containerised workloads on GCP, AWS, and Azure with Docker and Kubernetes. I also enjoy integrating AI — from facial recognition APIs to configuring local LLM inference stacks for multi-agent systems.",
+  "As a lead engineer, I value clear system boundaries, strong code-review culture, and automated CI/CD. I prefer shipping small, well-tested increments, working closely with product and design, and keeping architecture decisions grounded in actual business requirements rather than speculation.",
 ];
 
 export default function AboutPage() {

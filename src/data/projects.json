@@ -2,91 +2,397 @@
   {
     "slug": "innova-care",
     "title": "Innova Care – Home Care System",
-    "role": "Lead Backend & Architecture",
-    "company": "F3 Technologies",
-    "period": "2021–Present",
+    "role": "Lead Software Engineer",
+    "company": "F Three Technologies",
+    "period": "2021 – 2026",
     "domain": "Healthcare",
-    "summary": "Upgraded a legacy home care system to a modern, event-driven, cloud-native platform.",
-    "techStack": ["Node.js", "Google Cloud Functions", "Firebase Firestore", ".NET", "SQL"],
+    "summary": "Upgraded a legacy home care system to a modern, serverless, event-driven platform — enabling nurses to manage tasks, track attendance, and operate fully offline.",
+    "techStack": [
+      "Node.js",
+      "Express",
+      "React Native",
+      "Google Cloud Functions",
+      "Firebase Firestore",
+      ".NET",
+      "SQL",
+      "Pub/Sub",
+      "NFC",
+      "Geofencing"
+    ],
     "highlights": [
-      "Designed event-driven synchronization between SQL and Firestore",
-      "Implemented offline-first workflows for caregivers",
-      "Introduced automated testing and CI/CD pipelines"
-    ]
-  },
-  {
-    "slug": "myindici",
-    "title": "MyIndici – Patient Portal",
-    "role": "Backend Engineer",
-    "company": "F3 Technologies",
-    "period": "2020–2022",
-    "domain": "Healthcare",
-    "summary": "Patient portal supporting appointments, prescriptions, and secure communication.",
-    "techStack": ["Node.js", "REST APIs", "SQL Server", "React"],
-    "highlights": [
-      "Built secure REST APIs for patient records and appointments",
-      "Optimized queries and caching for high-traffic use",
-      "Collaborated with frontend team on API contracts"
-    ]
-  },
-  {
-    "slug": "bio-scan",
-    "title": "Bio Scan – Medical Imaging Platform",
-    "role": "Full Stack Engineer",
-    "company": "F3 Technologies",
-    "period": "2020–2021",
-    "domain": "Healthcare",
-    "summary": "Platform for managing and reviewing diagnostic imaging and reports.",
-    "techStack": ["Node.js", "React", "AWS", "NoSQL"],
-    "highlights": [
-      "Developed secure upload and retrieval APIs for imaging data",
-      "Improved reliability and monitoring for critical workloads",
-      "Worked closely with clinicians to refine workflows"
-    ]
-  },
-  {
-    "slug": "ask-cyphen",
-    "title": "Ask Cyphen – AI Assistant",
-    "role": "Backend & Integration Engineer",
-    "company": "F3 Technologies",
-    "period": "2023–Present",
-    "domain": "AI",
-    "summary": "AI-powered assistant providing contextual answers and automation.",
-    "techStack": ["Node.js", "REST APIs", "AI/LLM APIs", "Cloud Functions"],
-    "highlights": [
-      "Integrated multiple AI providers behind a unified API",
-      "Implemented observability and rate limiting for external calls",
-      "Collaborated on prompt design and safety mechanisms"
+      "Architected a bi-directional synchronization bridge and event-driven layer using Cloud Functions to facilitate real-time data parity between legacy SQL environments and modern NoSQL interfaces.",
+      "Engineered a secure Virtual Private Cloud (VPC) in the Australia region, ensuring strict data residency compliance and localized low-latency performance for healthcare practitioners.",
+      "Implemented a Cloud NAT and custom routing configuration with a Static Outbound IP to satisfy rigorous firewall protocols for secure, authenticated desktop-to-cloud integration.",
+      "Provisioned a hardened network perimeter utilizing Serverless VPC Access connectors and Compute Engine (VMs) to eliminate public internet exposure for sensitive clinical transfers.",
+      "Led the frontend team in developing a high-performance React Native application, implementing offline-first workflows to ensure uninterrupted clinical operations in low-connectivity environments.",
+      "Integrated hardware-level verification using NFC tag scanning and geofencing to automate and audit nurse attendance at patient locations.",
+      "Managed the end-to-end delivery process by providing technical leadership, code reviews, and comprehensive testing strategies for the mobile and backend engineering teams.",
+      "Established enterprise-grade CI/CD pipelines and automated test suites to maintain high code quality and 24/7 availability for multi-region, auto-scaling cloud deployments."
     ]
   },
   {
     "slug": "eizhar",
     "title": "Eizhar – Property Management Platform",
-    "role": "Lead Engineer",
-    "company": "F3 Technologies",
-    "period": "2022–Present",
+    "role": "Lead Software Engineer",
+    "company": "Mobiles Technologies",
+    "period": "2020 – 2021",
     "domain": "Real Estate",
-    "summary": "End-to-end platform for managing properties, tenants, and billing.",
-    "techStack": ["Node.js", "React", "PostgreSQL", "Message Queues"],
+    "summary": "End-to-end property management system supporting landlords, tenants, dealers, and managers — with listings, visit requests, rent reminders, and multi-channel notifications.",
+    "techStack": [
+      "Node.js",
+      "Express",
+      "React Native",
+      "Google Cloud Functions",
+      "Firebase Firestore",
+      "Twilio",
+      "Pub/Sub"
+    ],
     "highlights": [
-      "Designed multi-tenant architecture for property portfolios",
-      "Implemented reliable billing and invoicing workflows",
-      "Led code reviews and mentoring for junior engineers"
+      "Gathered and finalized comprehensive system requirements by collaborating with key stakeholders and project managers",
+      "Architected and deployed the entire backend using a serverless approach on Firebase Cloud Functions for maximum scalability",
+      "Led the frontend team in developing the React Native mobile application, providing critical logic, testing, and delivery support",
+      "Designed a multi-role architecture supporting landlords, tenants, dealers, and managers with secure access controls",
+      "Implemented a Pub/Sub-driven event system for asynchronous, scalable service communication and background tasks",
+      "Integrated Twilio for SMS alerts and custom email solutions for automated marketing and rent reminders",
+      "Built a robust notification engine supporting both in-app and background push notifications for real-time user updates",
+      "Established CI/CD pipelines with automated test suites to ensure reliable deployments and high code quality"
     ]
   },
   {
-    "slug": "logistics-platform",
-    "title": "Logistics & Tracking Platform",
-    "role": "Backend Engineer",
+    "slug": "llm-inference-stack",
+    "title": "Local LLM Inference Stack – Multi-Agent Intelligence",
+    "role": "Lead Architect & Systems Engineer",
+    "company": "Personal Project",
+    "period": "2024 – Present",
+    "domain": "AI / Fintech",
+    "summary": "Engineered a high-performance local inference stack to serve a multi-agent trading system, utilizing hardware acceleration for real-time market analysis and automated execution.",
+    "techStack": [
+      "llama.cpp",
+      "SYCL",
+      "Intel oneAPI",
+      "Python",
+      "Quantized Models (32B)",
+      "Multi-Agent Orchestration"
+    ],
+    "highlights": [
+      "Optimized a local inference stack using llama.cpp and SYCL to leverage hardware-specific acceleration on consumer GPUs",
+      "Deployed quantized 32B parameter models to balance high-reasoning capabilities with low-latency execution",
+      "Architected a sequential multi-agent workflow where specialized agents handle sentiment analysis and trade decisioning",
+      "Implemented automated execution pipelines for real-time market response based on LLM-driven insights"
+    ]
+  },
+  {
+    "slug": "bio-scan",
+    "title": "Bio Scan – AI Health Monitor",
+    "role": "Senior Software Engineer",
+    "company": "F3 Technologies",
+    "period": "2022 – 2023",
+    "domain": "Healthcare / AI",
+    "summary": "Mobile health monitoring app that uses AI-powered facial recognition to track vital signs including blood pressure, respiration rate, and stress levels in real time.",
+    "techStack": [
+      "Node.js",
+      "Express",
+      "Google Cloud Functions",
+      "Firebase Firestore",
+      "Binnah AI",
+      "Blinq"
+    ],
+    "highlights": [
+      "Integrated Binnah AI for facial recognition-based vital sign analysis via device camera",
+      "Built historical data storage and trend analysis for patient vital sign records",
+      "Enabled health report generation and sharing with healthcare professionals",
+      "Deployed on Google Cloud Functions for scalable, serverless operation",
+      "Integrated Blinq payment solution for subscription and service billing"
+    ]
+  },
+  {
+    "slug": "ask-cyphen",
+    "title": "Ask Cyphen – AI Threat Intelligence",
+    "role": "Senior Software Engineer",
+    "company": "F3 Technologies",
+    "period": "2023 – 2023",
+    "domain": "AI / Security",
+    "summary": "A custom Kibana plugin that combines Elasticsearch and ChatGPT to deliver natural language threat detection, data visualisation, and conversational analytics for security teams.",
+    "techStack": [
+      "Node.js",
+      "JavaScript",
+      "Kibana Plugin API",
+      "Elasticsearch",
+      "ChatGPT / OpenAI"
+    ],
+    "highlights": [
+      "Built a custom Kibana plugin to visualise threat data and security analytics",
+      "Integrated ChatGPT with Elasticsearch to enable natural language queries over threat data",
+      "Leveraged Elasticsearch indexing and search to provide fast, robust threat analysis",
+      "Delivered a seamless UI within Kibana for intuitive interaction with security data"
+    ]
+  },
+  {
+    "slug": "health-vision-forms",
+    "title": "Health Vision Forms – Clinical Documentation System",
+    "role": "Lead Software Engineer",
+    "company": "F Three Technologies",
+    "period": "2020 – 2026",
+    "domain": "Healthcare",
+    "summary": "Modernized a legacy desktop clinical system into a secure, web-accessible platform, enabling nurses to manage complex patient visit forms, multimedia attachments, and real-time data synchronization with existing SQL infrastructure.",
+    "techStack": [
+      "Node.js",
+      "React",
+      "Firebase Cloud Functions",
+      "Firebase Firestore",
+      "Firebase Auth",
+      ".NET",
+      "SQL",
+      "SOAP",
+      "Event-Driven Architecture"
+    ],
+    "highlights": [
+      "Architected a bi-directional synchronization bridge and event-driven layer using Cloud Functions to facilitate real-time data parity between legacy SQL environments and modern NoSQL interfaces.",
+      "Engineered a secure Virtual Private Cloud (VPC) in the Australia region, ensuring strict data residency compliance and localized low-latency performance for healthcare practitioners.",
+      "Implemented a Cloud NAT and custom routing configuration with a Static Outbound IP to satisfy rigorous firewall protocols for secure, authenticated desktop-to-cloud integration.",
+      "Provisioned a hardened network perimeter utilizing Serverless VPC Access connectors and Compute Engine (VMs) to eliminate public internet exposure for sensitive clinical transfers.",
+      "Designed a scalable NoSQL database schema and sophisticated versioning system, providing users with robust rollback capabilities to maintain clinical data integrity.",
+      "Implemented advanced Firestore Security Rules and Firebase Custom Tokens to enforce HIPAA-compliant access controls across browser and desktop environments.",
+      "Led the frontend engineering team in developing complex business logic and high-fidelity interfaces, overseeing successful end-to-end delivery for multiple enterprise clients.",
+      "Managed comprehensive cloud orchestration and hosting, maintaining 24/7 high availability for critical patient-care operations and high-volume clinical visit data."
+    ]
+  },
+  {
+    "slug": "myindici",
+    "title": "MyIndici – Patient Portal",
+    "role": "Senior Software Engineer",
+    "company": "F3 Technologies",
+    "period": "2020 – 2022",
+    "domain": "Healthcare / Fintech",
+    "summary": "Part of New Zealand's top 20 healthcare systems — a secure patient portal offering virtual consultations, accident and insurance claim management, and patient self-service.",
+    "techStack": [
+      "Node.js",
+      "React",
+      "SQL Server",
+      "REST APIs"
+    ],
+    "highlights": [
+      "Spearheaded development and enhancement of the Accident/Winz module for insurance claim management",
+      "Implemented secure data handling for sensitive medical and insurance records in compliance with healthcare regulations",
+      "Optimised the user interface to improve accessibility and overall patient experience",
+      "Collaborated cross-functionally to ensure seamless integration across the MyIndici platform"
+    ]
+  },
+  {
+    "slug": "synclyfy-web",
+    "title": "Synclyfy – Team Collaboration Suite",
+    "role": "Lead Full Stack Engineer",
+    "company": "Personal Project",
+    "period": "2023",
+    "domain": "SaaS / Productivity",
+    "summary": "A high-performance collaboration platform focused on real-time task management and team synchronization with a modern, responsive web architecture.",
+    "techStack": [
+      "React.js",
+      "Next.js",
+      "Node.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Context API",
+      "Vercel"
+    ],
+    "highlights": [
+      "Built a high-performance dashboard using Next.js for optimized client-side rendering and SEO efficiency",
+      "Developed interactive task boards with real-time state management utilizing the Context API",
+      "Designed a professional-grade UI/UX with Framer Motion for smooth transitions and Tailwind CSS for responsive design",
+      "Architected a modular service layer to handle complex data visualizations and multi-user collaboration"
+    ]
+  },
+  {
+    "slug": "tax-filing-system",
+    "title": "Tax Filing System – Financial Document Platform",
+    "role": "Full Stack Engineer",
+    "company": "Personal Project",
+    "period": "2023",
+    "domain": "Fintech",
+    "summary": "A secure digital ecosystem for tax filing that automates document generation and manages sensitive financial workflows via a serverless integration.",
+    "techStack": [
+      "Node.js",
+      "Express",
+      "React.js",
+      "Firebase Firestore",
+      "Firebase Auth",
+      "PDFKit",
+      "Nodemailer",
+      "Ant Design"
+    ],
+    "highlights": [
+      "Integrated Firebase Firestore for secure, real-time storage of sensitive financial records and tax documents",
+      "Built a backend PDF generation engine using PDFKit to automate the creation of official filing receipts",
+      "Implemented a secure authentication flow using Firebase Auth combined with JWT-based session management",
+      "Developed a multi-step filing wizard in React with Ant Design to streamline complex data entry for users"
+    ]
+  },
+  {
+    "slug": "ai-image-generator",
+    "title": "AI Image Generator – Generative Art Interface",
+    "role": "Full Stack Engineer",
+    "company": "Personal Project",
+    "period": "2023",
+    "domain": "AI / Creative Tech",
+    "summary": "A creative platform that interfaces with generative AI models to transform natural language prompts into high-quality digital images, featuring a community showcase and real-time asset management.",
+    "techStack": [
+      "React.js",
+      "Node.js",
+      "Firebase Cloud Functions",
+      "Firebase Firestore",
+      "OpenAI DALL-E API",
+      "Tailwind CSS",
+      "Cloudinary"
+    ],
+    "highlights": [
+      "Integrated OpenAI DALL-E API to enable high-fidelity image generation from natural language descriptions",
+      "Architected a serverless backend using Firebase Cloud Functions to securely handle API requests and credit management",
+      "Utilized Firebase Firestore to maintain a real-time community feed of generated artwork and prompt metadata",
+      "Integrated Cloudinary for optimized cloud storage and delivery of high-resolution AI-generated assets",
+      "Developed a modern, responsive frontend using React and Tailwind CSS featuring dynamic image masonry layouts",
+      "Implemented secure sharing functionality allowing users to showcase their AI-generated creations to a global gallery"
+    ]
+  },
+  {
+    "slug": "avatars-nft-blockchain",
+    "title": "Avatars NFT – Generative Blockchain Collectibles",
+    "role": "Blockchain Developer",
+    "company": "Personal Project",
+    "period": "2022",
+    "domain": "Web3 / Blockchain",
+    "summary": "A full-stack NFT minting platform that allows users to generate and mint unique digital avatar collectibles onto the blockchain with automated metadata management.",
+    "techStack": [
+      "Solidity",
+      "React.js",
+      "Web3.js",
+      "Hardhat",
+      "IPFS",
+      "OpenZeppelin",
+      "Tailwind CSS"
+    ],
+    "highlights": [
+      "Developed and deployed ERC-721 smart contracts using Solidity and OpenZeppelin standards for secure digital asset ownership",
+      "Integrated IPFS for decentralized storage of NFT images and JSON metadata, ensuring permanent and censorship-resistant data",
+      "Built a seamless minting interface in React.js that interacts directly with the Ethereum blockchain via Web3.js",
+      "Implemented automated rarity and attribute generation logic for unique avatar characteristics",
+      "Utilized Hardhat for local blockchain simulation, testing, and streamlined contract deployment workflows",
+      "Designed a responsive user dashboard for viewing owned collections and tracking live minting progress"
+    ]
+  },
+  {
+    "slug": "pixler-nft-marketplace",
+    "title": "Pixler – Web3 NFT Marketplace Interface",
+    "role": "Blockchain Developer",
+    "company": "Personal Project",
+    "period": "2021",
+    "domain": "Web3 / Blockchain",
+    "summary": "A decentralized NFT marketplace interface designed for the Ethereum ecosystem, enabling users to explore, mint, and trade digital collectibles through secure wallet interactions.",
+    "techStack": [
+      "React.js",
+      "Web3.js",
+      "Ethers.js",
+      "Solidity",
+      "Truffle / Hardhat",
+      "Metamask",
+      "Tailwind CSS"
+    ],
+    "highlights": [
+      "Developed a responsive Web3 frontend using React.js for seamless interaction with decentralized protocols",
+      "Integrated Web3.js and Ethers.js to facilitate secure communication between the browser and Ethereum smart contracts",
+      "Implemented Metamask wallet authentication and real-time transaction state tracking for minting and trading",
+      "Designed a modern, dark-themed UI using Tailwind CSS optimized for digital asset discovery and high-resolution NFT previews",
+      "Managed smart contract integration for decentralized marketplace logic, including ownership verification and asset listings"
+    ]
+  },
+  {
+    "slug": "glocery-app",
+    "title": "GroceryApp – Serverless E-Commerce Mobile",
+    "role": "Full Stack Mobile Developer",
+    "company": "Personal Project",
+    "period": "2021",
+    "domain": "E-Commerce",
+    "summary": "A cross-platform mobile shopping app powered by a serverless backend to handle real-time inventory, order processing, and user lifecycle events.",
+    "techStack": [
+      "React Native",
+      "Node.js",
+      "Firebase Cloud Functions",
+      "Firebase Firestore",
+      "Firebase Auth",
+      "React Navigation"
+    ],
+    "highlights": [
+      "Architected serverless business logic using Firebase Cloud Functions for secure order initialization and data validation",
+      "Developed a responsive cross-platform UI with React Native, ensuring high performance on both iOS and Android",
+      "Leveraged Firestore for real-time inventory updates and dynamic product category synchronization",
+      "Implemented automated backend triggers to handle user registration and transactional data maintenance"
+    ]
+  },
+  {
+    "slug": "solana-ethereum-nft",
+    "title": "Cross-Chain NFT Infrastructure",
+    "role": "Blockchain Developer",
     "company": "Freelance",
     "period": "2020",
-    "domain": "Logistics",
-    "summary": "Custom logistics solution with tracking, routing, and notifications.",
-    "techStack": ["Node.js", "Express", "MongoDB", "React Native"],
+    "domain": "Web3 / Blockchain",
+    "summary": "Developed end-to-end NFT minting and trading systems across two major protocols, featuring secure smart contracts and wallet-connected frontends.",
+    "techStack": [
+      "Solidity",
+      "Rust",
+      "React.js",
+      "Metamask",
+      "Solarium",
+      "Candy Machine"
+    ],
     "highlights": [
-      "Implemented real-time tracking APIs for drivers and shipments",
-      "Designed notification workflows using third-party SMS and email providers",
-      "Delivered production-ready mobile and web APIs under tight timelines"
+      "Deployed secure smart contracts for NFT collections on Ethereum (Solidity) and Solana (Rust)",
+      "Built Web3-enabled frontends in React.js with dual-wallet support for Metamask and Solarium",
+      "Integrated Solana Candy Machine for scalable, automated minting events and digital asset distribution",
+      "Ensured transaction integrity and real-time wallet balance synchronization for digital marketplaces"
+    ]
+  },
+  {
+    "slug": "sales-management-android",
+    "title": "Sales Management System – Mobile Operations",
+    "role": "Android Developer",
+    "company": "Euroko International",
+    "period": "2019",
+    "domain": "Logistics / Retail",
+    "summary": "Developed a dedicated Android application for field sales teams to manage inventory, track sales, and streamline organizational reporting.",
+    "techStack": [
+      "Java",
+      "Android SDK",
+      "REST APIs",
+      "SQL"
+    ],
+    "highlights": [
+      "Engineered an Android application to digitize traditional sales tracking and inventory management processes",
+      "Integrated secure API communication to synchronize local mobile data with centralized organizational servers",
+      "Designed a user-friendly interface optimized for field agents working in high-mobility environments",
+      "Implemented local data persistence to ensure operational continuity during intermittent network connectivity"
+    ]
+  },
+  {
+    "slug": "portfolio-website",
+    "title": "MyPortfolio – Professional Engineering Showcase",
+    "role": "Lead Frontend Engineer",
+    "company": "Personal Project",
+    "period": "2024",
+    "domain": "Web Development",
+    "summary": "A high-performance, interactive portfolio website designed to showcase a professional trajectory, featuring dynamic project filtering, responsive design, and optimized asset delivery.",
+    "techStack": [
+      "React.js",
+      "Next.js",
+      "Tailwind CSS",
+      "Framer Motion",
+      "EmailJS",
+      "Vercel"
+    ],
+    "highlights": [
+      "Developed a modern, modular frontend architecture using Next.js for superior performance and SEO optimization",
+      "Implemented a fluid and engaging user experience utilizing Framer Motion for sophisticated UI animations and transitions",
+      "Designed a fully responsive and accessible interface with Tailwind CSS, ensuring a consistent look across all device types",
+      "Integrated EmailJS for seamless, client-side contact form functionality without the need for a dedicated backend server",
+      "Optimized site loading speeds through lazy loading, image optimization, and static site generation (SSG) on Vercel"
     ]
   }
 ]

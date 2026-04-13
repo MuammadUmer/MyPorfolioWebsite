@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import type { SkillCategory } from '@/lib/types/content';
 
@@ -6,17 +8,53 @@ export interface SkillsSectionProps {
 }
 
 const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
+  const [activeFilter, setActiveFilter] = React.useState<string>('All');
+
+  const filters = ['All', ...categories.map((c) => c.category)];
+
+  const visible =
+    activeFilter === 'All'
+      ? categories
+      : categories.filter((c) => c.category === activeFilter);
+
   return (
     <section
       id="mu-skills__skills-grid__section--primary"
       className="py-20"
     >
       <div className="mx-auto w-full max-w-5xl px-4 md:px-6">
-        <div className="animate-fade-in-up mb-12">
+        <div className="animate-fade-in-up mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Skills</h1>
         </div>
+
+        {/* Filter bar */}
+        <div
+          className="animate-fade-in-up flex flex-wrap gap-2 mb-10"
+          role="group"
+          aria-label="Filter skills by category"
+        >
+          {filters.map((filter) => {
+            const isActive = activeFilter === filter;
+            return (
+              <button
+                key={filter}
+                id={`mu-skills__filters__btn--${filter.toLowerCase().replace(/\s+&?\s*/g, '-')}`}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all duration-200 ${
+                  isActive
+                    ? 'bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20'
+                    : 'border-border text-muted-foreground hover:border-primary/50 hover:text-foreground bg-transparent'
+                }`}
+                aria-pressed={isActive}
+              >
+                {filter}
+              </button>
+            );
+          })}
+        </div>
+
         <div className="grid gap-6 md:grid-cols-2">
-          {categories.map((category) => (
+          {visible.map((category) => (
             <article
               key={category.category}
               className="animate-fade-in-up rounded-lg border border-border bg-card/80 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5"

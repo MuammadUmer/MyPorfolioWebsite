@@ -42,6 +42,12 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ items }) => {
                     </p>
                   </div>
 
+                  {item.description ? (
+                    <p className="text-muted-foreground leading-relaxed">
+                      {item.description}
+                    </p>
+                  ) : null}
+
                   {item.responsibilities?.length ? (
                     <ul className="space-y-2">
                       {item.responsibilities.map((resp) => (

@@ -8,7 +8,7 @@ import { ArrowLeft } from 'lucide-react';
 export const dynamicParams = true;
 
 interface ProjectPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 function normalizeSlug(rawSlug: string): string {
@@ -22,7 +22,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-  const project = getProjectBySlug(normalizeSlug(params.slug));
+  const { slug } = await params;
+  const project = getProjectBySlug(normalizeSlug(slug));
 
   if (!project) {
     return {
@@ -65,8 +66,9 @@ function buildProjectJsonLd(project: Project) {
   };
 }
 
-export default function ProjectDetailPage({ params }: ProjectPageProps) {
-  const project = getProjectBySlug(normalizeSlug(params.slug));
+export default async function ProjectDetailPage({ params }: ProjectPageProps) {
+  const { slug } = await params;
+  const project = getProjectBySlug(normalizeSlug(slug));
 
   if (!project) {
     return (

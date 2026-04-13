@@ -21,6 +21,7 @@ export interface Experience {
   role: string;
   location?: string;
   period: string;
+  description?: string;
   responsibilities: string[];
   techStack?: string[];
 }

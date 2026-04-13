@@ -1,7 +1,7 @@
 import HeroSection from '@/components/organisms/HeroSection';
 import { getProjects } from '@/lib/services/content';
 
-const YEARS_EXPERIENCE = 6;
+const YEARS_EXPERIENCE = 7;
 const DOMAINS = ['Healthcare', 'Real Estate', 'AI', 'Blockchain', 'Logistics'];
 
 export default function HomePage() {

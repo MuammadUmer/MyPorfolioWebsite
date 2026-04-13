@@ -1,51 +1,67 @@
 [
   {
     "company": "Euroko International",
-    "role": "Software Engineer",
-    "location": "Pakistan",
-    "period": "May 2019 – Dec 2019",
+    "role": "Software Developer",
+    "location": "Onsite – Pakistan",
+    "period": "Jun 2019 – Dec 2019",
+    "description": "My first professional engineering role, where I built foundational skills across Android development, React.js, and IT operations while contributing to real client-facing products.",
     "responsibilities": [
-      "Worked on foundational backend services and internal tools",
-      "Collaborated with senior engineers on API design and implementation",
-      "Gained experience with .NET and SQL-based systems"
+      "Developed an Android application for a Sales Management System",
+      "Designed and built a responsive website using React.js",
+      "Managed IT and network support tasks across the organisation"
     ]
   },
   {
     "company": "Freelance",
-    "role": "Full Stack Developer",
-    "location": "Remote",
+    "role": "Blockchain & Frontend Developer",
+    "location": "Remote – Pakistan",
     "period": "Jan 2020 – Oct 2020",
+    "description": "Worked independently on blockchain and web projects, delivering NFT smart contracts on Solana and Ethereum and building React.js applications integrated with crypto wallets for international clients.",
     "responsibilities": [
-      "Designed, developed, and deployed smart contracts on Solana and Ethereum for NFT buying and selling platforms",
-      "Implemented secure blockchain transaction logic ensuring reliability and efficiency",
-      "Developed responsive web applications using React.js",
-      "Integrated cryptocurrency wallets to enable seamless and secure blockchain interactions",
-      "Managed full development lifecycle including requirement gathering, architecture design, development, testing, and deployment"
-    ]
-  },
-  {
-    "company": "Mobile Technologies",
-    "role": "Senior Backend Developer",
-    "location": "Pakistan",
-    "period": "2020 – 2023",
-    "responsibilities": [
-      "Built and maintained Node.js REST APIs with a focus on clean architecture, validation, and versioning",
-      "Designed integrations and background jobs (queues/schedulers) to automate data sync and operational workflows",
-      "Improved database reliability and performance through indexing, query tuning, and migration planning across SQL/NoSQL stores",
-      "Partnered with product and frontend teams to define API contracts, reduce latency, and improve end-to-end user flows",
-      "Mobile Technologies operated as a subsidiary of F3 Technologies"
+      "Designed and deployed smart contracts on Solana and Ethereum for NFT buying and selling platforms",
+      "Developed responsive React.js web applications integrated with cryptocurrency wallets (MetaMask)",
+      "Managed full project lifecycle from architecture and development through to deployment"
     ]
   },
   {
     "company": "F3 Technologies",
-    "role": "Software Engineer / Lead",
-    "location": "Sharjah – Remote",
-    "period": "2023 – Present",
+    "role": "Senior Software Engineer",
+    "location": "Onsite – Pakistan",
+    "period": "Oct 2020 – Jul 2023",
+    "description": "Joined F3 Technologies as a full-stack engineer, building production-grade Node.js APIs, React and React Native applications, and real-time database integrations across healthcare, real estate, and logistics products.",
     "responsibilities": [
-      "Focused on RESTful API development using Node.js",
-      "Led React.js and React Native teams across multiple products",
-      "Managed NoSQL and SQL databases and data migrations",
-      "Contributed to architecture, reliability, and DevOps practices"
+      "Developed and maintained RESTful APIs using Node.js, Express, and NestJS with a focus on scalability, performance, and clean architecture",
+      "Built responsive web and mobile applications using React.js, Next.js, and React Native for consistent cross-platform experiences",
+      "Designed and implemented data models using Firestore, MongoDB, and SQL with support for real-time data synchronization",
+      "Implemented core application features including authentication, data management, and third-party integrations",
+      "Enhanced APIs and contributed to modernization of legacy systems to improve maintainability and performance",
+      "Integrated real-time features and notification systems using Twilio and custom email services",
+      "Supported secure payment integrations including Stripe, Poli, and Blinq",
+      "Assisted in CI/CD pipeline setup and deployment processes to improve release efficiency and consistency",
+      "Collaborated with cross-functional teams including design, QA, and backend to ensure timely feature delivery",
+      "Worked with cloud platforms such as AWS and GCP and utilized Docker for containerized development and deployments"
+    ]
+  },
+  {
+    "company": "F3 Technologies",
+    "role": "Senior Software Engineer",
+    "location": "Sharjah, UAE – Remote",
+    "period": "Aug 2023 – Feb 2026",
+    "description": "Served as Lead Software Engineer driving end-to-end development and system architecture across cross-functional teams. Owned scalable cloud infrastructure on AWS, GCP, and Azure, led backend and frontend engineering efforts (React.js and React Native), and contributed to AI feature integration while establishing CI/CD pipelines and DevOps best practices across product lines.",
+    "responsibilities": [
+      "Led end-to-end software development and system architecture across cross-functional teams, ensuring scalable and high-quality delivery",
+      "Designed and developed scalable RESTful APIs using Node.js, Express, and NestJS, including modernization of legacy systems into distributed services",
+      "Architected event-driven systems using Pub/Sub patterns for high-performance, loosely coupled workflows",
+      "Built responsive web and mobile applications using React.js and React Native for seamless cross-platform user experiences",
+      "Engineered and managed hybrid database architectures (Firestore, MongoDB, SQL) with real-time synchronization and optimized data modeling",
+      "Implemented offline-first capabilities through synchronization strategies between NoSQL and SQL systems",
+      "Led server-to-server integrations and large-scale data migrations while ensuring data integrity",
+      "Integrated AI-driven features including facial recognition for health monitoring applications",
+      "Developed real-time communication systems using Twilio and custom email services",
+      "Implemented secure payment integrations including Stripe, Poli, and Blinq",
+      "Established CI/CD pipelines, automated testing frameworks, and optimized deployment workflows",
+      "Deployed and managed applications across AWS, GCP, and Azure using Docker and Kubernetes",
+      "Provided technical leadership for frontend teams using React.js, Next.js, and React Native"
     ]
   }
 ]

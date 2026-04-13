@@ -1,68 +1,114 @@
 [
   {
+    "category": "Architecture & System Design",
+    "items": [
+      "Microservices & event-driven architecture",
+      "Distributed systems & API ecosystems",
+      "Offline-first & real-time architectures",
+      "Pub/Sub messaging patterns",
+      "Scalable & high-availability design"
+    ]
+  },
+  {
     "category": "Backend & APIs",
     "items": [
       "Node.js",
       "Express",
+      "NestJS",
       "ASP.NET Web API",
-      "RESTful API design",
-      "Serverless architectures"
+      "Google Cloud Functions (serverless)",
+      "AWS Lambda",
+      "JWT & OAuth 2.0",
+      "Rate limiting & request validation",
+      "Zod / Joi / Yup"
     ]
   },
   {
     "category": "Frontend & Mobile",
     "items": [
-      "React",
-      "Next.js",
+      "React.js",
+      "Next.js (SSR / SSG)",
       "React Native",
       "TypeScript",
-      "Responsive UI design"
+      "Redux & Context API",
+      "Tailwind CSS",
+      "Ant Design / Material-UI",
+      "Flutter"
     ]
   },
   {
-    "category": "Cloud & DevOps",
+    "category": "Cloud & Infrastructure",
     "items": [
-      "Google Cloud Platform",
-      "Firebase",
+      "Google Cloud Platform (GCP)",
+      "Firebase & Firestore",
       "AWS",
       "Azure",
-      "CI/CD pipelines"
+      "Docker & Kubernetes",
+      "Terraform (IaC)",
+      "VPCs, NAT, load balancing, auto-scaling",
+      "Google Artifact Registry"
     ]
   },
   {
     "category": "Databases",
     "items": [
-      "SQL Server",
-      "PostgreSQL",
-      "MySQL",
+      "Firebase Firestore",
+      "Firebase Realtime Database",
       "MongoDB",
-      "Firebase Firestore"
+      "MySQL",
+      "PostgreSQL",
+      "SQL Server",
+      "GraphQL"
+    ]
+  },
+  {
+    "category": "AI & Intelligent Development",
+    "items": [
+      "AI-assisted architecture & code generation",
+      "Multi-agent system design",
+      "Local LLM deployment (llama.cpp + SYCL + Intel oneAPI)",
+      "OpenAI / ChatGPT integration",
+      "Windsurf & Claude Code (AI IDE)"
+    ]
+  },
+  {
+    "category": "Testing & CI/CD",
+    "items": [
+      "Jest & React Testing Library",
+      "Playwright (E2E)",
+      "GitHub Actions",
+      "API route testing",
+      "CI/CD pipeline design"
     ]
   },
   {
     "category": "Blockchain",
     "items": [
-      "Solidity",
-      "Smart contract integration",
+      "Ethereum smart contracts (Solidity)",
+      "Solana (candy-machine / NFT minting)",
+      "MetaMask integration",
       "Web3.js / ethers.js"
     ]
   },
   {
-    "category": "Testing & Documentation",
+    "category": "Integrations & Payments",
     "items": [
-      "Jest",
-      "React Testing Library",
-      "Postman",
-      "API documentation"
+      "Stripe",
+      "Poli",
+      "Blinq",
+      "Twilio (SMS & voice)",
+      "Elasticsearch",
+      "Kibana plugin development"
     ]
   },
   {
-    "category": "Tools",
+    "category": "Tools & Collaboration",
     "items": [
-      "Git",
-      "GitHub",
-      "Jira",
-      "VS Code"
+      "Git / GitHub / Bitbucket",
+      "Docker",
+      "Postman & Swagger",
+      "Figma",
+      "Jira / Confluence / Trello"
     ]
   }
 ]
