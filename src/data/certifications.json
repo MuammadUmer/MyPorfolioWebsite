@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Professional Cloud Architect",
+    "issuer": "Google Cloud",
+    "status": "in-progress"
+  },
+  {
+    "name": "Google Cloud Fundamentals: Core Infrastructure",
+    "issuer": "Google Cloud"
+  },
+  {
+    "name": "Cloud Architecture: Design, Implement, and Manage",
+    "issuer": "Google Cloud"
+  },
+  {
+    "name": "Manage Kubernetes in Google Cloud",
+    "issuer": "Google Cloud"
+  },
+  {
+    "name": "Gemini for Data Scientists and Analysts",
+    "issuer": "Google Cloud"
+  },
+  {
+    "name": "Advanced Android Development Workshop",
+    "issuer": "COMSATS University Islamabad"
+  }
+]

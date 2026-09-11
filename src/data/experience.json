@@ -39,12 +39,16 @@
       "Supported secure payment integrations including Stripe, Poli, and Blinq",
       "Assisted in CI/CD pipeline setup and deployment processes to improve release efficiency and consistency",
       "Collaborated with cross-functional teams including design, QA, and backend to ensure timely feature delivery",
-      "Worked with cloud platforms such as AWS and GCP and utilized Docker for containerized development and deployments"
+      "Worked with cloud platforms such as AWS and GCP and utilized Docker for containerized development and deployments",
+      "Trained more than 100 engineers in React and React Native across the organisation",
+      "Applied domain-driven Clean Architecture principles that reduced technical debt by 25%",
+      "Refactored state management workflows with useMemo/useCallback memoization, improving client memory performance by 40%",
+      "Designed distributed GCP containerized architectures (GKE / Compute) engineered to auto-scale from 10k requests/sec to over 1M+ requests/sec"
     ]
   },
   {
-    "company": "F3 Technologies",
-    "role": "Senior Software Engineer",
+    "company": "F Three Technologies",
+    "role": "Lead Software Engineer",
     "location": "Sharjah, UAE – Remote",
     "period": "Aug 2023 – Feb 2026",
     "description": "Served as Lead Software Engineer driving end-to-end development and system architecture across cross-functional teams. Owned scalable cloud infrastructure on AWS, GCP, and Azure, led backend and frontend engineering efforts (React.js and React Native), and contributed to AI feature integration while establishing CI/CD pipelines and DevOps best practices across product lines.",
@@ -61,7 +65,13 @@
       "Implemented secure payment integrations including Stripe, Poli, and Blinq",
       "Established CI/CD pipelines, automated testing frameworks, and optimized deployment workflows",
       "Deployed and managed applications across AWS, GCP, and Azure using Docker and Kubernetes",
-      "Provided technical leadership for frontend teams using React.js, Next.js, and React Native"
+      "Provided technical leadership for frontend teams using React.js, Next.js, and React Native",
+      "Architected end-to-end cloud solution designs and landing zone patterns, provisioning resilient GCP infrastructure with Terraform (IaC) on GKE for self-healing and auto-scaling",
+      "Governed enterprise identity and security baselines across GCP environments using IAM, OAuth 2.0, MFA, and RBAC, with encrypted data transfers aligned to strict compliance standards",
+      "Conducted security architecture reviews and dynamic analysis (SAST, DAST, API scanning) to maintain zero-vulnerability releases and GDPR/OWASP alignment",
+      "Extended CI/CD governance with Jenkins and GitLab CI alongside GitHub Actions, enforcing automated test execution and deployment release readiness",
+      "Orchestrated zero-downtime server-to-server migrations from legacy systems into distributed GCP microservices architectures",
+      "Established reference architectures and technology evaluation frameworks to maintain architectural integrity and maintainability across releases"
     ]
   }
 ]

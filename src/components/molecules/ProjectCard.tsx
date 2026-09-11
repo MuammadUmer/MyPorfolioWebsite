@@ -12,9 +12,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       className="animate-fade-in-up rounded-lg border border-border bg-card/80 p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5"
     >
       <AppLink href={`/projects/${project.slug}`} className="block group">
-        <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
-          {project.title}
-        </h3>
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <h3 className="text-lg font-semibold group-hover:text-primary transition-colors">
+            {project.title}
+          </h3>
+          {project.status === 'in-progress' && (
+            <span className="shrink-0 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wide border border-accent/50 text-accent bg-accent/10">
+              In Progress
+            </span>
+          )}
+        </div>
         <p className="text-sm text-muted-foreground mb-2">
           {project.role}
           {project.company ? ` · ${project.company}` : ''}

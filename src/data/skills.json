@@ -20,7 +20,15 @@
       "AWS Lambda",
       "JWT & OAuth 2.0",
       "Rate limiting & request validation",
-      "Zod / Joi / Yup"
+      "Zod / Joi / Yup",
+      "Fastify",
+      "Spring Boot",
+      "Flask",
+      "Python",
+      "Java",
+      "C#",
+      "MFA & RBAC governance",
+      "OWASP security baselines"
     ]
   },
   {
@@ -33,7 +41,10 @@
       "Redux & Context API",
       "Tailwind CSS",
       "Ant Design / Material-UI",
-      "Flutter"
+      "Flutter",
+      "Zustand",
+      "Vite",
+      "Webpack"
     ]
   },
   {
@@ -46,7 +57,8 @@
       "Docker & Kubernetes",
       "Terraform (IaC)",
       "VPCs, NAT, load balancing, auto-scaling",
-      "Google Artifact Registry"
+      "Google Artifact Registry",
+      "Vercel"
     ]
   },
   {
@@ -58,7 +70,8 @@
       "MySQL",
       "PostgreSQL",
       "SQL Server",
-      "GraphQL"
+      "GraphQL",
+      "Redis"
     ]
   },
   {
@@ -78,7 +91,8 @@
       "Playwright (E2E)",
       "GitHub Actions",
       "API route testing",
-      "CI/CD pipeline design"
+      "CI/CD pipeline design",
+      "Jenkins"
     ]
   },
   {
@@ -98,7 +112,9 @@
       "Blinq",
       "Twilio (SMS & voice)",
       "Elasticsearch",
-      "Kibana plugin development"
+      "Kibana plugin development",
+      "Kafka",
+      "RabbitMQ"
     ]
   },
   {

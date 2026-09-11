@@ -1,7 +1,15 @@
 import projectsData from '@/data/projects.json';
 import experienceData from '@/data/experience.json';
 import skillsData from '@/data/skills.json';
-import type { Project, Experience, SkillCategory } from '@/lib/types/content';
+import certificationsData from '@/data/certifications.json';
+import educationData from '@/data/education.json';
+import type {
+  Project,
+  Experience,
+  SkillCategory,
+  Certification,
+  Education,
+} from '@/lib/types/content';
 
 export function getProjects(): Project[] {
   return projectsData as Project[];
@@ -25,4 +33,12 @@ export function getExperience(): Experience[] {
 
 export function getSkillCategories(): SkillCategory[] {
   return skillsData as SkillCategory[];
+}
+
+export function getCertifications(): Certification[] {
+  return certificationsData as Certification[];
+}
+
+export function getEducation(): Education[] {
+  return educationData as Education[];
 }

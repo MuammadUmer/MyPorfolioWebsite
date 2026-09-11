@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Mail, Linkedin } from 'lucide-react';
+import { Mail, Linkedin, Github } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const year = new Date().getFullYear();
@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
         </p>
         <div className="flex items-center gap-4">
           <a
-            href="mailto:muhammadumerswati@hotmail.com"
+            href="mailto:muhammadumerswati@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -31,6 +31,15 @@ const Footer: React.FC = () => {
           >
             <Linkedin className="h-4 w-4" />
             <span className="hidden sm:inline">LinkedIn</span>
+          </a>
+          <a
+            href="https://github.com/MuammadUmer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Github className="h-4 w-4" />
+            <span className="hidden sm:inline">GitHub</span>
           </a>
         </div>
       </div>

@@ -169,13 +169,25 @@
       "Node.js",
       "React",
       "SQL Server",
-      "REST APIs"
+      "REST APIs",
+      "Google Cloud Functions",
+      "Cloud Run",
+      "Pub/Sub",
+      "Redis",
+      "PostgreSQL",
+      "Terraform",
+      "Temporal",
+      "Google Cloud Storage",
+      "Artifact Registry"
     ],
     "highlights": [
       "Spearheaded development and enhancement of the Accident/Winz module for insurance claim management",
       "Implemented secure data handling for sensitive medical and insurance records in compliance with healthcare regulations",
       "Optimised the user interface to improve accessibility and overall patient experience",
-      "Collaborated cross-functionally to ensure seamless integration across the MyIndici platform"
+      "Collaborated cross-functionally to ensure seamless integration across the MyIndici platform",
+      "Modernized the portal's infrastructure onto serverless GCP services (Cloud Functions, Cloud Run) with Terraform-managed IaC and Artifact Registry-based CI/CD",
+      "Orchestrated asynchronous workflows with Temporal and Pub/Sub, backed by Redis caching and PostgreSQL for high-concurrency reliability",
+      "Maintained regulatory healthcare compliance across insurance and clinical data exchange workflows for 250+ medical practices"
     ]
   },
   {
@@ -305,29 +317,6 @@
     ]
   },
   {
-    "slug": "glocery-app",
-    "title": "GroceryApp – Serverless E-Commerce Mobile",
-    "role": "Full Stack Mobile Developer",
-    "company": "Personal Project",
-    "period": "2021",
-    "domain": "E-Commerce",
-    "summary": "A cross-platform mobile shopping app powered by a serverless backend to handle real-time inventory, order processing, and user lifecycle events.",
-    "techStack": [
-      "React Native",
-      "Node.js",
-      "Firebase Cloud Functions",
-      "Firebase Firestore",
-      "Firebase Auth",
-      "React Navigation"
-    ],
-    "highlights": [
-      "Architected serverless business logic using Firebase Cloud Functions for secure order initialization and data validation",
-      "Developed a responsive cross-platform UI with React Native, ensuring high performance on both iOS and Android",
-      "Leveraged Firestore for real-time inventory updates and dynamic product category synchronization",
-      "Implemented automated backend triggers to handle user registration and transactional data maintenance"
-    ]
-  },
-  {
     "slug": "solana-ethereum-nft",
     "title": "Cross-Chain NFT Infrastructure",
     "role": "Blockchain Developer",
@@ -393,6 +382,126 @@
       "Designed a fully responsive and accessible interface with Tailwind CSS, ensuring a consistent look across all device types",
       "Integrated EmailJS for seamless, client-side contact form functionality without the need for a dedicated backend server",
       "Optimized site loading speeds through lazy loading, image optimization, and static site generation (SSG) on Vercel"
+    ]
+  },
+  {
+    "slug": "vivasta",
+    "title": "Vivasta – Community Healthcare Ecosystem",
+    "role": "Lead Software Engineer",
+    "company": "F Three Technologies",
+    "period": "2023 – 2025",
+    "domain": "Healthcare",
+    "summary": "Modernized a monolithic community healthcare platform into a serverless GCP system empowering nurses, drivers, and field staff with real-time electronic patient records and offline-first synchronization.",
+    "techStack": [
+      "Node.js",
+      "Express",
+      "React Native",
+      "Google Cloud Functions",
+      "GKE",
+      "Google Cloud Storage",
+      "Firebase Firestore",
+      "VPC",
+      ".NET",
+      "Pub/Sub",
+      "NFC",
+      "Geofencing",
+      "Artifact Registry"
+    ],
+    "highlights": [
+      "Engineered cross-platform React Native applications empowering nurses, drivers, and field staff with real-time electronic patient records and referral management pipelines",
+      "Designed offline-first synchronization via Firestore and a bi-directional SQL-to-NoSQL message bridge utilizing Cloud Pub/Sub",
+      "Implemented geofencing and NFC-based attendance verification for localized healthcare logistics tools",
+      "Deployed containerized microservices on GKE within a secured VPC for resilient, multi-region availability"
+    ]
+  },
+  {
+    "slug": "zenith-ai",
+    "title": "Zenith AI – Cloud-Native AI Video Content Monetization Platform",
+    "role": "Full Stack Solution Architect",
+    "company": "Personal Project",
+    "period": "2025 – Present",
+    "domain": "AI / Media",
+    "status": "in-progress",
+    "summary": "Cloud-native media processing platform that converts prompt inputs into short-form video assets using distributed AI services, with credit-backed transaction flows and real-time progress updates.",
+    "techStack": [
+      "Next.js",
+      "Fastify",
+      "Temporal",
+      "PostgreSQL",
+      "Google Kubernetes Engine",
+      "Cloud Run",
+      "Firebase Firestore",
+      "Google Cloud Storage",
+      "Firebase",
+      "Gemini",
+      "ElevenLabs",
+      "Shotstack",
+      "FFmpeg",
+      "Terraform",
+      "JWT"
+    ],
+    "highlights": [
+      "Architected a cloud-native media pipeline converting text prompts into short-form video using Gemini, ElevenLabs, Shotstack, and FFmpeg",
+      "Orchestrated multi-stage asynchronous AI media workflows via Temporal with real-time progress delivered through Firestore state listeners",
+      "Designed automated credit-backed transaction flows and JWT-secured API access",
+      "Provisioned infrastructure with Terraform across GKE and Cloud Run for scalable, cost-efficient processing"
+    ]
+  },
+  {
+    "slug": "investlytics",
+    "title": "InvestLytics – B2B SaaS Portfolio Management Platform",
+    "role": "Fintech Solution Architect",
+    "company": "Personal Project",
+    "period": "2025 – Present",
+    "domain": "Fintech",
+    "status": "in-progress",
+    "summary": "WealthTech solution for Portfolio Management System (PMS) providers, covering contract note ingestion, capital gains calculations, and financial analytics.",
+    "techStack": [
+      "Flask",
+      "Python",
+      "React",
+      "MongoDB",
+      "Google Cloud Run",
+      "Financial Analytics",
+      "AI/ML Services"
+    ],
+    "highlights": [
+      "Engineered scalable data processing workflows for contract note ingestion and capital gains calculations",
+      "Implemented financial analytics engines covering TWRR, Sharpe ratio, and Value at Risk (VaR)",
+      "Designed multi-tenant advisor access models with granular RBAC security",
+      "Built reporting engines and deployed backend services on Google Cloud Run"
+    ]
+  },
+  {
+    "slug": "grocery-ecommerce-platform",
+    "title": "Grocery – Enterprise E-Commerce Platform",
+    "role": "Backend Engineer",
+    "company": "Personal Project",
+    "period": "2025 – Present",
+    "domain": "E-Commerce / Cloud-Native",
+    "status": "in-progress",
+    "summary": "Production-ready, enterprise-style e-commerce platform built to demonstrate modern Java backend development, scalable cloud architecture, secure REST APIs, and microservices best practices.",
+    "techStack": [
+      "Java 25",
+      "Spring Boot",
+      "Spring Security",
+      "Spring Data JPA",
+      "PostgreSQL",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "Google Cloud Platform (GCP)",
+      "BigQuery",
+      "Redis",
+      "Kafka",
+      "JUnit",
+      "Testcontainers"
+    ],
+    "highlights": [
+      "Building secure REST APIs with Spring Boot and Spring Security following microservices best practices",
+      "Designing event-driven order processing with Kafka and Redis caching for high-throughput workloads",
+      "Provisioning cloud infrastructure on GCP with Terraform, Docker, and Kubernetes",
+      "Applying test-driven development with JUnit and Testcontainers for integration-level confidence"
     ]
   }
 ]

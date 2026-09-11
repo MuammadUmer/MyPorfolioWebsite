@@ -14,6 +14,7 @@ export interface Project {
   techStack: string[];
   highlights: string[];
   links?: ProjectLink[];
+  status?: 'in-progress';
 }
 
 export interface Experience {
@@ -29,4 +30,17 @@ export interface Experience {
 export interface SkillCategory {
   category: string;
   items: string[];
+}
+
+export interface Certification {
+  name: string;
+  issuer: string;
+  status?: 'in-progress';
+}
+
+export interface Education {
+  degree: string;
+  institution: string;
+  period: string;
+  details?: string[];
 }
