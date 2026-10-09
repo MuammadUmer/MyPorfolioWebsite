@@ -44,3 +44,45 @@ export interface Education {
   period: string;
   details?: string[];
 }
+
+export interface ProfileLinks {
+  email: string;
+  linkedin: string;
+  github: string;
+  cv: string;
+  cvDownloadName: string;
+}
+
+export interface Profile {
+  name: string;
+  initials: string;
+  role: string;
+  seniority: string;
+  location: string;
+  yearsExperience: number;
+  domains: string[];
+  status: string;
+  about: string[];
+  contactIntro: string;
+  links: ProfileLinks;
+}
+
+export interface AboutCopy {
+  lead: string;
+  body: string[];
+  quote: string;
+}
+
+export type TimelineKind = 'experience' | 'education';
+
+export interface TimelineEntry {
+  id: string;
+  kind: TimelineKind;
+  year: string;
+  period: string;
+  title: string;
+  organisation: string;
+  location?: string;
+  description?: string;
+  bullets: string[];
+}

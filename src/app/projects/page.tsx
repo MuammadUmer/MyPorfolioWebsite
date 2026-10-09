@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import ProjectsGrid from '@/components/organisms/ProjectsGrid';
+import Eyebrow from '@/components/atoms/Eyebrow';
+import SectionHeading from '@/components/atoms/SectionHeading';
 import { getProjects } from '@/lib/services/content';
 import { getCanonicalUrl } from '@/lib/seo/site';
+import { translate } from '@/lib/i18n/translate';
 
 export const metadata: Metadata = {
   title: 'Projects – Muhammad Umer | Case Studies',
@@ -35,13 +38,16 @@ export default function ProjectsPage() {
   };
 
   return (
-    <section className="py-20">
-      <div className="mx-auto w-full max-w-5xl px-4 md:px-6">
-        <div className="animate-fade-in-up mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-            Projects
-          </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl">
+    <section className="page-top pb-[var(--space-section)]">
+      <div className="container-page">
+        <div className="flex flex-col gap-6">
+          <Eyebrow>{translate('nav.projects')}</Eyebrow>
+          <SectionHeading
+            as="h1"
+            bold={translate('section.projects.bold')}
+            italic={translate('section.projects.italic')}
+          />
+          <p className="t-lead max-w-[var(--measure)] text-muted-foreground">
             Selected projects that showcase backend architecture, APIs, cloud-native design, and cross-functional
             collaboration across healthcare, real estate, AI, and logistics.
           </p>

@@ -10,7 +10,7 @@ const mockProject: Project = {
   period: '2021–Present',
   domain: 'Healthcare',
   summary: 'Upgraded a legacy home care system to a modern, event-driven, cloud-native platform.',
-  techStack: ['Node.js', 'Google Cloud Functions'],
+  techStack: ['Node.js', 'Google Cloud Functions', 'A', 'B', 'C', 'D', 'E'],
   highlights: ['Designed event-driven synchronization between SQL and Firestore'],
 };
 
@@ -23,5 +23,16 @@ describe('ProjectCard', () => {
 
     const link = screen.getByRole('link', { name: /innova care/i });
     expect(link).toHaveAttribute('href', '/projects/innova-care');
+  });
+
+  it('shows at most six tech chips and no badge by default', () => {
+    const { container } = render(<ProjectCard project={mockProject} />);
+    expect(container.querySelectorAll('.tech-chip')).toHaveLength(6);
+    expect(screen.queryByText('In Progress')).not.toBeInTheDocument();
+  });
+
+  it('shows the In Progress badge for in-progress projects', () => {
+    render(<ProjectCard project={{ ...mockProject, status: 'in-progress' }} />);
+    expect(screen.getByText('In Progress')).toBeInTheDocument();
   });
 });

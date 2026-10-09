@@ -47,3 +47,35 @@ export const Linkedin: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 export const ChevronDown: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <Icon {...props} data-testid="icon-chevron-down" />
 );
+
+export const ArrowUpRight: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props} data-testid="icon-arrow-up-right" />
+);
+
+export const ArrowDown: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props} data-testid="icon-arrow-down" />
+);
+
+export const ArrowUp: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props} data-testid="icon-arrow-up" />
+);
+
+export const Github: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props} data-testid="icon-github" />
+);
+
+export const Plus: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props} data-testid="icon-plus" />
+);
+
+export const RotateCw: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props} data-testid="icon-rotate-cw" />
+);
+
+export const Check: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props} data-testid="icon-check" />
+);
+
+export const ChevronRight: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <Icon {...props} data-testid="icon-chevron-right" />
+);

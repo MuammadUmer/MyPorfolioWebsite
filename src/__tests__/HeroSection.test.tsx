@@ -1,100 +1,62 @@
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import HeroSection from '@/components/organisms/HeroSection';
-import type { Project } from '@/lib/types/content';
+import { getProfile } from '@/lib/services/content';
 
-jest.mock('next/navigation', () => ({
-  useRouter: () => ({
-    push: jest.fn(),
-  }),
+const trackEventMock = jest.fn();
+
+jest.mock('@/lib/analytics', () => ({
+  trackEvent: (...args: unknown[]) => trackEventMock(...args),
 }));
 
-const sampleProjects: Project[] = [
-  {
-    slug: 'innova-care',
-    title: 'Innova Care – Home Care System',
-    role: 'Lead Backend & Architecture',
-    company: 'F3 Technologies',
-    period: '2021–Present',
-    domain: 'Healthcare',
-    summary: 'Upgraded a legacy home care system.',
-    techStack: ['Node.js', 'Google Cloud Functions'],
-    highlights: ['Event-driven sync'],
-  },
-];
-
 describe('HeroSection', () => {
-  const flushTypewriter = () => {
-    for (let i = 0; i < 100; i += 1) {
-      act(() => {
-        jest.runOnlyPendingTimers();
-      });
-    }
-  };
+  const profile = getProfile();
 
-  beforeEach(() => {
-    jest.useFakeTimers();
+  beforeEach(() => trackEventMock.mockClear());
+
+  it('renders the name and role inside a single h1', () => {
+    render(<HeroSection profile={profile} />);
+    const heading = screen.getByRole('heading', { level: 1 });
+    expect(heading).toHaveTextContent('Muhammad Umer');
+    expect(heading).toHaveTextContent('Lead Software Engineer.');
   });
 
-  afterEach(() => {
-    jest.useRealTimers();
+  it('keeps the existing subtitle and status chip text', () => {
+    render(<HeroSection profile={profile} />);
+    expect(
+      screen.getByText(/Senior Full Stack Engineer with 7\+ years building scalable cloud-native APIs/)
+    ).toBeInTheDocument();
+    expect(screen.getByText(/muhammad-umer --status "Open to opportunities"/)).toBeInTheDocument();
   });
 
-  it('renders hero title, subtitle and primary CTA', () => {
-    render(
-      <HeroSection
-        featuredProjects={sampleProjects}
-        yearsExperience={6}
-        totalProjects={20}
-        domains={['Healthcare', 'Real Estate']}
-      />
-    );
+  it('keeps the three CTAs with their ids, destinations and download attribute', () => {
+    render(<HeroSection profile={profile} />);
 
-    flushTypewriter();
+    const primary = screen.getByRole('link', { name: /view projects/i });
+    expect(primary).toHaveAttribute('id', 'mu-home__hero__btn--primary-cta');
+    expect(primary).toHaveAttribute('href', '/projects');
+    expect(primary).toHaveAttribute('data-action-id', 'act-home__hero__click-primary-cta');
 
-    expect(screen.getByText(/muhammad umer/i)).toBeInTheDocument();
+    const contact = screen.getByRole('link', { name: /contact me/i });
+    expect(contact).toHaveAttribute('id', 'mu-home__hero__btn--secondary-contact');
+    expect(contact).toHaveAttribute('href', '/contact');
 
-    const primaryCta = screen.getByRole('button', {
-      name: /view projects/i,
+    const cv = screen.getByRole('link', { name: /download cv/i });
+    expect(cv).toHaveAttribute('id', 'mu-home__hero__link--download-cv');
+    expect(cv).toHaveAttribute('href', '/CV.pdf');
+    expect(cv).toHaveAttribute('download', 'Muhammad-Umer-CV.pdf');
+  });
+
+  it('tracks the contact CTA click', () => {
+    render(<HeroSection profile={profile} />);
+    screen.getByRole('link', { name: /contact me/i }).click();
+    expect(trackEventMock).toHaveBeenCalledWith('hero_contact_cta_click', {
+      actionId: 'act-home__hero__click-contact',
     });
-    expect(primaryCta).toBeInTheDocument();
-    expect(primaryCta).toHaveAttribute('id', 'mu-home__hero__btn--primary-cta');
   });
 
-  it('shows key stats and featured project', () => {
-    render(
-      <HeroSection
-        featuredProjects={sampleProjects}
-        yearsExperience={6}
-        totalProjects={20}
-        domains={['Healthcare', 'Real Estate']}
-      />
-    );
-
-    flushTypewriter();
-
-    expect(screen.getByText(/years experience/i)).toBeInTheDocument();
-    expect(screen.getByText(/projects delivered/i)).toBeInTheDocument();
-    expect(screen.getByText(/innova care/i)).toBeInTheDocument();
-
-    const projectCard = screen.getByRole('article');
-    expect(projectCard.id).toContain('innova-care');
-  });
-
-  it('fires primary CTA click handler', () => {
-    const { getByRole } = render(
-      <HeroSection
-        featuredProjects={sampleProjects}
-        yearsExperience={6}
-        totalProjects={20}
-        domains={['Healthcare']}
-      />
-    );
-
-    flushTypewriter();
-
-    const button = getByRole('button', { name: /view projects/i });
-    fireEvent.click(button);
-    // useRouter is mocked, so we just ensure click does not throw
-    expect(button).toBeInTheDocument();
+  it('hides the decorative ghost name from assistive technology', () => {
+    const { container } = render(<HeroSection profile={profile} />);
+    const ghost = container.querySelector('.ghost-name');
+    expect(ghost).toHaveAttribute('aria-hidden', 'true');
   });
 });

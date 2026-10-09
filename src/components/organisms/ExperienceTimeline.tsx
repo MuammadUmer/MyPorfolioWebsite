@@ -1,71 +1,131 @@
 import * as React from 'react';
-import type { Experience } from '@/lib/types/content';
+import Eyebrow from '@/components/atoms/Eyebrow';
+import Reveal from '@/components/atoms/Reveal';
+import SectionHeading from '@/components/atoms/SectionHeading';
+import { translate } from '@/lib/i18n/translate';
+import type { TimelineEntry } from '@/lib/types/content';
 
 export interface ExperienceTimelineProps {
-  items: Experience[];
+  entries: TimelineEntry[];
+  page?: string;
+  /** `summary` collapses long bullet lists behind a disclosure; `full` shows everything. */
+  density?: 'summary' | 'full';
 }
 
-const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ items }) => {
+const SUMMARY_BULLETS = 4;
+
+const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({
+  entries,
+  page = 'home',
+  density = 'summary',
+}) => {
+  const isHome = page === 'home';
+  const idPrefix = `mu-${page}__timeline`;
+  const headingId = `${idPrefix}__heading--title`;
+
   return (
     <section
-      id="mu-experience__timeline__section--primary"
-      className="py-20"
+      id={`mu-${page}__experience__section--primary`}
+      aria-labelledby={headingId}
+      className={`${isHome ? 'section-pad' : 'page-top pb-[var(--space-section)]'} defer-render`}
     >
-      <div className="mx-auto w-full max-w-3xl px-4 md:px-6">
-        <div className="animate-fade-in-up mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Experience</h1>
+      <div className="container-page">
+        {isHome ? <span id="experience" className="block h-0" /> : null}
+        <div className="mb-[var(--space-stack)] flex flex-col gap-6">
+          <Eyebrow index="05">{translate('nav.experience')}</Eyebrow>
+          <SectionHeading
+            id={headingId}
+            as={isHome ? 'h2' : 'h1'}
+            bold={translate('section.experience.bold')}
+            italic={translate('section.experience.italic')}
+          />
         </div>
 
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-0 top-0 bottom-0 w-px bg-border ml-[7px]" />
+        <ol className="flex flex-col gap-10 lg:gap-14">
+          {entries.map((entry) => {
+            const collapsed = density === 'summary' && entry.bullets.length > SUMMARY_BULLETS + 1;
+            const visible = collapsed ? entry.bullets.slice(0, SUMMARY_BULLETS) : entry.bullets;
+            const rest = collapsed ? entry.bullets.slice(SUMMARY_BULLETS) : [];
+            const tag =
+              entry.kind === 'education'
+                ? translate('experience.tag.education')
+                : translate('experience.tag.experience');
 
-          <div className="space-y-12">
-            {items.map((item, index) => (
-              <div
-                key={`${item.company}-${item.period}`}
-                className="animate-fade-in-up relative pl-10"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {/* Timeline dot */}
-                <div className="absolute left-0 top-2 w-4 h-4 rounded-full bg-primary border-4 border-background" />
+            return (
+              <li key={entry.id} className="tl-item">
+                <div className="tl-rail relative" aria-hidden="true">
+                  <div className="timeline-rail absolute inset-y-0 left-1/2 w-px -translate-x-1/2" />
+                  <div className="timeline-fill absolute inset-y-0 left-1/2 w-px -translate-x-1/2" />
+                  <div className="absolute left-1/2 top-2 h-4 w-4 -translate-x-1/2 rounded-full bg-inverse ring-4 ring-background" />
+                </div>
 
-                <div className="space-y-3">
-                  <div>
-                    <h3 className="text-xl font-semibold">{item.role}</h3>
-                    <p className="text-muted-foreground">
-                      {item.company}
-                      {item.location ? ` · ${item.location}` : ''}
-                    </p>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider mt-1">
-                      {item.period}
-                    </p>
+                {entry.year ? (
+                  <p aria-hidden="true" className="tl-year t-display-num text-foreground">
+                    {entry.year}
+                  </p>
+                ) : null}
+
+                <Reveal
+                  as="div"
+                  className="tl-card surface-card p-6"
+                  id={`${idPrefix}__card--${entry.id}`}
+                >
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                    <span className="rounded-full bg-deep px-3 py-1 font-mono text-[0.6875rem] uppercase tracking-widest text-deep-foreground">
+                      {tag}
+                    </span>
+                    <span className="text-xs uppercase tracking-wider text-muted-foreground">
+                      {entry.period}
+                    </span>
                   </div>
 
-                  {item.description ? (
-                    <p className="text-muted-foreground leading-relaxed">
-                      {item.description}
-                    </p>
+                  <h3 className="t-h3">{entry.title}</h3>
+                  <p className="mt-1 text-muted-foreground">
+                    {entry.organisation}
+                    {entry.location ? ` · ${entry.location}` : ''}
+                  </p>
+
+                  {entry.description ? (
+                    <p className="mt-4 leading-relaxed text-muted-foreground">{entry.description}</p>
                   ) : null}
 
-                  {item.responsibilities?.length ? (
-                    <ul className="space-y-2">
-                      {item.responsibilities.map((resp) => (
-                        <li
-                          key={resp}
-                          className="text-muted-foreground flex items-start gap-2"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2 flex-shrink-0" />
-                          {resp}
+                  {entry.bullets.length > 0 ? (
+                    <ul className="mt-4 flex flex-col gap-2">
+                      {visible.map((bullet) => (
+                        <li key={bullet} className="flex items-start gap-3 text-muted-foreground">
+                          <span
+                            aria-hidden="true"
+                            className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/60"
+                          />
+                          {bullet}
                         </li>
                       ))}
                     </ul>
                   ) : null}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+
+                  {rest.length > 0 ? (
+                    <details className="group mt-3">
+                      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center rounded-full border border-border-strong px-4 text-sm font-medium hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring group-open:hidden">
+                        {translate('experience.showMore', { values: { count: rest.length } })}
+                      </summary>
+                      <ul className="flex flex-col gap-2">
+                        {rest.map((bullet) => (
+                          <li key={bullet} className="flex items-start gap-3 text-muted-foreground">
+                            <span
+                              aria-hidden="true"
+                              className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/60"
+                            />
+                            {bullet}
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  ) : null}
+                </Reveal>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );
