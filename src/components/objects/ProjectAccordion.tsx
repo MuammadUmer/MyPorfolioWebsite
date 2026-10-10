@@ -82,7 +82,7 @@ const ProjectAccordion: React.FC<ProjectAccordionProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-3 lg:h-[720px] lg:flex-row">
+    <div className="flex flex-col gap-3 lg:h-[590px] lg:flex-row">
       <p className="sr-only" role="status" aria-live="polite">
         {announcement}
       </p>
@@ -113,18 +113,23 @@ const ProjectAccordion: React.FC<ProjectAccordionProps> = ({
                 onClick={() => setOpenSlug(project.slug)}
                 onFocus={() => setOpenSlug(project.slug)}
                 onKeyDown={(event) => handleKeyDown(event, position)}
-                className={`flex w-full items-center gap-4 p-5 pr-20 text-left focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-ring ${
-                  open ? '' : 'lg:absolute lg:inset-0 lg:flex-col lg:items-start lg:justify-start lg:gap-6 lg:px-5 lg:pb-20 lg:pr-5 lg:pt-6'
+                className={`flex w-full items-center gap-4 px-5 py-4 pr-20 text-left focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-ring ${
+                  open ? '' : 'lg:absolute lg:inset-0 lg:flex-col lg:justify-center lg:p-3 lg:text-center'
                 }`}
               >
-                <span className="eyebrow" aria-hidden="true">
+                <span
+                  className={`eyebrow ${
+                    open ? '' : 'lg:absolute lg:left-1/2 lg:top-6 lg:-translate-x-1/2'
+                  }`}
+                  aria-hidden="true"
+                >
                   {String(position + 1).padStart(2, '0')}
                 </span>
                 <span
                   className={
                     open
                       ? 't-h3 flex-1'
-                      : 'flex-1 font-semibold lg:flex-none lg:rotate-180 lg:[writing-mode:vertical-rl]'
+                      : 'flex-1 font-semibold lg:flex-none lg:rotate-180 lg:text-center lg:[writing-mode:vertical-rl]'
                   }
                 >
                   {title}
@@ -153,27 +158,27 @@ const ProjectAccordion: React.FC<ProjectAccordionProps> = ({
               role="region"
               aria-labelledby={buttonId}
               hidden={!open}
-              className="animate-fade-in-up grid gap-6 px-5 pb-5 lg:min-w-[640px] lg:grid-cols-[3fr_2fr] lg:overflow-y-auto lg:[scrollbar-width:thin]"
+              className="animate-fade-in-up grid gap-6 px-5 pb-5 lg:min-h-0 lg:flex-1 lg:min-w-[640px] lg:grid-cols-[3fr_2fr] lg:overflow-y-auto lg:[scrollbar-width:thin]"
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3">
                 <p className="eyebrow">
                   {project.domain}
                   {project.company ? ` · ${project.company}` : ''}
                 </p>
                 <p className="t-h4">{project.title}</p>
                 <p className="text-muted-foreground">{project.summary}</p>
-                <ul className="flex flex-col gap-3 text-sm">
+                <ul className="flex flex-col gap-2.5 text-sm">
                   {project.highlights.slice(0, HIGHLIGHT_COUNT).map((highlight) => (
                     <li key={highlight} className="flex gap-2 text-muted-foreground">
                       <span
                         aria-hidden="true"
                         className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary"
                       />
-                      <span className="line-clamp-3">{highlight}</span>
+                      <span className="line-clamp-2">{highlight}</span>
                     </li>
                   ))}
                 </ul>
-                <div>
+                <div className="mt-auto pt-2">
                   <Link
                     href={`/projects/${project.slug}`}
                     id={`${idPrefix}__link--${project.slug}`}
@@ -212,7 +217,7 @@ const ProjectAccordion: React.FC<ProjectAccordionProps> = ({
                 </dl>
                 <div>
                   <p className="mb-2 text-deep-muted">Stack</p>
-                  <ul className="grid grid-cols-1 gap-x-4 gap-y-1 sm:grid-cols-2 lg:grid-cols-1 min-[1280px]:grid-cols-2">
+                  <ul className="grid grid-cols-2 gap-x-4 gap-y-1">
                     {project.techStack.map((tech) => (
                       <li key={tech} className="break-words">
                         {tech}
