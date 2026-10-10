@@ -17,7 +17,7 @@ test('home accordion opens a project panel and links to its case study', async (
   await page.goto('/');
   await page.locator('#projects').scrollIntoViewIfNeeded();
 
-  const eizhar = page.getByRole('button', { name: /eizhar/i });
+  const eizhar = page.getByRole('button', { name: 'Eizhar', exact: true });
   await eizhar.click();
   await expect(eizhar).toHaveAttribute('aria-expanded', 'true');
 

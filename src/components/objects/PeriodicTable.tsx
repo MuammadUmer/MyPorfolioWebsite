@@ -17,17 +17,21 @@ export interface PeriodicTableProps {
 
 const PeriodicTable: React.FC<PeriodicTableProps> = ({ tiles, categories, idPrefix }) => {
   const [filter, setFilter] = React.useState<string | null>(null);
-  const [activeId, setActiveId] = React.useState<string | null>(null);
+  const [activeId, setActiveId] = React.useState<string | null>(tiles[0]?.id ?? null);
 
-  const active = tiles.find((tile) => tile.id === activeId) ?? null;
+  const active = tiles.find((tile) => tile.id === activeId) ?? tiles[0] ?? null;
   const shown = filter ? tiles.filter((tile) => tile.category === filter).length : tiles.length;
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Escape') setActiveId(null);
+  const selectFilter = (next: string | null) => {
+    setFilter(next);
+    if (next && active?.category !== next) {
+      const first = tiles.find((tile) => tile.category === next);
+      if (first) setActiveId(first.id);
+    }
   };
 
   return (
-    <div onKeyDown={handleKeyDown}>
+    <div>
       <div
         role="group"
         aria-label="Filter skills by category"
@@ -38,7 +42,7 @@ const PeriodicTable: React.FC<PeriodicTableProps> = ({ tiles, categories, idPref
           id={`${idPrefix}__chip--all`}
           className="chip shrink-0"
           aria-pressed={filter === null}
-          onClick={() => setFilter(null)}
+          onClick={() => selectFilter(null)}
         >
           {translate('skills.filter.all')}
         </button>
@@ -49,7 +53,7 @@ const PeriodicTable: React.FC<PeriodicTableProps> = ({ tiles, categories, idPref
             id={`${idPrefix}__chip--${category.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`}
             className={`chip family-${category.family} shrink-0`}
             aria-pressed={filter === category.name}
-            onClick={() => setFilter(filter === category.name ? null : category.name)}
+            onClick={() => selectFilter(filter === category.name ? null : category.name)}
           >
             <span className="fam-dot" aria-hidden="true" />
             {category.name}
@@ -74,10 +78,10 @@ const PeriodicTable: React.FC<PeriodicTableProps> = ({ tiles, categories, idPref
                   id={`${idPrefix}__card--${tile.id}`}
                   className={`skill-tile family-${tile.family} h-full w-full`}
                   data-dim={dimmed}
-                  aria-pressed={activeId === tile.id}
+                  aria-pressed={active?.id === tile.id}
                   onMouseEnter={() => setActiveId(tile.id)}
                   onFocus={() => setActiveId(tile.id)}
-                  onClick={() => setActiveId(activeId === tile.id ? null : tile.id)}
+                  onClick={() => setActiveId(tile.id)}
                 >
                   <span aria-hidden="true" className="font-mono text-[0.75rem] leading-none opacity-80">
                     {String(tile.number).padStart(2, '0')}
@@ -129,9 +133,7 @@ const PeriodicTable: React.FC<PeriodicTableProps> = ({ tiles, categories, idPref
                 </div>
               ) : null}
             </div>
-          ) : (
-            <p className="text-deep-muted">{translate('skills.hint')}</p>
-          )}
+          ) : null}
         </aside>
       </div>
     </div>

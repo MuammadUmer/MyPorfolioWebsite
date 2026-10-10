@@ -8,16 +8,14 @@ import ProjectAccordion from '@/components/objects/ProjectAccordion';
 import { translate } from '@/lib/i18n/translate';
 import type { Project } from '@/lib/types/content';
 
-export const FEATURED_PROJECT_COUNT = 3;
+export const VISIBLE_PROJECT_PANELS = 3;
 
 export interface ProjectsShowcaseProps {
   projects: Project[];
 }
 
-/** Home "work" section: hover-expand accordion of the featured projects + link to the full list. */
+/** Home "work" section: hover-expand accordion that rotates through every project + link to the full list. */
 const ProjectsShowcase: React.FC<ProjectsShowcaseProps> = ({ projects }) => {
-  const featured = projects.slice(0, FEATURED_PROJECT_COUNT);
-
   return (
     <section
       id="mu-home__projects__section--primary"
@@ -39,7 +37,11 @@ const ProjectsShowcase: React.FC<ProjectsShowcaseProps> = ({ projects }) => {
         </div>
 
         <Reveal>
-          <ProjectAccordion projects={featured} idPrefix="mu-home__featured-projects" />
+          <ProjectAccordion
+            projects={projects}
+            visibleCount={VISIBLE_PROJECT_PANELS}
+            idPrefix="mu-home__featured-projects"
+          />
         </Reveal>
 
         <Reveal delay={100} className="mt-8">

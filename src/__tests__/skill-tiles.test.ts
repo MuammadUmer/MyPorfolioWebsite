@@ -49,6 +49,21 @@ describe('buildSkillTiles with the real data', () => {
     expect(new Set(symbols).size).toBe(symbols.length);
   });
 
+  it('keeps one skill per item (no combined entries)', () => {
+    tiles.forEach((tile) => {
+      expect(tile.label).not.toMatch(/ & | \/ | \+ |, /);
+    });
+  });
+
+  it('has no duplicate labels', () => {
+    const labels = tiles.map((tile) => tile.label);
+    expect(new Set(labels).size).toBe(labels.length);
+  });
+
+  it('gives every short item a symbol', () => {
+    tiles.filter((tile) => !tile.wide).forEach((tile) => expect(tile.symbol).not.toBeNull());
+  });
+
   it('assigns family numbers 1-10 by category order', () => {
     expect(new Set(tiles.map((tile) => tile.family))).toEqual(new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
     expect(tiles[0].family).toBe(1);

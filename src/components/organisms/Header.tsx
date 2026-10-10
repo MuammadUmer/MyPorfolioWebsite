@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import { Sun, Moon } from 'lucide-react';
 import Button from '@/components/atoms/Button';
 import AppLink from '@/components/atoms/Link';
-import ScrambleText from '@/components/atoms/ScrambleText';
 import LinkButton from '@/components/atoms/LinkButton';
 import profile from '@/data/profile.json';
 import { useScrollSpy } from '@/lib/hooks/useScrollSpy';
@@ -213,7 +212,7 @@ const Header: React.FC = () => {
                 }`}
                 id={`mu-global__header__link--${item.key}`}
               >
-                <ScrambleText text={item.label} />
+                {item.label}
               </AppLink>
             );
           })}

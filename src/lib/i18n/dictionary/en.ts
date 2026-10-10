@@ -42,7 +42,6 @@ export const en = {
   'about.stat.domains': 'Domains',
 
   'skills.summary': '{items} items in {families} families',
-  'skills.hint': 'Hover or focus a tile for details',
   'skills.filter.all': 'All',
   'skills.usedIn': 'Used in',
   'skills.showing': 'Showing {shown} of {total} — {category}',

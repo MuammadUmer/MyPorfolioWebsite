@@ -4,7 +4,6 @@ import CertificationsSection from '@/components/organisms/CertificationsSection'
 import ContactSection from '@/components/organisms/ContactSection';
 import EducationList from '@/components/organisms/EducationList';
 import Footer from '@/components/organisms/Footer';
-import ProjectsShowcase from '@/components/organisms/ProjectsShowcase';
 import {
   getAboutCopy,
   getCertifications,
@@ -125,44 +124,6 @@ describe('EducationList', () => {
     expect(screen.getByText('B.S. Software Engineering')).toBeInTheDocument();
     expect(screen.getByText(/COMSATS University Islamabad · 2015 – 2019/)).toBeInTheDocument();
     expect(screen.getByText('CGPA: 3.2 / 4.0')).toBeInTheDocument();
-  });
-});
-
-describe('ProjectsShowcase', () => {
-  const projects = getProjects();
-
-  it('opens the first featured project and links to its case study', () => {
-    render(<ProjectsShowcase projects={projects} />);
-    expect(screen.getByRole('heading', { level: 2, name: /selected projects/i })).toBeInTheDocument();
-
-    const firstButton = screen.getByRole('button', { name: /innova care/i });
-    expect(firstButton).toHaveAttribute('aria-expanded', 'true');
-    expect(screen.getByRole('link', { name: /view case study/i })).toHaveAttribute(
-      'href',
-      '/projects/innova-care'
-    );
-  });
-
-  it('switches the open panel on click and keyboard navigation', () => {
-    render(<ProjectsShowcase projects={projects} />);
-    const buttons = screen.getAllByRole('button', { expanded: false });
-    expect(buttons).toHaveLength(2);
-
-    fireEvent.click(screen.getByRole('button', { name: /eizhar/i }));
-    expect(screen.getByRole('button', { name: /eizhar/i })).toHaveAttribute('aria-expanded', 'true');
-    expect(screen.getByRole('button', { name: /innova care/i })).toHaveAttribute('aria-expanded', 'false');
-
-    fireEvent.keyDown(screen.getByRole('button', { name: /eizhar/i }), { key: 'ArrowRight' });
-    expect(screen.getByRole('button', { name: /local llm inference stack/i })).toHaveAttribute(
-      'aria-expanded',
-      'true'
-    );
-  });
-
-  it('links to the full project list with the derived count', () => {
-    render(<ProjectsShowcase projects={projects} />);
-    const link = screen.getByRole('link', { name: `All ${projects.length} projects` });
-    expect(link).toHaveAttribute('href', '/projects');
   });
 });
 

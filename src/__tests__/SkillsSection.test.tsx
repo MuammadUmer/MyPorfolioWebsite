@@ -5,7 +5,7 @@ import type { Project, SkillCategory } from '@/lib/types/content';
 const categories: SkillCategory[] = [
   {
     category: 'Backend & APIs',
-    items: ['Node.js', 'Express', 'Rate limiting & request validation'],
+    items: ['Node.js', 'Express', 'Request validation'],
   },
   {
     category: 'Frontend & Mobile',
@@ -44,7 +44,7 @@ describe('SkillsSection', () => {
     expect(screen.getByRole('button', { name: 'Node.js' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Express' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'React' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Rate limiting & request validation' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Request validation' })).toBeInTheDocument();
   });
 
   it('exposes a filter chip per category plus All', () => {
@@ -64,27 +64,50 @@ describe('SkillsSection', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Showing 1 of 4 — Frontend & Mobile');
   });
 
-  it('shows details and the projects using the tile on hover or focus', () => {
+  it('selects the first tile by default so the details panel is never empty', () => {
     render(<SkillsSection categories={categories} projects={projects} />);
-    expect(screen.getByText('Hover or focus a tile for details')).toBeInTheDocument();
-
-    fireEvent.focus(screen.getByRole('button', { name: 'Node.js' }));
     const details = screen.getByRole('complementary', { name: /skill details/i });
     expect(within(details).getByText('Node.js')).toBeInTheDocument();
     expect(within(details).getByText('Backend & APIs')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Node.js' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.queryByText(/hover or focus a tile/i)).not.toBeInTheDocument();
+  });
+
+  it('shows the projects using the selected tile', () => {
+    render(<SkillsSection categories={categories} projects={projects} />);
+    const details = screen.getByRole('complementary', { name: /skill details/i });
     expect(within(details).getByRole('link', { name: 'Innova Care' })).toHaveAttribute(
       'href',
       '/projects/innova-care'
     );
   });
 
-  it('clears the details panel with Escape', () => {
+  it('changes the selection on hover or focus and keeps it after the pointer leaves', () => {
     render(<SkillsSection categories={categories} projects={projects} />);
-    const tile = screen.getByRole('button', { name: 'React' });
-    fireEvent.focus(tile);
-    expect(screen.queryByText('Hover or focus a tile for details')).not.toBeInTheDocument();
-    fireEvent.keyDown(tile, { key: 'Escape' });
-    expect(screen.getByText('Hover or focus a tile for details')).toBeInTheDocument();
+    const details = screen.getByRole('complementary', { name: /skill details/i });
+    const react = screen.getByRole('button', { name: 'React' });
+
+    fireEvent.mouseEnter(react);
+    expect(within(details).getByText('Frontend & Mobile')).toBeInTheDocument();
+    expect(react).toHaveAttribute('aria-pressed', 'true');
+
+    fireEvent.mouseLeave(react);
+    expect(within(details).getByText('Frontend & Mobile')).toBeInTheDocument();
+    expect(react).toHaveAttribute('aria-pressed', 'true');
+
+    fireEvent.focus(screen.getByRole('button', { name: 'Express' }));
+    expect(within(details).getByText('Backend & APIs')).toBeInTheDocument();
+    expect(react).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('moves the selection into the family when a filter is chosen', () => {
+    render(<SkillsSection categories={categories} projects={projects} />);
+    const group = screen.getByRole('group', { name: /filter skills by category/i });
+    fireEvent.click(within(group).getByRole('button', { name: 'Frontend & Mobile' }));
+    expect(screen.getByRole('button', { name: 'React' })).toHaveAttribute('aria-pressed', 'true');
+
+    fireEvent.click(within(group).getByRole('button', { name: 'All' }));
+    expect(screen.getByRole('button', { name: 'React' })).toHaveAttribute('aria-pressed', 'true');
   });
 
   it('uses an h1 on the standalone page', () => {

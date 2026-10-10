@@ -32,10 +32,21 @@ function candidates(label: string): string[] {
   const letters = parts.join('');
   const list: string[] = [];
 
+  const compact = label.replace(/\s+/g, '');
+
+  if (compact.length <= 2) list.push(compact.charAt(0).toUpperCase() + compact.slice(1));
   if (first.length >= 2) list.push(cap(first.slice(0, 2)));
   if (second) list.push(first.charAt(0).toUpperCase() + second.charAt(0).toLowerCase());
   for (let i = 1; i < letters.length; i += 1) {
     list.push(letters.charAt(0).toUpperCase() + letters.charAt(i).toLowerCase());
+  }
+  for (let i = 1; i < letters.length; i += 1) {
+    for (let j = i + 1; j < letters.length; j += 1) {
+      list.push(letters.charAt(i).toUpperCase() + letters.charAt(j).toLowerCase());
+    }
+  }
+  for (let digit = 1; digit <= 9; digit += 1) {
+    list.push(`${letters.charAt(0).toUpperCase()}${digit}`);
   }
   return list;
 }
