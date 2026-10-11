@@ -129,6 +129,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
             glanceTitle={translate('about.glance')}
             glanceItems={glanceItems}
             flipLabel={translate('about.flipCard')}
+            avatar={profile.avatar}
             idPrefix={idPrefix}
           />
         </div>

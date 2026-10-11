@@ -53,6 +53,18 @@ export interface ProfileLinks {
   cvDownloadName: string;
 }
 
+export interface ProfileAvatar {
+  /** Optimised GLB used by the interactive 3D avatar (hero). */
+  model: string;
+  /** Transparent still render of the same avatar (hero fallback, badge portrait). */
+  poster: string;
+  /** Small circular crop used as the logo mark. */
+  logo: string;
+  alt: string;
+  /** Camera framing shared by the poster render and the live 3D view (model units, usually metres). */
+  framing?: { target: string; radius: string };
+}
+
 export interface Profile {
   name: string;
   initials: string;
@@ -65,6 +77,7 @@ export interface Profile {
   about: string[];
   contactIntro: string;
   links: ProfileLinks;
+  avatar?: ProfileAvatar;
 }
 
 export interface AboutCopy {

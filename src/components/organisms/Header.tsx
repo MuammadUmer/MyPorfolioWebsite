@@ -6,10 +6,14 @@ import { Sun, Moon } from 'lucide-react';
 import Button from '@/components/atoms/Button';
 import AppLink from '@/components/atoms/Link';
 import LinkButton from '@/components/atoms/LinkButton';
-import profile from '@/data/profile.json';
+import AvatarMark from '@/components/atoms/AvatarMark';
+import profileData from '@/data/profile.json';
+import type { Profile } from '@/lib/types/content';
 import { useScrollSpy } from '@/lib/hooks/useScrollSpy';
 import { applyTheme, readIsDark } from '@/lib/theme';
 import { translate } from '@/lib/i18n/translate';
+
+const profile: Profile = profileData;
 
 export interface NavItem {
   key: string;
@@ -170,7 +174,7 @@ const Header: React.FC = () => {
           aria-label="Go to home"
           id="mu-global__header__link--brand"
         >
-          MU
+          <AvatarMark logo={profile.avatar?.logo} initials={profile.initials} size={40} />
         </AppLink>
 
         <nav

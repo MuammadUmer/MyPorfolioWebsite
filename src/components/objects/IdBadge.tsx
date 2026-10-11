@@ -1,7 +1,9 @@
 'use client';
 
 import * as React from 'react';
+import Image from 'next/image';
 import { Check, RotateCw } from 'lucide-react';
+import AvatarMark from '@/components/atoms/AvatarMark';
 import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion';
 
 export interface IdBadgeProps {
@@ -14,6 +16,8 @@ export interface IdBadgeProps {
   glanceItems: string[];
   flipLabel: string;
   idPrefix: string;
+  /** Optional avatar renders; the monogram is used when absent. */
+  avatar?: { logo: string; poster: string };
 }
 
 const MAX_TILT = 8;
@@ -27,6 +31,7 @@ const IdBadge: React.FC<IdBadgeProps> = ({
   glanceItems,
   flipLabel,
   idPrefix,
+  avatar,
 }) => {
   const [flipped, setFlipped] = React.useState(false);
   const [tilt, setTilt] = React.useState({ rx: 0, ry: 0 });
@@ -61,8 +66,13 @@ const IdBadge: React.FC<IdBadgeProps> = ({
           <div className="badge-flip h-[336px]" data-flipped={flipped}>
             <div className="badge-face flex h-full flex-col" id={`${idPrefix}__badge--front`}>
               <div className="flex h-16 items-center gap-3 bg-inverse px-4 text-inverse-foreground">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-current text-sm font-bold">
-                  {initials}
+                <span className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-full border border-current text-sm font-bold">
+                  <AvatarMark
+                    logo={avatar?.logo}
+                    initials={initials}
+                    size={36}
+                    textClassName="text-sm font-bold"
+                  />
                 </span>
                 <span className="min-w-0">
                   <span className="block truncate text-sm font-semibold">{name}</span>
@@ -70,8 +80,18 @@ const IdBadge: React.FC<IdBadgeProps> = ({
                 </span>
               </div>
               <div className="flex flex-1 flex-col justify-between p-4">
-                <div className="grid flex-1 place-items-center rounded-tile bg-muted">
-                  <span className="t-display-num text-foreground/80">{initials}</span>
+                <div className="relative grid flex-1 place-items-center overflow-hidden rounded-tile bg-muted">
+                  {avatar?.poster ? (
+                    <Image
+                      src={avatar.poster}
+                      alt=""
+                      fill
+                      sizes="192px"
+                      className="object-contain object-bottom"
+                    />
+                  ) : (
+                    <span className="t-display-num text-foreground/80">{initials}</span>
+                  )}
                 </div>
                 <p className="eyebrow mt-4">{location}</p>
               </div>

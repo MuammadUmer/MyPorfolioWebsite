@@ -5,6 +5,7 @@ import { ArrowRight, Download, Mail } from 'lucide-react';
 import LinkButton from '@/components/atoms/LinkButton';
 import Reveal from '@/components/atoms/Reveal';
 import ScrambleText from '@/components/atoms/ScrambleText';
+import Avatar3D from '@/components/objects/Avatar3D';
 import { trackEvent } from '@/lib/analytics';
 import { observeReveal } from '@/lib/hooks/reveal';
 import { slugify } from '@/lib/services/slug';
@@ -12,7 +13,7 @@ import { useI18n } from '@/lib/i18n/use-i18n';
 import type { Profile } from '@/lib/types/content';
 
 export interface HeroSectionProps {
-  profile: Pick<Profile, 'name' | 'role' | 'status' | 'links'>;
+  profile: Pick<Profile, 'name' | 'role' | 'status' | 'links' | 'avatar'>;
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
@@ -27,6 +28,54 @@ const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
   const [firstName, ...restName] = profile.name.split(' ');
   const roleWords = profile.role.split(' ');
   const lastIndex = roleWords.length - 1;
+
+  const hasAvatar = Boolean(profile.avatar);
+
+  const actions = (
+    <Reveal
+      delay={300}
+      role="group"
+      aria-label="Hero primary actions"
+      className={
+    hasAvatar
+      ? 'flex flex-col items-stretch gap-3 pt-2 sm:flex-row sm:flex-wrap'
+      : 'col-span-12 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap lg:col-span-4 lg:flex-col lg:items-end lg:self-center'
+      }
+    >
+      <LinkButton
+        href="/projects"
+        size="lg"
+        id="mu-home__hero__btn--primary-cta"
+        actionId="act-home__hero__click-primary-cta"
+      >
+        <ScrambleText text={t('home.hero.cta.viewProjects')} />
+        <ArrowRight aria-hidden="true" />
+      </LinkButton>
+      <LinkButton
+        href="/contact"
+        variant="secondary"
+        size="lg"
+        id="mu-home__hero__btn--secondary-contact"
+        actionId="act-home__hero__click-contact"
+        onClick={() =>
+          trackEvent('hero_contact_cta_click', { actionId: 'act-home__hero__click-contact' })
+        }
+      >
+        <Mail aria-hidden="true" />
+        <ScrambleText text={t('home.hero.cta.contact')} />
+      </LinkButton>
+      <LinkButton
+        href={profile.links.cv}
+        variant="ghost"
+        size="lg"
+        id="mu-home__hero__link--download-cv"
+        download={profile.links.cvDownloadName}
+      >
+        <Download aria-hidden="true" />
+        {t('home.hero.cta.downloadCv')}
+      </LinkButton>
+    </Reveal>
+  );
 
   return (
     <section
@@ -47,8 +96,30 @@ const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
         </span>
       </div>
 
+      {profile.avatar ? (
+        <Avatar3D
+          model={profile.avatar.model}
+          poster={profile.avatar.poster}
+          alt={profile.avatar.alt}
+          sizes="40vw"
+          framing={profile.avatar.framing}
+          className="pointer-events-none absolute bottom-0 right-[2%] z-0 hidden aspect-[4/5] w-[min(40vw,560px)] lg:block"
+        />
+      ) : null}
+
       <div className="container-page relative grid flex-1 grid-cols-12 items-end gap-x-[var(--space-gutter)] gap-y-10 pb-[var(--space-block)] pt-10">
-        <div className="col-span-12 flex flex-col gap-6 lg:col-span-8">
+        {profile.avatar ? (
+          <Avatar3D
+            model={profile.avatar.model}
+            poster={profile.avatar.poster}
+            alt={profile.avatar.alt}
+            sizes="224px"
+            framing={profile.avatar.framing}
+            className="pointer-events-none relative col-span-12 mx-auto h-72 w-56 lg:hidden"
+          />
+        ) : null}
+
+        <div className={`col-span-12 flex flex-col gap-6 ${hasAvatar ? 'lg:col-span-7' : 'lg:col-span-8'}`}>
           <Reveal delay={0}>
             <p className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-2 font-mono text-xs text-muted-foreground">
               <span className="animate-pulse-dot h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
@@ -76,46 +147,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
           <Reveal delay={200}>
             <p className="t-lead max-w-[46ch] text-muted-foreground">{t('home.hero.subtitle')}</p>
           </Reveal>
+          {hasAvatar ? actions : null}
         </div>
 
-        <Reveal
-          delay={300}
-          aria-label="Hero primary actions"
-          className="col-span-12 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap lg:col-span-4 lg:flex-col lg:items-end lg:self-center"
-        >
-          <LinkButton
-            href="/projects"
-            size="lg"
-            id="mu-home__hero__btn--primary-cta"
-            actionId="act-home__hero__click-primary-cta"
-          >
-            <ScrambleText text={t('home.hero.cta.viewProjects')} />
-            <ArrowRight aria-hidden="true" />
-          </LinkButton>
-          <LinkButton
-            href="/contact"
-            variant="secondary"
-            size="lg"
-            id="mu-home__hero__btn--secondary-contact"
-            actionId="act-home__hero__click-contact"
-            onClick={() =>
-              trackEvent('hero_contact_cta_click', { actionId: 'act-home__hero__click-contact' })
-            }
-          >
-            <Mail aria-hidden="true" />
-            <ScrambleText text={t('home.hero.cta.contact')} />
-          </LinkButton>
-          <LinkButton
-            href={profile.links.cv}
-            variant="ghost"
-            size="lg"
-            id="mu-home__hero__link--download-cv"
-            download={profile.links.cvDownloadName}
-          >
-            <Download aria-hidden="true" />
-            {t('home.hero.cta.downloadCv')}
-          </LinkButton>
-        </Reveal>
+        {hasAvatar ? null : actions}
+
       </div>
     </section>
   );

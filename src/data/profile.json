@@ -5,7 +5,13 @@
   "seniority": "Senior Full Stack Engineer",
   "location": "Riyadh, Saudi Arabia",
   "yearsExperience": 7,
-  "domains": ["Healthcare", "Real Estate", "AI", "Blockchain", "Logistics"],
+  "domains": [
+    "Healthcare",
+    "Real Estate",
+    "AI",
+    "Blockchain",
+    "Logistics"
+  ],
   "status": "Open to opportunities",
   "about": [
     "I'm Muhammad Umer, a Senior Full Stack Engineer based in Riyadh, Saudi Arabia, with 7+ years of experience designing and delivering scalable, high-performance web and mobile applications. I specialise in Node.js/NestJS/Express, Java/Spring Boot, and Python/Flask backends, cloud-native architectures on GCP, and cross-platform frontends with React.js and React Native.",
@@ -20,5 +26,15 @@
     "github": "https://github.com/MuammadUmer",
     "cv": "/CV.pdf",
     "cvDownloadName": "Muhammad-Umer-CV.pdf"
+  },
+  "avatar": {
+    "model": "/avatar/muhammad-umer.51f786bb.glb",
+    "poster": "/avatar/poster.6f751886.webp",
+    "logo": "/avatar/logo.c7501c7f.webp",
+    "alt": "3D avatar of Muhammad Umer",
+    "framing": {
+      "target": "0m 1.45m 0m",
+      "radius": "2.6m"
+    }
   }
 }
