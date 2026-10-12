@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Image from 'next/image';
-import { canRunInteractiveAvatar } from '@/lib/avatar/capabilities';
+import { getAvatarBlockReason } from '@/lib/avatar/capabilities';
 import { approach, orbitFor, pointerFromEvent, type Pointer } from '@/lib/avatar/orbit';
 
 export interface Avatar3DProps {
@@ -15,6 +15,8 @@ export interface Avatar3DProps {
   sizes?: string;
   /** Optional camera framing, e.g. `{ target: '0m 1.4m 0m', radius: '2.4m' }`; defaults to the whole model. */
   framing?: { target: string; radius: string };
+  /** Play the model's own animation (autoplay) and keep the camera follow gentle. */
+  animated?: boolean;
 }
 
 type ViewerElement = HTMLElement & { cameraOrbit?: string };
@@ -35,6 +37,7 @@ const Avatar3D: React.FC<Avatar3DProps> = ({
   className,
   sizes = '40vw',
   framing,
+  animated = false,
 }) => {
   const radius = framing?.radius ?? 'auto';
   const target = framing?.target ?? 'auto auto auto';
@@ -45,7 +48,13 @@ const Avatar3D: React.FC<Avatar3DProps> = ({
   // 1) Decide whether to upgrade from poster to 3D, then lazy-load the viewer library.
   React.useEffect(() => {
     const container = containerRef.current;
-    if (!container || !canRunInteractiveAvatar()) return;
+    if (!container) return;
+    // Keep the still image when 3D can't run, and say why (inspect `data-avatar-reason` in devtools).
+    const reason = getAvatarBlockReason();
+    if (reason) {
+      container.dataset.avatarReason = reason;
+      return;
+    }
 
     let cancelled = false;
     let cancelIdle: (() => void) | null = null;
@@ -59,7 +68,10 @@ const Avatar3D: React.FC<Avatar3DProps> = ({
             .then(() => {
               if (!cancelled) setEnabled(true);
             })
-            .catch(() => undefined);
+            .catch((error: unknown) => {
+              container.dataset.avatarReason = 'viewer-failed-to-load';
+              console.warn('[avatar] could not load the 3D viewer', error);
+            });
         });
       },
       { rootMargin: '200px' }
@@ -88,6 +100,10 @@ const Avatar3D: React.FC<Avatar3DProps> = ({
     let lastOrbit = '';
 
     const onLoad = () => setReady(true);
+    const onError = () => {
+      container.dataset.avatarReason = 'model-failed-to-load';
+      console.warn('[avatar] the 3D model failed to load');
+    };
     const onMove = (event: PointerEvent) => {
       if (event.pointerType !== 'mouse') return;
       const next = pointerFromEvent(event.clientX, event.clientY, window.innerWidth, window.innerHeight);
@@ -105,7 +121,13 @@ const Avatar3D: React.FC<Avatar3DProps> = ({
       if (!visible || document.hidden) return;
       current.x = approach(current.x, target.x);
       current.y = approach(current.y, target.y);
-      const orbit = orbitFor(current, now - lastMove, now, radius);
+      const orbit = orbitFor(
+        current,
+        now - lastMove,
+        now,
+        radius,
+        animated ? { sway: false, maxAzimuth: 9, maxPolar: 3 } : undefined
+      );
       if (orbit !== lastOrbit) {
         viewer.cameraOrbit = orbit;
         lastOrbit = orbit;
@@ -121,6 +143,7 @@ const Avatar3D: React.FC<Avatar3DProps> = ({
     visibility.observe(container);
 
     viewer.addEventListener('load', onLoad);
+    viewer.addEventListener('error', onError);
     window.addEventListener('pointermove', onMove, { passive: true });
     document.documentElement.addEventListener('pointerleave', onLeave);
     frame = requestAnimationFrame(tick);
@@ -129,10 +152,11 @@ const Avatar3D: React.FC<Avatar3DProps> = ({
       cancelAnimationFrame(frame);
       visibility.disconnect();
       viewer.removeEventListener('load', onLoad);
+      viewer.removeEventListener('error', onError);
       window.removeEventListener('pointermove', onMove);
       document.documentElement.removeEventListener('pointerleave', onLeave);
     };
-  }, [enabled, radius]);
+  }, [enabled, radius, animated]);
 
   return (
     <div ref={containerRef} className={className} data-avatar-state={ready ? 'model' : 'poster'}>
@@ -156,6 +180,7 @@ const Avatar3D: React.FC<Avatar3DProps> = ({
           disable-zoom
           disable-pan
           disable-tap
+          autoplay={animated || undefined}
           shadow-intensity="0"
           environment-image="legacy"
           exposure="1"

@@ -4,7 +4,7 @@ import * as React from 'react';
 import Image from 'next/image';
 
 export interface AvatarMarkProps {
-  /** Small circular avatar image. When missing (or when it fails to load) the initials are shown instead. */
+  /** Head-only avatar still. When missing (or when it fails to load) the initials are shown instead. */
   logo?: string;
   initials: string;
   size?: number;
@@ -12,6 +12,7 @@ export interface AvatarMarkProps {
   textClassName?: string;
 }
 
+/** The avatar's head on its own: no circle or ring, softly faded at the shoulders by `.avatar-head`. */
 const AvatarMark: React.FC<AvatarMarkProps> = ({
   logo,
   initials,
@@ -26,15 +27,17 @@ const AvatarMark: React.FC<AvatarMarkProps> = ({
 
   return (
     <span
-      className="relative inline-block shrink-0 overflow-hidden rounded-full bg-muted ring-1 ring-border"
+      className="avatar-head relative inline-block shrink-0"
       style={{ width: size, height: size }}
+      data-avatar-mark="head"
     >
       <Image
         src={logo}
         alt=""
         fill
         sizes={`${size}px`}
-        className="object-cover"
+        className="object-contain object-bottom"
+        draggable={false}
         onError={() => setFailed(true)}
       />
     </span>

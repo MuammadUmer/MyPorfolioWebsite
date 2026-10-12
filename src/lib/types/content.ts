@@ -58,8 +58,10 @@ export interface ProfileAvatar {
   model: string;
   /** Transparent still render of the same avatar (hero fallback, badge portrait). */
   poster: string;
-  /** Small circular crop used as the logo mark. */
+  /** Head-only still of the avatar used as the logo mark (no circle; faded by CSS). */
   logo: string;
+  /** Photo shown on the ID card. */
+  portrait?: string;
   alt: string;
   /** Camera framing shared by the poster render and the live 3D view (model units, usually metres). */
   framing?: { target: string; radius: string };

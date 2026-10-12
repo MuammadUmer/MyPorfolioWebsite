@@ -62,15 +62,58 @@ test('phones get the poster only, without horizontal overflow', async ({ page })
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
-test('the header logo and ID badge use the avatar instead of the MU monogram', async ({ page }) => {
+test('the header shows the MU circuit logo and the ID badge uses the avatar', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
 
   const brand = page.locator('#mu-global__header__link--brand');
   await expect(brand).toHaveAttribute('aria-label', 'Go to home');
-  await expect(brand.locator('img')).toBeVisible();
+  await expect(brand.locator('svg[data-logo="mu-circuit"]')).toBeVisible();
   await expect(brand).not.toHaveText(/MU/);
 
   await page.evaluate(() => document.getElementById('about')?.scrollIntoView());
-  await expect(page.locator('.badge-scene img')).toHaveCount(2);
+  await expect(page.locator('.badge-scene img')).toHaveCount(1);
+});
+
+test('the ID card hangs on a lanyard: strap + grommet, can be dragged, swings back, and flips', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  await page.evaluate(() => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.getElementById('about')?.scrollIntoView();
+  });
+  await page.waitForTimeout(1200);
+
+  const scene = page.getByTestId('id-badge-scene');
+  await expect(scene.locator('[data-lanyard="strap"]')).toBeVisible();
+  await expect(scene.locator('.badge-face svg[viewBox="0 0 32 32"]')).toHaveCount(2);
+
+  const swing = () =>
+    page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('.badge-swing') as Element).getPropertyValue('--swing')) || 0);
+
+  const box = (await scene.boundingBox())!;
+  await page.mouse.move(box.x + box.width / 2, box.y + 220);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width / 2 + 120, box.y + 260, { steps: 6 });
+  expect(Math.abs(await swing())).toBeGreaterThan(0.1);
+
+  await page.mouse.up();
+  await page.waitForTimeout(400);
+  const swinging = await swing();
+  expect(Math.abs(swinging)).toBeLessThan(0.75);
+
+  await scene.getByRole('button', { name: /flip card/i }).click();
+  await expect(page.locator('.badge-flip')).toHaveAttribute('data-flipped', 'true');
+});
+
+test('the hero avatar plays its own animation', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+  await expect(page.locator('[data-avatar-state="model"]')).toBeVisible({ timeout: 45_000 });
+  const times = [] as number[];
+  for (let i = 0; i < 2; i += 1) {
+    times.push(await page.evaluate(() => (document.querySelector('model-viewer') as HTMLElement & { currentTime: number }).currentTime));
+    await page.waitForTimeout(1200);
+  }
+  expect(times[1]).toBeGreaterThan(times[0]);
 });

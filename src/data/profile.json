@@ -14,10 +14,10 @@
   ],
   "status": "Open to opportunities",
   "about": [
-    "I'm Muhammad Umer, a Senior Full Stack Engineer based in Riyadh, Saudi Arabia, with 7+ years of experience designing and delivering scalable, high-performance web and mobile applications. I specialise in Node.js/NestJS/Express, Java/Spring Boot, and Python/Flask backends, cloud-native architectures on GCP, and cross-platform frontends with React.js and React Native.",
-    "My background spans healthcare, real estate, logistics, AI, and blockchain — giving me the ability to quickly understand domain requirements and translate them into reliable, maintainable systems. Notable projects include Innova Care (offline-first home care on GCP), MyIndici (New Zealand's top-20 patient portal), Vivasta (community healthcare ecosystem for nurses and field staff), Bio Scan (AI-powered vital sign monitoring), Ask Cyphen (Kibana + ChatGPT threat analytics), and Eizhar (property management platform).",
-    "I have hands-on experience architecting event-driven systems with Pub/Sub, designing offline-first experiences with SQL↔Firestore synchronisation, and deploying containerised workloads on GCP, AWS, and Azure with Docker and Kubernetes. I also enjoy integrating AI — from facial recognition APIs to configuring local LLM inference stacks for multi-agent systems.",
-    "As a lead engineer, I value clear system boundaries, strong code-review culture, and automated CI/CD. I prefer shipping small, well-tested increments, working closely with product and design, and keeping architecture decisions grounded in actual business requirements rather than speculation."
+    "I'm a Senior Full Stack Engineer and Cloud Architect in Riyadh. I design systems that hold up under real load, and I lead the teams that ship them, across healthcare, fintech and AI for more than seven years.",
+    "Most of my work is moving systems from fragile to dependable. I've migrated legacy monoliths to microservices on GCP with zero downtime, and designed GKE platforms that auto-scale from 10k to over 1M requests per second. I build event-driven back ends on Pub/Sub, provision infrastructure as code with Terraform, and treat IAM, OAuth and OWASP reviews as part of the design, not an afterthought.",
+    "Architecture only matters once it ships. As Lead Software Engineer at F Three Technologies, I led a cross-functional team of seven and set the architecture and release standards they built on; earlier, I trained more than 100 people in React and React Native. Flagship work includes Myindici, a regulated patient portal serving 250+ New Zealand medical practices, and offline-first care apps for nurses and field staff.",
+    "I also bring AI into production, from an LLM that lets security analysts query threat logs in natural language to contactless vital-sign monitoring with computer vision. I design for the 3 a.m. incident, not the demo."
   ],
   "contactIntro": "Share a bit about what you are hiring for, timelines, and how I can help. I will reply as soon as I can.",
   "links": {
@@ -28,13 +28,14 @@
     "cvDownloadName": "Muhammad-Umer-CV.pdf"
   },
   "avatar": {
-    "model": "/avatar/muhammad-umer.51f786bb.glb",
-    "poster": "/avatar/poster.6f751886.webp",
-    "logo": "/avatar/logo.c7501c7f.webp",
+    "model": "/avatar/muhammad-umer.f9a3cff5.glb",
+    "poster": "/avatar/poster.e9cca6b6.webp",
+    "logo": "/avatar/logo.c48d1373.webp",
+    "portrait": "/avatar/portrait.b5e3ec1b.webp",
     "alt": "3D avatar of Muhammad Umer",
     "framing": {
-      "target": "0m 1.45m 0m",
-      "radius": "2.6m"
+      "target": "0m 0.93m 0m",
+      "radius": "3.0m"
     }
   }
 }
