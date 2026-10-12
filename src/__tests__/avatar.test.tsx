@@ -3,7 +3,7 @@ import AvatarMark from '@/components/atoms/AvatarMark';
 import Avatar3D from '@/components/objects/Avatar3D';
 import HeroSection from '@/components/organisms/HeroSection';
 import AboutSection from '@/components/organisms/AboutSection';
-import { canRunInteractiveAvatar } from '@/lib/avatar/capabilities';
+import { canRunInteractiveAvatar, getAvatarBlockReason } from '@/lib/avatar/capabilities';
 import { approach, clamp, orbitFor, pointerFromEvent, BASE_POLAR_DEG, MAX_AZIMUTH_DEG } from '@/lib/avatar/orbit';
 import { getAboutCopy, getEducation, getProfile } from '@/lib/services/content';
 import type { ProfileAvatar } from '@/lib/types/content';
@@ -15,8 +15,9 @@ const avatar: ProfileAvatar = {
   model: '/avatar/muhammad-umer.glb',
   poster: '/avatar/poster.webp',
   logo: '/avatar/logo.webp',
+  portrait: '/avatar/portrait.webp',
   alt: '3D avatar of Muhammad Umer',
-  framing: { target: '0m 1.45m 0m', radius: '2.6m' },
+  framing: { target: '0m 0.93m 0m', radius: '3m' },
 };
 
 function fakeWindow(overrides: {
@@ -45,15 +46,23 @@ describe('canRunInteractiveAvatar', () => {
   });
 
   it.each([
-    ['small screens', { desktop: false }],
-    ['reduced motion', { reduced: true }],
-    ['data saver', { connection: { saveData: true } }],
-    ['slow connections', { connection: { effectiveType: '3g' } }],
-    ['weak CPUs', { cores: 2 }],
-    ['low memory', { memory: 2 }],
-    ['missing WebGL', { webgl: false }],
-  ])('stays on the poster for %s', (_label, overrides) => {
+    ['small screens', { desktop: false }, 'small-screen'],
+    ['reduced motion', { reduced: true }, 'reduced-motion'],
+    ['data saver', { connection: { saveData: true } }, 'data-saver'],
+    ['2g connections', { connection: { effectiveType: '2g' } }, 'slow-connection'],
+    ['missing WebGL', { webgl: false }, 'no-webgl'],
+  ])('stays on the poster for %s and reports why', (_label, overrides, reason) => {
     expect(canRunInteractiveAvatar(fakeWindow(overrides))).toBe(false);
+    expect(getAvatarBlockReason(fakeWindow(overrides))).toBe(reason);
+  });
+
+  it.each([
+    ['a "3g" reading (very common on normal broadband)', { connection: { effectiveType: '3g' } }],
+    ['few CPU cores', { cores: 2 }],
+    ['low reported memory', { memory: 2 }],
+  ])('still runs with %s', (_label, overrides) => {
+    expect(getAvatarBlockReason(fakeWindow(overrides))).toBeNull();
+    expect(canRunInteractiveAvatar(fakeWindow(overrides))).toBe(true);
   });
 
   it('is false without matchMedia', () => {
@@ -81,6 +90,11 @@ describe('orbit helpers', () => {
     const idle = orbitFor({ x: 0, y: 0 }, 5000, 1000);
     expect(active).toBe(`0.00deg ${BASE_POLAR_DEG.toFixed(2)}deg auto`);
     expect(idle).not.toBe(active);
+  });
+
+  it('can disable the idle sway and shrink the follow range for animated models', () => {
+    const gentle = orbitFor({ x: 1, y: 0 }, 10_000, 1000, '3m', { sway: false, maxAzimuth: 9, maxPolar: 3 });
+    expect(gentle).toBe(`-9.00deg ${BASE_POLAR_DEG.toFixed(2)}deg 3m`);
   });
 
   it('keeps the configured camera radius in the orbit', () => {
@@ -128,6 +142,7 @@ describe('Avatar3D', () => {
     expect(screen.getByRole('img', { name: avatar.alt })).toBeInTheDocument();
     expect(document.querySelector('model-viewer')).toBeNull();
     expect(document.querySelector('[data-avatar-state]')).toHaveAttribute('data-avatar-state', 'poster');
+    expect(document.querySelector('[data-avatar-state]')).toHaveAttribute('data-avatar-reason', 'no-media-queries');
   });
 
   it('upgrades to the viewer when visible on a capable device, then reveals it on load', async () => {
@@ -162,6 +177,7 @@ describe('Avatar3D', () => {
         poster={avatar.poster}
         alt={avatar.alt}
         framing={{ target: '0m 1.45m 0m', radius: '2.6m' }}
+        animated
       />
     );
 
@@ -176,6 +192,7 @@ describe('Avatar3D', () => {
     expect(element).toHaveAttribute('aria-hidden', 'true');
     expect(element).toHaveAttribute('camera-target', '0m 1.45m 0m');
     expect(element).toHaveAttribute('camera-orbit', '0deg 84deg 2.6m');
+    expect(element).toHaveAttribute('autoplay');
 
     act(() => {
       element.dispatchEvent(new Event('load'));

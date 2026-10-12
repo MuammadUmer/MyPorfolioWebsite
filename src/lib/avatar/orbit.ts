@@ -32,9 +32,22 @@ export function approach(current: number, target: number, factor = 0.08): number
  * Camera orbit that makes the avatar appear to look toward the pointer. When the pointer has been idle
  * for a while a slow sway keeps the avatar alive.
  */
-export function orbitFor(pointer: Pointer, idleMs: number, timeMs: number, radius = 'auto'): string {
-  const sway = idleMs > SWAY_AFTER_MS ? Math.sin(timeMs / 1800) * SWAY_DEG : 0;
-  const azimuth = -pointer.x * MAX_AZIMUTH_DEG + sway;
-  const polar = BASE_POLAR_DEG - pointer.y * MAX_POLAR_DEG;
+export interface OrbitOptions {
+  /** idle sway; turn off when the model has its own animation */
+  sway?: boolean;
+  maxAzimuth?: number;
+  maxPolar?: number;
+}
+
+export function orbitFor(
+  pointer: Pointer,
+  idleMs: number,
+  timeMs: number,
+  radius = 'auto',
+  { sway: swayEnabled = true, maxAzimuth = MAX_AZIMUTH_DEG, maxPolar = MAX_POLAR_DEG }: OrbitOptions = {}
+): string {
+  const sway = swayEnabled && idleMs > SWAY_AFTER_MS ? Math.sin(timeMs / 1800) * SWAY_DEG : 0;
+  const azimuth = -pointer.x * maxAzimuth + sway;
+  const polar = BASE_POLAR_DEG - pointer.y * maxPolar;
   return `${azimuth.toFixed(2)}deg ${polar.toFixed(2)}deg ${radius}`;
 }

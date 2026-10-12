@@ -10,27 +10,29 @@ describe('avatar assets referenced by profile.json', () => {
 
   it('exist on disk', () => {
     expect(avatar).toBeDefined();
-    [avatar?.model, avatar?.poster, avatar?.logo].forEach((url) => {
+    [avatar?.model, avatar?.poster, avatar?.logo, avatar?.portrait].forEach((url) => {
       expect(url).toBeTruthy();
       expect(fs.existsSync(resolve(url as string))).toBe(true);
     });
   });
 
-  it('stay within the size budgets (GLB ≤ 3 MB, poster ≤ 80 KB, logo ≤ 12 KB)', () => {
+  it('stay within the size budgets (GLB ≤ 6 MB lazy-loaded on desktop, poster ≤ 80 KB, logo ≤ 16 KB, portrait ≤ 120 KB)', () => {
     const size = (url?: string) => fs.statSync(resolve(url as string)).size;
-    expect(size(avatar?.model)).toBeLessThanOrEqual(3 * 1024 * 1024);
+    expect(size(avatar?.model)).toBeLessThanOrEqual(6 * 1024 * 1024);
     expect(size(avatar?.poster)).toBeLessThanOrEqual(80 * 1024);
-    expect(size(avatar?.logo)).toBeLessThanOrEqual(12 * 1024);
+    expect(size(avatar?.logo)).toBeLessThanOrEqual(16 * 1024);
+    expect(size(avatar?.portrait)).toBeLessThanOrEqual(120 * 1024);
   });
 
   it('uses content-hashed file names so a new avatar is never served from a stale cache', () => {
     expect(avatar?.model).toMatch(/\.[0-9a-f]{8}\.glb$/);
     expect(avatar?.poster).toMatch(/\.[0-9a-f]{8}\.webp$/);
     expect(avatar?.logo).toMatch(/\.[0-9a-f]{8}\.webp$/);
+    expect(avatar?.portrait).toMatch(/\.[0-9a-f]{8}\.webp$/);
   });
 
   it('has no leftover unreferenced files in public/avatar', () => {
-    const referenced = [avatar?.model, avatar?.poster, avatar?.logo].map((url) => path.basename(url as string));
+    const referenced = [avatar?.model, avatar?.poster, avatar?.logo, avatar?.portrait].map((url) => path.basename(url as string));
     const files = fs.readdirSync(path.join(publicDir, 'avatar'));
     expect(files.sort()).toEqual(referenced.sort());
   });

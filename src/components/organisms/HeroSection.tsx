@@ -101,9 +101,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
           model={profile.avatar.model}
           poster={profile.avatar.poster}
           alt={profile.avatar.alt}
-          sizes="40vw"
+          sizes="45vh"
           framing={profile.avatar.framing}
-          className="pointer-events-none absolute bottom-0 right-[2%] z-0 hidden aspect-[4/5] w-[min(40vw,560px)] lg:block"
+          animated
+          className="pointer-events-none absolute bottom-0 right-[3%] z-0 hidden aspect-[1/2] h-[calc(100%-var(--header-h))] lg:block"
         />
       ) : null}
 
@@ -113,9 +114,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
             model={profile.avatar.model}
             poster={profile.avatar.poster}
             alt={profile.avatar.alt}
-            sizes="224px"
+            sizes="160px"
             framing={profile.avatar.framing}
-            className="pointer-events-none relative col-span-12 mx-auto h-72 w-56 lg:hidden"
+            animated
+            className="pointer-events-none relative col-span-12 mx-auto h-80 w-40 lg:hidden"
           />
         ) : null}
 

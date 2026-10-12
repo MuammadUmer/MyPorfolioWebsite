@@ -168,13 +168,13 @@ const Header: React.FC = () => {
       <div className="container-page flex h-[var(--header-h)] items-center justify-between">
         <AppLink
           href="/"
-          className={`pointer-events-auto inline-flex h-11 items-center text-xl font-bold tracking-tight text-primary hover:text-primary-hover transition-opacity duration-300 ${
+          className={`pointer-events-auto inline-flex h-14 items-center text-xl font-bold tracking-tight text-primary hover:text-primary-hover transition-opacity duration-300 ${
             scrolled ? 'md:invisible md:opacity-0' : ''
           }`}
           aria-label="Go to home"
           id="mu-global__header__link--brand"
         >
-          <AvatarMark logo={profile.avatar?.logo} initials={profile.initials} size={40} />
+          <AvatarMark logo={profile.avatar?.logo} initials={profile.initials} size={56} />
         </AppLink>
 
         <nav

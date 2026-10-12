@@ -7,11 +7,14 @@
  * File names carry a content hash on purpose: browsers and next/image cache avatar files for hours, so a
  * changed avatar must get a new URL to show up everywhere immediately.
  *
- * usage: npm run avatar:stills -- public/avatar/muhammad-umer.glb [--poster-target="0m 1.45m 0m"] [--poster-radius=2.6m]
- *                                                                  [--head-y=1.7] [--logo-radius=0.8]
+ * usage: npm run avatar:stills -- <model.glb> [--poster-target="0m 0.93m 0m"] [--poster-radius=2.8m] [--poster-size=640x1280]
+ *                                          [--poster-time=1] [--head-y=1.7] [--logo-radius=0.75] [--portrait=<photo.jpg>]
  *
  * --poster-target  point the hero camera looks at (default: keep the value already in profile.json)
  * --poster-radius  camera distance for the hero framing (default: keep the value already in profile.json)
+ * --poster-size    poster pixel size WxH (default 800x1000; use 640x1280 for a full-body avatar)
+ * --poster-time    animation time (seconds) to freeze for the stills when the model has an animation (default 0)
+ * --portrait       a photo (jpg/png) to resize/encode as the ID-card portrait (kept as-is otherwise)
  * --head-y         height (model units, usually metres) of the face centre for the logo; default = 13% below the top
  * --logo-radius    camera distance for the logo close-up; default = 38% of the model height
  * Set PW_CHROMIUM to a Chromium/Chrome executable if Playwright's own browser is not installed.
@@ -25,7 +28,7 @@ const { chromium } = require('@playwright/test');
 const [model, ...flags] = process.argv.slice(2);
 if (!model || !fs.existsSync(model)) {
   console.error(
-    'Usage: npm run avatar:stills -- <path-to-model.glb> [--poster-target="0m 1.45m 0m"] [--poster-radius=2.6m] [--head-y=1.7] [--logo-radius=0.8]'
+    'Usage: npm run avatar:stills -- <path-to-model.glb> [--poster-target="0m 0.93m 0m"] [--poster-radius=2.8m] [--poster-size=640x1280] [--poster-time=1] [--head-y=1.7] [--logo-radius=0.75] [--portrait=photo.jpg]'
   );
   process.exit(1);
 }
@@ -44,13 +47,15 @@ const profile = JSON.parse(fs.readFileSync(profilePath, 'utf8'));
 const existing = profile.avatar || {};
 const posterTarget = flag('poster-target') || existing.framing?.target || 'auto auto auto';
 const posterRadius = flag('poster-radius') || existing.framing?.radius || 'auto';
+const posterSize = (flag('poster-size') || '800x1000').split('x').map(Number);
+const posterTime = parseFloat(flag('poster-time')) || 0;
 
 // Lighting used for both the stills and the live viewer (keep in sync with Avatar3D.tsx).
 const LIGHTING = 'environment-image="legacy" exposure="1" shadow-intensity="0"';
 
 const html = `<!doctype html><html><body style="margin:0;background:transparent">
 <script type="module" src="/mv.js"></script>
-<model-viewer id="mv" src="/model.glb" camera-orbit="0deg 84deg auto" field-of-view="22deg"
+<model-viewer id="mv" src="/model.glb" autoplay camera-orbit="0deg 84deg auto" field-of-view="22deg"
   min-camera-orbit="auto auto 0.2m" max-camera-orbit="auto auto 20m" ${LIGHTING} interaction-prompt="none"
   style="width:800px;height:1000px;background:transparent;--poster-color:transparent"></model-viewer></body></html>`;
 
@@ -78,7 +83,7 @@ const server = http.createServer((req, res) => {
     executablePath: process.env.PW_CHROMIUM || undefined,
     args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'],
   });
-  const page = await browser.newPage({ viewport: { width: 900, height: 1100 } });
+  const page = await browser.newPage({ viewport: { width: 900, height: 1500 } });
   await page.goto(`http://127.0.0.1:${port}/`);
   await page.waitForFunction(() => document.getElementById('mv')?.loaded, null, { timeout: 60000 });
 
@@ -95,15 +100,19 @@ const server = http.createServer((req, res) => {
 
   const grab = async (attrs, size) => {
     await page.evaluate(
-      async ({ attrs, size }) => {
+      async ({ attrs, size, time }) => {
         const mv = document.getElementById('mv');
         mv.style.width = `${size[0]}px`;
         mv.style.height = `${size[1]}px`;
         Object.entries(attrs).forEach(([key, value]) => mv.setAttribute(key, value));
+        if (mv.availableAnimations && mv.availableAnimations.length > 0) {
+          mv.pause();
+          mv.currentTime = time;
+        }
         mv.jumpCameraToGoal();
         await new Promise((resolve) => setTimeout(resolve, 1200));
       },
-      { attrs, size }
+      { attrs, size, time: posterTime }
     );
     const base64 = await page.evaluate(async () => {
       const blob = await document.getElementById('mv').toBlob({ mimeType: 'image/webp', qualityArgument: 0.92 });
@@ -117,7 +126,7 @@ const server = http.createServer((req, res) => {
 
   const posterBuffer = await grab(
     { 'camera-orbit': `0deg 84deg ${posterRadius}`, 'camera-target': posterTarget, 'field-of-view': '22deg' },
-    [800, 1000]
+    posterSize
   );
   const logoBuffer = await grab(
     {
@@ -125,7 +134,7 @@ const server = http.createServer((req, res) => {
       'camera-target': `${info.center[0]}m ${headY.toFixed(3)}m ${info.center[2]}m`,
       'field-of-view': '30deg',
     },
-    [192, 192]
+    [256, 256]
   );
 
   await browser.close();
@@ -144,7 +153,20 @@ const server = http.createServer((req, res) => {
   fs.writeFileSync(path.join(outDir, names.poster), posterBuffer);
   fs.writeFileSync(path.join(outDir, names.logo), logoBuffer);
 
-  const keep = new Set(Object.values(names));
+  let portraitName = existing.portrait ? path.basename(existing.portrait) : undefined;
+  if (flag('portrait')) {
+    const sharp = require('sharp');
+    const portraitBuffer = await sharp(flag('portrait'))
+      .rotate()
+      .resize(768, 768, { fit: 'cover', position: 'top' })
+      .webp({ quality: 88 })
+      .toBuffer();
+    portraitName = `portrait.${hashOf(portraitBuffer)}.webp`;
+    fs.writeFileSync(path.join(outDir, portraitName), portraitBuffer);
+    console.log(`portrait: public/avatar/${portraitName} (${(portraitBuffer.length / 1024).toFixed(1)} KB)`);
+  }
+
+  const keep = new Set([...Object.values(names), ...(portraitName ? [portraitName] : [])]);
   for (const file of fs.readdirSync(outDir)) {
     if (!keep.has(file) && /\.(glb|webp)$/.test(file)) fs.rmSync(path.join(outDir, file));
   }
@@ -153,6 +175,7 @@ const server = http.createServer((req, res) => {
     model: `/avatar/${names.model}`,
     poster: `/avatar/${names.poster}`,
     logo: `/avatar/${names.logo}`,
+    ...(portraitName ? { portrait: `/avatar/${portraitName}` } : {}),
     alt: existing.alt || `3D avatar of ${profile.name}`,
     framing: { target: posterTarget, radius: posterRadius },
   };
