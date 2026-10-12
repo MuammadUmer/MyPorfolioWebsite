@@ -62,17 +62,17 @@ test('phones get the poster only, without horizontal overflow', async ({ page })
   expect(overflow).toBeLessThanOrEqual(0);
 });
 
-test('the header logo and ID badge use the avatar instead of the MU monogram', async ({ page }) => {
+test('the header shows the MU circuit logo and the ID badge uses the avatar', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/');
 
   const brand = page.locator('#mu-global__header__link--brand');
   await expect(brand).toHaveAttribute('aria-label', 'Go to home');
-  await expect(brand.locator('img')).toBeVisible();
+  await expect(brand.locator('svg[data-logo="mu-circuit"]')).toBeVisible();
   await expect(brand).not.toHaveText(/MU/);
 
   await page.evaluate(() => document.getElementById('about')?.scrollIntoView());
-  await expect(page.locator('.badge-scene img')).toHaveCount(2);
+  await expect(page.locator('.badge-scene img')).toHaveCount(1);
 });
 
 test('the ID card hangs on a lanyard: strap + grommet, can be dragged, swings back, and flips', async ({ page }) => {

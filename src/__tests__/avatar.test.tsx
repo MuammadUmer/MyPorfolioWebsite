@@ -243,6 +243,6 @@ describe('avatar placement', () => {
         projectCount={19}
       />
     );
-    expect(container.querySelectorAll('.badge-scene img')).toHaveLength(2);
+    expect(container.querySelectorAll('.badge-scene img')).toHaveLength(1);
   });
 });
