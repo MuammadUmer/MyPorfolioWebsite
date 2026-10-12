@@ -44,3 +44,58 @@ export interface Education {
   period: string;
   details?: string[];
 }
+
+export interface ProfileLinks {
+  email: string;
+  linkedin: string;
+  github: string;
+  cv: string;
+  cvDownloadName: string;
+}
+
+export interface ProfileAvatar {
+  /** Optimised GLB used by the interactive 3D avatar (hero). */
+  model: string;
+  /** Transparent still render of the same avatar (hero fallback, badge portrait). */
+  poster: string;
+  /** Small circular crop used as the logo mark. */
+  logo: string;
+  alt: string;
+  /** Camera framing shared by the poster render and the live 3D view (model units, usually metres). */
+  framing?: { target: string; radius: string };
+}
+
+export interface Profile {
+  name: string;
+  initials: string;
+  role: string;
+  seniority: string;
+  location: string;
+  yearsExperience: number;
+  domains: string[];
+  status: string;
+  about: string[];
+  contactIntro: string;
+  links: ProfileLinks;
+  avatar?: ProfileAvatar;
+}
+
+export interface AboutCopy {
+  lead: string;
+  body: string[];
+  quote: string;
+}
+
+export type TimelineKind = 'experience' | 'education';
+
+export interface TimelineEntry {
+  id: string;
+  kind: TimelineKind;
+  year: string;
+  period: string;
+  title: string;
+  organisation: string;
+  location?: string;
+  description?: string;
+  bullets: string[];
+}

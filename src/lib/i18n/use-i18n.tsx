@@ -1,27 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { en, type TranslationKey } from '@/lib/i18n/dictionary/en';
 import { defaultLocale, type Locale } from '@/lib/i18n/config';
+import { translate, type TranslateOptions } from '@/lib/i18n/translate';
+import type { TranslationKey } from '@/lib/i18n/dictionary/en';
 
 export interface I18nContextValue {
   locale: Locale;
-  t: (key: TranslationKey | string, options?: { defaultValue?: string; year?: number }) => string;
-}
-
-function translate(
-  key: TranslationKey | string,
-  options?: { defaultValue?: string; year?: number }
-): string {
-  const record = en as Record<string, string>;
-  const template = record[key] ?? options?.defaultValue ?? key;
-
-  if (template.includes('{year}')) {
-    const year = options?.year ?? new Date().getFullYear();
-    return template.replace('{year}', String(year));
-  }
-
-  return template;
+  t: (key: TranslationKey | string, options?: TranslateOptions) => string;
 }
 
 const I18nContext = React.createContext<I18nContextValue>({

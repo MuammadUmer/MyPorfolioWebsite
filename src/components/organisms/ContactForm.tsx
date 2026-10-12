@@ -33,6 +33,9 @@ const initialState: ContactFormState = {
 
 const MIN_MESSAGE_LENGTH = 20;
 
+const labelClasses = 'text-sm font-medium text-foreground';
+const errorClasses = 'text-sm text-destructive';
+
 const ContactForm: React.FC = () => {
   const [values, setValues] = React.useState<ContactFormState>(initialState);
   const [errors, setErrors] = React.useState<ContactFormErrors>({});
@@ -130,176 +133,164 @@ const ContactForm: React.FC = () => {
 
   if (isSubmitted && submitResult?.status === 'ok') {
     return (
-      <section
-        id="mu-contact__form__section--primary"
-        className="py-20"
-      >
-        <div className="mx-auto w-full max-w-xl px-4 md:px-6">
-          <div className="animate-fade-in-up text-center py-12 px-6 rounded-xl border border-border bg-card">
-            <svg className="w-16 h-16 text-primary mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <h2 className="text-2xl font-bold mb-2">Message Sent!</h2>
-            <p className="text-muted-foreground mb-6">
-              {submitResult.message}
-            </p>
-            <Button
-              variant="primary"
-              onClick={() => { setIsSubmitted(false); setSubmitResult(null); }}
-            >
-              Send Another Message
-            </Button>
-          </div>
-        </div>
-      </section>
+      <div className="surface-card px-6 py-12 text-center">
+        <svg
+          className="mx-auto mb-4 h-16 w-16 text-primary"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+          aria-hidden="true"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h2 className="t-h3 mb-2">Message Sent!</h2>
+        <p className="mb-6 text-muted-foreground" role="status">
+          {submitResult.message}
+        </p>
+        <Button
+          variant="primary"
+          onClick={() => {
+            setIsSubmitted(false);
+            setSubmitResult(null);
+          }}
+        >
+          Send Another Message
+        </Button>
+      </div>
     );
   }
 
   return (
-    <section
-      id="mu-contact__form__section--primary"
-      className="py-20"
-    >
-      <div className="mx-auto w-full max-w-xl px-4 md:px-6">
-        <div className="animate-fade-in-up mb-12">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Contact</h1>
-          <p className="text-muted-foreground text-lg">
-            Share a bit about what you are hiring for, timelines, and how I can help. I will reply as soon as I can.
-          </p>
+    <div>
+      {submitResult && submitResult.status === 'error' && (
+        <div
+          role="alert"
+          className="mb-4 rounded-tile border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
+        >
+          {submitResult.message}
         </div>
+      )}
 
-        {submitResult && submitResult.status === 'error' && (
-          <div
-            role="alert"
-            className="mb-4 rounded-md p-3 text-sm bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
-          >
-            {submitResult.message}
+      <div className="surface-card p-6 sm:p-8">
+        <form
+          id="mu-contact__form__form--primary"
+          onSubmit={handleSubmit}
+          noValidate
+          className="space-y-6"
+        >
+          <div className="space-y-2">
+            <label htmlFor="contact-name" className={labelClasses}>
+              Name <span aria-hidden="true">*</span>
+              <VisuallyHidden>(required)</VisuallyHidden>
+            </label>
+            <input
+              id="contact-name"
+              name="name"
+              type="text"
+              placeholder="Your name"
+              required
+              value={values.name}
+              onChange={handleChange}
+              aria-invalid={errors.name ? true : undefined}
+              aria-describedby={errors.name ? 'contact-name-error' : undefined}
+              className={`field ${errors.name ? 'border-destructive' : ''}`}
+            />
+            {errors.name && (
+              <p id="contact-name-error" className={errorClasses}>
+                {errors.name}
+              </p>
+            )}
           </div>
-        )}
 
-        <div className="animate-fade-in-up rounded-xl border border-border bg-card p-6 sm:p-8" style={{ animationDelay: '0.2s' }}>
-          <form
-            id="mu-contact__form__form--primary"
-            onSubmit={handleSubmit}
-            noValidate
-            className="space-y-6"
+          <div className="space-y-2">
+            <label htmlFor="contact-email" className={labelClasses}>
+              Email <span aria-hidden="true">*</span>
+              <VisuallyHidden>(required)</VisuallyHidden>
+            </label>
+            <input
+              id="contact-email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              required
+              value={values.email}
+              onChange={handleChange}
+              aria-invalid={errors.email ? true : undefined}
+              aria-describedby={errors.email ? 'contact-email-error' : undefined}
+              className={`field ${errors.email ? 'border-destructive' : ''}`}
+            />
+            {errors.email && (
+              <p id="contact-email-error" className={errorClasses}>
+                {errors.email}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="contact-company" className={labelClasses}>
+              Company
+            </label>
+            <input
+              id="contact-company"
+              name="company"
+              type="text"
+              placeholder="Your company (optional)"
+              value={values.company}
+              onChange={handleChange}
+              className="field"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="contact-message" className={labelClasses}>
+              Message <span aria-hidden="true">*</span>
+              <VisuallyHidden>(required)</VisuallyHidden>
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows={5}
+              placeholder="Tell me about your project or opportunity..."
+              required
+              value={values.message}
+              onChange={handleChange}
+              aria-invalid={errors.message ? true : undefined}
+              aria-describedby={errors.message ? 'contact-message-error' : 'contact-message-hint'}
+              className={`field ${errors.message ? 'border-destructive' : ''}`}
+            />
+            {errors.message ? (
+              <p id="contact-message-error" className={errorClasses}>
+                {errors.message}
+              </p>
+            ) : (
+              <p id="contact-message-hint" className="text-xs text-muted-foreground">
+                Please include enough context so I can respond with something useful.
+              </p>
+            )}
+          </div>
+
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            disabled={isSubmitting}
+            id="mu-contact__form__btn--submit"
+            actionId="act-contact__form__submit-contact"
+            className="w-full"
           >
-            <div className="space-y-2">
-              <label htmlFor="contact-name" className="text-sm font-medium text-foreground">
-                Name <span aria-hidden="true">*</span>
-                <VisuallyHidden>(required)</VisuallyHidden>
-              </label>
-              <input
-                id="contact-name"
-                name="name"
-                type="text"
-                placeholder="Your name"
-                required
-                value={values.name}
-                onChange={handleChange}
-                aria-describedby={errors.name ? 'contact-name-error' : undefined}
-                className={`h-10 w-full rounded-md border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
-                  errors.name ? 'border-destructive' : 'border-border'
-                }`}
-              />
-              {errors.name && (
-                <p id="contact-name-error" className="text-sm text-destructive">
-                  {errors.name}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="contact-email" className="text-sm font-medium text-foreground">
-                Email <span aria-hidden="true">*</span>
-                <VisuallyHidden>(required)</VisuallyHidden>
-              </label>
-              <input
-                id="contact-email"
-                name="email"
-                type="email"
-                placeholder="you@example.com"
-                required
-                value={values.email}
-                onChange={handleChange}
-                aria-describedby={errors.email ? 'contact-email-error' : undefined}
-                className={`h-10 w-full rounded-md border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
-                  errors.email ? 'border-destructive' : 'border-border'
-                }`}
-              />
-              {errors.email && (
-                <p id="contact-email-error" className="text-sm text-destructive">
-                  {errors.email}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="contact-company" className="text-sm font-medium text-foreground">
-                Company
-              </label>
-              <input
-                id="contact-company"
-                name="company"
-                type="text"
-                placeholder="Your company (optional)"
-                value={values.company}
-                onChange={handleChange}
-                className="h-10 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="contact-message" className="text-sm font-medium text-foreground">
-                Message <span aria-hidden="true">*</span>
-                <VisuallyHidden>(required)</VisuallyHidden>
-              </label>
-              <textarea
-                id="contact-message"
-                name="message"
-                rows={5}
-                placeholder="Tell me about your project or opportunity..."
-                required
-                value={values.message}
-                onChange={handleChange}
-                aria-describedby={errors.message ? 'contact-message-error' : 'contact-message-hint'}
-                className={`w-full rounded-md border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
-                  errors.message ? 'border-destructive' : 'border-border'
-                }`}
-              />
-              {errors.message ? (
-                <p id="contact-message-error" className="text-sm text-destructive">
-                  {errors.message}
-                </p>
-              ) : (
-                <p id="contact-message-hint" className="text-xs text-muted-foreground">
-                  Please include enough context so I can respond with something useful.
-                </p>
-              )}
-            </div>
-
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              disabled={isSubmitting}
-              id="mu-contact__form__btn--submit"
-              actionId="act-contact__form__submit-contact"
-              className="w-full shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
-            >
-              {isSubmitting ? (
-                <span>Sending...</span>
-              ) : (
-                <>
-                  <Send className="mr-2 h-4 w-4" />
-                  Send Message
-                </>
-              )}
-            </Button>
-          </form>
-        </div>
+            {isSubmitting ? (
+              <span>Sending...</span>
+            ) : (
+              <>
+                <Send aria-hidden="true" />
+                Send Message
+              </>
+            )}
+          </Button>
+        </form>
       </div>
-    </section>
+    </div>
   );
 };
 

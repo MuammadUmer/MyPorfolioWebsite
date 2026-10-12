@@ -3,13 +3,19 @@ import experienceData from '@/data/experience.json';
 import skillsData from '@/data/skills.json';
 import certificationsData from '@/data/certifications.json';
 import educationData from '@/data/education.json';
+import profileData from '@/data/profile.json';
 import type {
   Project,
   Experience,
   SkillCategory,
   Certification,
   Education,
+  Profile,
+  AboutCopy,
+  TimelineEntry,
 } from '@/lib/types/content';
+import { splitAboutCopy } from '@/lib/services/about';
+import { buildTimeline } from '@/lib/services/timeline';
 
 export function getProjects(): Project[] {
   return projectsData as Project[];
@@ -41,4 +47,16 @@ export function getCertifications(): Certification[] {
 
 export function getEducation(): Education[] {
   return educationData as Education[];
+}
+
+export function getProfile(): Profile {
+  return profileData as Profile;
+}
+
+export function getAboutCopy(): AboutCopy {
+  return splitAboutCopy((profileData as Profile).about);
+}
+
+export function getTimeline(): TimelineEntry[] {
+  return buildTimeline(getExperience(), getEducation());
 }

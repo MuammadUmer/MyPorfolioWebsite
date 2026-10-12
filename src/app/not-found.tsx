@@ -1,14 +1,14 @@
-import AppLink from '@/components/atoms/Link';
+import LinkButton from '@/components/atoms/LinkButton';
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-[60vh] items-center justify-center">
-      <div className="text-center animate-fade-in-up">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
-        <AppLink href="/" className="inline-flex items-center gap-1 text-primary underline hover:text-primary/90">
+    <div className="page-top flex min-h-[70vh] items-center justify-center pb-[var(--space-section)]">
+      <div className="animate-fade-in-up text-center">
+        <h1 className="t-hero mb-4">404</h1>
+        <p className="t-lead mb-8 text-muted-foreground">Oops! Page not found</p>
+        <LinkButton href="/" size="lg">
           Return to Home
-        </AppLink>
+        </LinkButton>
       </div>
     </div>
   );

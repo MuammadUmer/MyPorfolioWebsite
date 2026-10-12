@@ -5,6 +5,7 @@ export interface AppLinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   href: string;
   variant?: 'default' | 'nav' | 'muted';
+  ref?: React.Ref<HTMLAnchorElement>;
 }
 
 const AppLink: React.FC<React.PropsWithChildren<AppLinkProps>> = ({
@@ -15,14 +16,12 @@ const AppLink: React.FC<React.PropsWithChildren<AppLinkProps>> = ({
   ...rest
 }) => {
   const base =
-    'font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:ring-offset-background';
+    'font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring';
 
   const variantClass =
-    variant === 'nav'
-      ? 'text-sm text-foreground/70 hover:text-foreground'
-      : variant === 'muted'
-      ? 'text-sm text-foreground/70 hover:text-foreground'
-      : 'text-sm text-primary hover:text-primary/90';
+    variant === 'nav' || variant === 'muted'
+      ? 'text-sm text-muted-foreground hover:text-foreground'
+      : 'text-sm text-primary hover:text-primary-hover';
 
   const classes = [base, variantClass, className].filter(Boolean).join(' ');
 

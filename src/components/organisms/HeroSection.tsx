@@ -1,267 +1,157 @@
 'use client';
 
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
 import { ArrowRight, Download, Mail } from 'lucide-react';
-import Button from '@/components/atoms/Button';
-import AppLink from '@/components/atoms/Link';
+import LinkButton from '@/components/atoms/LinkButton';
+import Reveal from '@/components/atoms/Reveal';
+import ScrambleText from '@/components/atoms/ScrambleText';
+import Avatar3D from '@/components/objects/Avatar3D';
 import { trackEvent } from '@/lib/analytics';
-import type { Project } from '@/lib/types/content';
+import { observeReveal } from '@/lib/hooks/reveal';
+import { slugify } from '@/lib/services/slug';
 import { useI18n } from '@/lib/i18n/use-i18n';
-
-function getFeaturedTitle(title: string): string {
-  return title.split(' – ')[0] ?? title;
-}
-
-function formatFeaturedTechLabel(label: string): string {
-  const normalized = label.trim().toLowerCase();
-  if (normalized === 'google cloud functions') return 'Cloud Functions';
-  if (normalized === 'firebase firestore') return 'Firestore';
-  if (normalized === 'at/llm apis') return 'AI/LLM APIs';
-  return label;
-}
+import type { Profile } from '@/lib/types/content';
 
 export interface HeroSectionProps {
-  featuredProjects: Project[];
-  yearsExperience: number;
-  totalProjects: number;
-  domains: string[];
+  profile: Pick<Profile, 'name' | 'role' | 'status' | 'links' | 'avatar'>;
 }
 
-function AnimatedCounter({ end, suffix = '' }: { end: number; suffix?: string }) {
-  const [count, setCount] = React.useState(0);
-  const ref = React.useRef<HTMLSpanElement>(null);
-  const [hasAnimated, setHasAnimated] = React.useState(false);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-          let start = 0;
-          const duration = 2;
-          const increment = end / (duration * 60);
-          const timer = setInterval(() => {
-            start += increment;
-            if (start >= end) {
-              setCount(end);
-              clearInterval(timer);
-            } else {
-              setCount(Math.floor(start));
-            }
-          }, 1000 / 60);
-        }
-      },
-      { threshold: 0.5 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [end, hasAnimated]);
-
-  return (
-    <span ref={ref} className="font-bold text-3xl sm:text-4xl text-foreground">
-      {count}{suffix}
-    </span>
-  );
-}
-
-function Typewriter({ text, delay = 80 }: { text: string; delay?: number }) {
-  const [displayedText, setDisplayedText] = React.useState('');
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-
-  React.useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText((prev) => prev + text[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, delay);
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, text, delay]);
-
-  return (
-    <span>
-      {displayedText}
-      <span className="inline-block w-0.5 h-[1em] bg-primary ml-1 align-middle animate-pulse" />
-    </span>
-  );
-}
-
-const HeroSection: React.FC<HeroSectionProps> = ({
-  featuredProjects,
-  yearsExperience,
-  totalProjects,
-  domains,
-}) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
   const { t } = useI18n();
-  const router = useRouter();
+  const headlineRef = React.useRef<HTMLHeadingElement | null>(null);
 
-  const handlePrimaryCta = () => {
-    router.push('/projects');
-  };
+  React.useEffect(() => {
+    if (!headlineRef.current) return;
+    return observeReveal(headlineRef.current);
+  }, []);
+
+  const [firstName, ...restName] = profile.name.split(' ');
+  const roleWords = profile.role.split(' ');
+  const lastIndex = roleWords.length - 1;
+
+  const hasAvatar = Boolean(profile.avatar);
+
+  const actions = (
+    <Reveal
+      delay={300}
+      role="group"
+      aria-label="Hero primary actions"
+      className={
+    hasAvatar
+      ? 'flex flex-col items-stretch gap-3 pt-2 sm:flex-row sm:flex-wrap'
+      : 'col-span-12 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap lg:col-span-4 lg:flex-col lg:items-end lg:self-center'
+      }
+    >
+      <LinkButton
+        href="/projects"
+        size="lg"
+        id="mu-home__hero__btn--primary-cta"
+        actionId="act-home__hero__click-primary-cta"
+      >
+        <ScrambleText text={t('home.hero.cta.viewProjects')} />
+        <ArrowRight aria-hidden="true" />
+      </LinkButton>
+      <LinkButton
+        href="/contact"
+        variant="secondary"
+        size="lg"
+        id="mu-home__hero__btn--secondary-contact"
+        actionId="act-home__hero__click-contact"
+        onClick={() =>
+          trackEvent('hero_contact_cta_click', { actionId: 'act-home__hero__click-contact' })
+        }
+      >
+        <Mail aria-hidden="true" />
+        <ScrambleText text={t('home.hero.cta.contact')} />
+      </LinkButton>
+      <LinkButton
+        href={profile.links.cv}
+        variant="ghost"
+        size="lg"
+        id="mu-home__hero__link--download-cv"
+        download={profile.links.cvDownloadName}
+      >
+        <Download aria-hidden="true" />
+        {t('home.hero.cta.downloadCv')}
+      </LinkButton>
+    </Reveal>
+  );
 
   return (
     <section
       id="mu-home__hero__section--primary"
-      className="relative min-h-[90vh] flex items-center overflow-hidden"
+      className="hero-wash relative isolate flex min-h-[100svh] overflow-clip pt-[var(--header-h)]"
     >
-      {/* Animated background */}
-      <div className="absolute inset-0 animated-gradient" />
-      <div className="absolute inset-0 dot-pattern" />
+      <div aria-hidden="true" className="dot-field absolute inset-0 -z-20" />
 
-      {/* Floating orbs */}
-      <div className="absolute top-20 right-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
       <div
-        className="absolute bottom-20 left-1/4 w-48 h-48 bg-accent/10 rounded-full blur-3xl animate-float"
-        style={{ animationDelay: '2s', animationDirection: 'reverse' }}
-      />
+        aria-hidden="true"
+        className="ghost-name absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 text-center"
+      >
+        <span className="hidden text-[min(9.8vw,15rem)] md:block">{profile.name}</span>
+        <span className="block text-[15vw] md:hidden">
+          {firstName}
+          <br />
+          {restName.join(' ')}
+        </span>
+      </div>
 
-      <div className="mx-auto w-full max-w-5xl relative z-10 px-4 py-20 md:px-6">
-        <div className="grid gap-12 lg:grid-cols-5 items-start">
-          {/* Left column - 60% */}
-          <div className="lg:col-span-3 space-y-8">
-            {/* Terminal-style element */}
-            <div
-              className="animate-fade-in-up inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 font-mono text-xs text-muted-foreground"
-              style={{ animationDelay: '0.1s' }}
-            >
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span>&gt; muhammad-umer --status &quot;Open to opportunities&quot;</span>
-            </div>
+      {profile.avatar ? (
+        <Avatar3D
+          model={profile.avatar.model}
+          poster={profile.avatar.poster}
+          alt={profile.avatar.alt}
+          sizes="40vw"
+          framing={profile.avatar.framing}
+          className="pointer-events-none absolute bottom-0 right-[2%] z-0 hidden aspect-[4/5] w-[min(40vw,560px)] lg:block"
+        />
+      ) : null}
 
-            {/* Name */}
-            <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-                <Typewriter text="Muhammad Umer" delay={80} />
-              </h1>
-              <p className="text-xl sm:text-2xl text-primary font-medium">
-                Lead Software Engineer
-              </p>
-            </div>
+      <div className="container-page relative grid flex-1 grid-cols-12 items-end gap-x-[var(--space-gutter)] gap-y-10 pb-[var(--space-block)] pt-10">
+        {profile.avatar ? (
+          <Avatar3D
+            model={profile.avatar.model}
+            poster={profile.avatar.poster}
+            alt={profile.avatar.alt}
+            sizes="224px"
+            framing={profile.avatar.framing}
+            className="pointer-events-none relative col-span-12 mx-auto h-72 w-56 lg:hidden"
+          />
+        ) : null}
 
-            {/* Description */}
-            <p
-              className="animate-fade-in-up text-lg text-muted-foreground max-w-xl"
-              style={{ animationDelay: '0.4s' }}
-            >
-              {t('home.hero.subtitle')}
+        <div className={`col-span-12 flex flex-col gap-6 ${hasAvatar ? 'lg:col-span-7' : 'lg:col-span-8'}`}>
+          <Reveal delay={0}>
+            <p className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-2 font-mono text-xs text-muted-foreground">
+              <span className="animate-pulse-dot h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
+              <span>
+                &gt; {slugify(profile.name)} --status &quot;{profile.status}&quot;
+              </span>
             </p>
+          </Reveal>
 
-            {/* CTA Buttons */}
-            <div
-              className="animate-fade-in-up flex flex-wrap gap-4"
-              style={{ animationDelay: '0.5s' }}
-              aria-label="Hero primary actions"
-            >
-              <Button
-                id="mu-home__hero__btn--primary-cta"
-                actionId="act-home__hero__click-primary-cta"
-                variant="primary"
-                size="lg"
-                onClick={handlePrimaryCta}
-                className="rounded-full shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
-              >
-                {t('home.hero.cta.viewProjects')}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button
-                id="mu-home__hero__btn--secondary-contact"
-                actionId="act-home__hero__click-contact"
-                variant="secondary"
-                size="lg"
-                onClick={() => {
-                  trackEvent('hero_contact_cta_click', {
-                    actionId: 'act-home__hero__click-contact',
-                  });
-                  router.push('/contact');
-                }}
-                className="rounded-full border-2 border-primary/50 hover:bg-primary/10 hover:border-primary"
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                {t('home.hero.cta.contact')}
-              </Button>
-              <AppLink
-                href="/CV.pdf"
-                variant="muted"
-                id="mu-home__hero__link--download-cv"
-                download="Muhammad-Umer-CV.pdf"
-                className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground"
-              >
-                <Download className="mr-2 h-4 w-4" />
-                {t('home.hero.cta.downloadCv')}
-              </AppLink>
-            </div>
+          <h1 ref={headlineRef} className="reveal-words">
+            <span className="eyebrow mb-4 block">{profile.name}</span>
+            <span className="t-hero block max-w-[14ch]">
+              {roleWords.map((word, index) => (
+                <React.Fragment key={`${word}-${index}`}>
+                  {index > 0 ? ' ' : null}
+                  <span className="word" style={{ '--i': index } as React.CSSProperties}>
+                    {word}
+                    {index === lastIndex ? <span className="t-serif">.</span> : null}
+                  </span>
+                </React.Fragment>
+              ))}
+            </span>
+          </h1>
 
-            {/* Stats */}
-            <div
-              className="animate-fade-in-up flex flex-wrap gap-8 pt-8"
-              style={{ animationDelay: '0.6s' }}
-              aria-label="Key stats"
-            >
-              <div className="text-center">
-                <AnimatedCounter end={yearsExperience} suffix="+" />
-                <p className="text-sm text-muted-foreground mt-1">Years Experience</p>
-              </div>
-              <div className="text-center">
-                <AnimatedCounter end={totalProjects} suffix="+" />
-                <p className="text-sm text-muted-foreground mt-1">Projects Delivered</p>
-              </div>
-              <div className="text-center">
-                <AnimatedCounter end={domains.length} />
-                <p className="text-sm text-muted-foreground mt-1">Domains</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right column - Featured Work */}
-          <div
-            id="mu-home__featured-projects__section--primary"
-            className="lg:col-span-2 animate-fade-in-up"
-            style={{ animationDelay: '0.4s' }}
-          >
-            <div className="rounded-xl border border-border bg-card/50 backdrop-blur-sm p-6">
-              <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">
-                Featured Work
-              </h3>
-              <div className="space-y-4">
-                {featuredProjects.map((project, index) => (
-                  <AppLink
-                    key={project.slug}
-                    href={`/projects/${project.slug}`}
-                    className="block group"
-                  >
-                    <article
-                      id={`mu-home__featured-projects__card--${project.slug}`}
-                      className="animate-fade-in-up p-4 rounded-lg border border-border bg-background/50 transition-all duration-300 hover:border-primary/50 hover:bg-background/80"
-                      style={{ animationDelay: `${0.5 + index * 0.1}s` }}
-                    >
-                      <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                        {getFeaturedTitle(project.title)}
-                      </h4>
-                      <p className="text-xs text-muted-foreground mb-2">
-                        {project.role}
-                        {project.company ? ` · ${project.company}` : ''}
-                      </p>
-                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                        {project.summary}
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.techStack.slice(0, 4).map((tech) => (
-                          <span
-                            key={tech}
-                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono border border-border bg-muted/50 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-                          >
-                            {formatFeaturedTechLabel(tech)}
-                          </span>
-                        ))}
-                      </div>
-                    </article>
-                  </AppLink>
-                ))}
-              </div>
-            </div>
-          </div>
+          <Reveal delay={200}>
+            <p className="t-lead max-w-[46ch] text-muted-foreground">{t('home.hero.subtitle')}</p>
+          </Reveal>
+          {hasAvatar ? actions : null}
         </div>
+
+        {hasAvatar ? null : actions}
+
       </div>
     </section>
   );
