@@ -6,7 +6,7 @@ import { Sun, Moon } from 'lucide-react';
 import Button from '@/components/atoms/Button';
 import AppLink from '@/components/atoms/Link';
 import LinkButton from '@/components/atoms/LinkButton';
-import AvatarMark from '@/components/atoms/AvatarMark';
+import Logo from '@/components/atoms/Logo';
 import profileData from '@/data/profile.json';
 import type { Profile } from '@/lib/types/content';
 import { useScrollSpy } from '@/lib/hooks/useScrollSpy';
@@ -174,7 +174,7 @@ const Header: React.FC = () => {
           aria-label="Go to home"
           id="mu-global__header__link--brand"
         >
-          <AvatarMark logo={profile.avatar?.logo} initials={profile.initials} size={56} />
+          <Logo className="h-16 w-auto" />
         </AppLink>
 
         <nav

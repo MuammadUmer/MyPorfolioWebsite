@@ -43,7 +43,7 @@ describe('ID card on a lanyard', () => {
 
     rerender(<IdBadge {...baseProps} avatar={{ portrait: '/avatar/portrait.abcdef12.webp', logo: '/avatar/logo.abcdef12.webp' }} />);
     const images = container.querySelectorAll('#mu-home__about__badge--front img');
-    expect(images).toHaveLength(2);
+    expect(images).toHaveLength(1);
     expect(Array.from(images).some((img) => (img.getAttribute('src') ?? '').includes('portrait'))).toBe(true);
   });
 

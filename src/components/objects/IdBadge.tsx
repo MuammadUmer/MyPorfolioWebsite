@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { Check, RotateCw } from 'lucide-react';
-import AvatarMark from '@/components/atoms/AvatarMark';
 import Grommet from '@/components/atoms/Grommet';
 import Lanyard from '@/components/atoms/Lanyard';
 import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion';

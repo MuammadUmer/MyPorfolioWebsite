@@ -36,6 +36,10 @@
   --deep-fg: #ffffff;
   --deep-muted: #c6cee0;
   --shadow-float: 0 20px 60px rgb(42 43 69 / 0.1);
+  --logo-trace: #b7bbc7;
+  --logo-glow: #2f6bff;
+  --logo-node: #ffffff;
+  --logo-glow-fx: none;
   --badge-shadow-far: rgb(42 43 69 / 0.22);
   --badge-shadow-near: rgb(42 43 69 / 0.2);
   --hero-wash: linear-gradient(180deg, var(--background-haze) 0%, var(--background) 62%);
@@ -116,6 +120,10 @@
   --deep-fg: #ffffff;
   --deep-muted: #c6cee0;
   --shadow-float: 0 20px 60px rgb(0 0 0 / 0.45);
+  --logo-trace: #8e929c;
+  --logo-glow: #5cc8ff;
+  --logo-node: #26282f;
+  --logo-glow-fx: drop-shadow(0 0 5px #5cc8ff);
   --badge-shadow-far: rgb(0 0 0 / 0.55);
   --badge-shadow-near: rgb(0 0 0 / 0.45);
   --hero-wash: radial-gradient(60% 50% at 75% 45%, rgb(255 72 139 / 0.16), transparent 70%);
@@ -575,6 +583,15 @@
   50% { opacity: 0.35; }
 }
 
+@keyframes logo-flow {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -400; }
+}
+
+/* MU circuit logo: lit traces, plus a light pulse that travels along them. */
+.logo-lit { filter: var(--logo-glow-fx); }
+.logo-pulse { stroke-dasharray: 14 386; animation: logo-flow 4.5s linear infinite; }
+
 .animate-fade-in-up { animation: fade-in-up 0.6s var(--ease-soft) both; }
 .animate-pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
 
@@ -616,5 +633,6 @@
     filter: none;
   }
   .timeline-fill { animation: none; }
+  .logo-pulse { animation: none; opacity: 0; }
 }
 
