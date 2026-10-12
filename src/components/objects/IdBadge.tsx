@@ -185,12 +185,12 @@ const IdBadge: React.FC<IdBadgeProps> = ({
               <div className="relative bg-inverse text-inverse-foreground">
                 <div className="h-11" />
                 <div className="flex h-14 items-center gap-3 px-4 pb-1">
-                  <AvatarMark
+                  {/* <AvatarMark
                     logo={avatar?.logo}
                     initials={initials}
                     size={52}
                     textClassName="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-current text-sm font-bold"
-                  />
+                  /> */}
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-semibold">{name}</span>
                     <span className="block text-xs leading-tight text-inverse-muted">{role}</span>
