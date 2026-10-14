@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>MU</title>
+  <rect width="64" height="64" rx="14" fill="#14161c"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 49V16L32 36L50 16V49" stroke="#8e929c" stroke-width="9"/>
+    <path d="M14 49V16L32 36L50 16V49" stroke="#5cc8ff" stroke-width="5"/>
+  </g>
+  <circle cx="32" cy="36" r="8" fill="#14161c" stroke="#5cc8ff" stroke-width="3"/>
+  <circle cx="32" cy="36" r="3.2" fill="#fff"/>
+</svg>
