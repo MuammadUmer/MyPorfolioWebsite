@@ -20,10 +20,10 @@ describe('HeroSection', () => {
     expect(heading).toHaveTextContent('Lead Software Engineer.');
   });
 
-  it('keeps the existing subtitle and status chip text', () => {
+  it('shows the domains tagline and the status chip text', () => {
     render(<HeroSection profile={profile} />);
     expect(
-      screen.getByText(/Senior Full Stack Engineer with 7\+ years building scalable cloud-native APIs/)
+      screen.getByText('Where Healthcare, Logistics, Real Estate and AI Meet the Cloud')
     ).toBeInTheDocument();
     expect(screen.getByText(/muhammad-umer --status "Open to opportunities"/)).toBeInTheDocument();
   });

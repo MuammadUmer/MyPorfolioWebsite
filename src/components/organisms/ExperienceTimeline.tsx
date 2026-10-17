@@ -41,8 +41,15 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({
           />
         </div>
 
-        <ol className="flex flex-col gap-10 lg:gap-14">
-          {entries.map((entry) => {
+        <div className="relative">
+        {/* One spine through every year: left on phones, centred from lg up. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-4 w-px -translate-x-1/2 lg:left-1/2">
+          <span className="timeline-rail absolute inset-0" />
+          <span className="timeline-fill absolute inset-0" />
+          <span className="timeline-pulse absolute inset-y-0 -left-px w-[3px]" />
+        </div>
+        <ol className="relative flex flex-col gap-10 lg:gap-14">
+          {entries.map((entry, index) => {
             const collapsed = density === 'summary' && entry.bullets.length > SUMMARY_BULLETS + 1;
             const visible = collapsed ? entry.bullets.slice(0, SUMMARY_BULLETS) : entry.bullets;
             const rest = collapsed ? entry.bullets.slice(SUMMARY_BULLETS) : [];
@@ -52,15 +59,13 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({
                 : translate('experience.tag.experience');
 
             return (
-              <li key={entry.id} className="tl-item">
+              <li key={entry.id} className="tl-item" data-side={index % 2 === 0 ? 'left' : 'right'}>
                 <div className="tl-rail relative" aria-hidden="true">
-                  <div className="timeline-rail absolute inset-y-0 left-1/2 w-px -translate-x-1/2" />
-                  <div className="timeline-fill absolute inset-y-0 left-1/2 w-px -translate-x-1/2" />
-                  <div className="absolute left-1/2 top-2 h-4 w-4 -translate-x-1/2 rounded-full bg-inverse ring-4 ring-background" />
+                  <div className="tl-dot absolute left-1/2 top-2 h-4 w-4 -translate-x-1/2 rounded-full bg-inverse ring-4 ring-background" />
                 </div>
 
                 {entry.year ? (
-                  <p aria-hidden="true" className="tl-year t-display-num text-foreground">
+                  <p aria-hidden="true" className="tl-year">
                     {entry.year}
                   </p>
                 ) : null}
@@ -126,6 +131,7 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({
             );
           })}
         </ol>
+        </div>
       </div>
     </section>
   );

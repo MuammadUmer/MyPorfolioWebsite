@@ -93,6 +93,7 @@ export type TimelineKind = 'experience' | 'education';
 export interface TimelineEntry {
   id: string;
   kind: TimelineKind;
+  /** Year the entry ended in (or "Present" when open-ended), shown on the timeline spine. */
   year: string;
   period: string;
   title: string;

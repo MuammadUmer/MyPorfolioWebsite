@@ -457,7 +457,8 @@
     .timeline-fill {
       animation: line-grow linear both;
       animation-timeline: view();
-      animation-range: entry 20% cover 70%;
+      /* The fill's leading edge tracks a line 60% down the viewport: entry 40% -> exit 40%. */
+      animation-range: entry 40% exit 40%;
     }
   }
 
@@ -469,16 +470,42 @@
     row-gap: 0.75rem;
   }
   .tl-rail { grid-area: rail; }
-  .tl-year { grid-area: year; }
   .tl-card { grid-area: card; }
+  /* Phones: the year sits above its card, next to the spine. */
+  .tl-year {
+    grid-area: year;
+    font-size: var(--fs-display-num);
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    color: var(--foreground);
+  }
+  /* lg+: the spine is centred, each year is a badge ON it, and cards alternate left / right. */
   @media (min-width: 1024px) {
     .tl-item {
-      grid-template-columns: minmax(0, 58fr) 3rem minmax(0, 42fr);
-      grid-template-areas: "card rail year";
+      grid-template-columns: minmax(0, 1fr) 7rem minmax(0, 1fr);
+      grid-template-areas: "card year .";
       column-gap: 0;
       align-items: start;
     }
-    .tl-year { padding-left: 1rem; }
+    .tl-item[data-side="right"] { grid-template-areas: ". year card"; }
+    .tl-rail { display: none; }
+    .tl-year {
+      justify-self: center;
+      z-index: 1;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      background: var(--inverse-bg);
+      color: var(--inverse-fg);
+      box-shadow: 0 0 0 0.5rem var(--background);
+      font-family: var(--font-geist-mono), ui-monospace, monospace;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      line-height: 1;
+    }
+    .tl-item[data-side="left"] .tl-card { margin-right: 1.5rem; }
+    .tl-item[data-side="right"] .tl-card { margin-left: 1.5rem; }
   }
 
   /* ID badge on a lanyard — the swing group rotates about the strap's top (pivot) */
@@ -592,6 +619,64 @@
 .logo-lit { filter: var(--logo-glow-fx); }
 .logo-pulse { stroke-dasharray: 14 386; animation: logo-flow 4.5s linear infinite; }
 
+/* Experience timeline motion. Scroll-driven where supported; elsewhere the content simply shows
+   (cards keep the shared `.reveal` fade). Reduced motion turns all of it off below. */
+.timeline-pulse {
+  background: linear-gradient(to bottom, transparent, var(--logo-glow), transparent) 0 -140px / 100% 140px no-repeat;
+  border-radius: 9999px;
+  opacity: 0.9;
+  animation: tl-pulse 6s linear infinite;
+}
+@keyframes tl-pulse {
+  from { background-position: 0 -140px; }
+  to { background-position: 0 calc(100% + 140px); }
+}
+@keyframes tl-in-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes tl-in-left {
+  from { opacity: 0; transform: translateX(-56px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes tl-in-right {
+  from { opacity: 0; transform: translateX(56px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes tl-badge-lit {
+  from { background: var(--muted); color: var(--muted-foreground); transform: scale(0.9); }
+  55% { transform: scale(1.1); }
+  to { background: var(--inverse-bg); color: var(--inverse-fg); transform: scale(1); }
+}
+@keyframes tl-dot-lit {
+  from { background: var(--border-strong); transform: scale(0.7); }
+  to { background: var(--inverse-bg); transform: scale(1); }
+}
+.tl-item { overflow-x: clip; }
+@supports (animation-timeline: view()) {
+  /* B: each card slides in from its own side (up on phones). */
+  .tl-item .tl-card {
+    animation: tl-in-up linear both;
+    animation-timeline: view();
+    animation-range: entry 5% entry 50%;
+  }
+  /* A: a badge / dot lights up when the spine's fill reaches it (60% down the viewport). */
+  .tl-item .tl-dot {
+    animation: tl-dot-lit linear both;
+    animation-timeline: view(block 0px 40%);
+    animation-range: entry 0px entry 72px;
+  }
+  @media (min-width: 1024px) {
+    .tl-item[data-side="left"] .tl-card { animation-name: tl-in-left; }
+    .tl-item[data-side="right"] .tl-card { animation-name: tl-in-right; }
+    .tl-item .tl-year {
+      animation: tl-badge-lit linear both;
+      animation-timeline: view(block 0px 40%);
+      animation-range: entry 0px entry 72px;
+    }
+  }
+}
+
 .animate-fade-in-up { animation: fade-in-up 0.6s var(--ease-soft) both; }
 .animate-pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
 
@@ -634,5 +719,9 @@
   }
   .timeline-fill { animation: none; }
   .logo-pulse { animation: none; opacity: 0; }
+  .timeline-pulse { display: none; }
+  .tl-item .tl-card,
+  .tl-item .tl-year,
+  .tl-item .tl-dot { animation: none !important; }
 }
 
