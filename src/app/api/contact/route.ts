@@ -113,7 +113,8 @@ export async function POST(request: Request): Promise<Response> {
         },
       }
     );
-  } catch {
+  } catch (error) {
+    console.error('[contact] unexpected error', error);
     return new Response(
       JSON.stringify({
         code: 'INTERNAL_ERROR',

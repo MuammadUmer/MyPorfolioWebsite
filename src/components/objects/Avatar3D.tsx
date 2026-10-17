@@ -17,7 +17,16 @@ export interface Avatar3DProps {
   framing?: { target: string; radius: string };
   /** Play the model's own animation (autoplay) and keep the camera follow gentle. */
   animated?: boolean;
+  /**
+   * The viewer applies this to the canvas's SHORTER side. The default (22deg) suits tall, narrow boxes; for a canvas
+   * that is wider than it is tall pass the equivalent vertical value so the figure keeps its size (the hero's
+   * 1.16:1 canvas uses 43deg, calibrated against screenshots of the old 1:2 canvas). A non-default value
+   * also lifts the viewer's default maximum so it is not clamped.
+   */
+  fieldOfView?: string;
 }
+
+const DEFAULT_FIELD_OF_VIEW = '22deg';
 
 type ViewerElement = HTMLElement & { cameraOrbit?: string };
 
@@ -38,6 +47,7 @@ const Avatar3D: React.FC<Avatar3DProps> = ({
   sizes = '40vw',
   framing,
   animated = false,
+  fieldOfView = DEFAULT_FIELD_OF_VIEW,
 }) => {
   const radius = framing?.radius ?? 'auto';
   const target = framing?.target ?? 'auto auto auto';
@@ -184,7 +194,8 @@ const Avatar3D: React.FC<Avatar3DProps> = ({
           shadow-intensity="0"
           environment-image="legacy"
           exposure="1"
-          field-of-view="22deg"
+          field-of-view={fieldOfView}
+          max-field-of-view={fieldOfView === DEFAULT_FIELD_OF_VIEW ? undefined : '120deg'}
           camera-orbit={`0deg 84deg ${radius}`}
           camera-target={target}
           min-camera-orbit="auto auto 0.2m"

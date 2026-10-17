@@ -49,6 +49,14 @@ describe('ExperienceTimeline', () => {
     expect(tags).toEqual(['Experience', 'Education']);
   });
 
+  it('draws a single spine and alternates the cards left and right', () => {
+    const { container } = render(<ExperienceTimeline entries={[...entries, { ...entries[1], id: 'third' }]} />);
+    expect(container.querySelectorAll('.timeline-rail')).toHaveLength(1);
+    expect(container.querySelectorAll('.timeline-fill')).toHaveLength(1);
+    const sides = Array.from(container.querySelectorAll('.tl-item')).map((item) => item.getAttribute('data-side'));
+    expect(sides).toEqual(['left', 'right', 'left']);
+  });
+
   it('collapses long bullet lists in summary density but keeps every bullet in the DOM', () => {
     render(<ExperienceTimeline entries={entries} density="summary" />);
     expect(screen.getByText('Show 4 more responsibilities')).toBeInTheDocument();

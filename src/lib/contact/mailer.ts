@@ -64,6 +64,9 @@ export async function sendContactEmail(
       console.error('[contact] Resend rejected the message', response.status, await response.text());
       return { ok: false, reason: 'provider-error' };
     }
+    // Log Resend's email id and recipient so a "never arrived" report can be traced in Resend -> Emails.
+    const id = await response.text().then((text) => (JSON.parse(text) as { id?: string }).id, () => undefined);
+    console.info(`[contact] accepted by Resend (id: ${id ?? 'unknown'}) -> ${getRecipient(env)}`);
     return { ok: true };
   } catch (error) {
     console.error('[contact] could not reach Resend', error);
