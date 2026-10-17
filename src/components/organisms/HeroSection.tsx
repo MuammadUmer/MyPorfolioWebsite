@@ -96,19 +96,23 @@ const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
         </span>
       </div>
 
-      {profile.avatar ? (
-        <Avatar3D
-          model={profile.avatar.model}
-          poster={profile.avatar.poster}
-          alt={profile.avatar.alt}
-          sizes="45vh"
-          framing={profile.avatar.framing}
-          animated
-          className="pointer-events-none absolute bottom-0 right-[3%] z-0 hidden aspect-[1/2] h-[calc(100%-var(--header-h))] lg:block"
-        />
-      ) : null}
-
       <div className="container-page relative grid flex-1 grid-cols-12 items-end gap-x-[var(--space-gutter)] gap-y-10 pb-[var(--space-block)] pt-10">
+        {profile.avatar ? (
+          /* lg+: the figure stands at the content column's right edge (not the screen edge). The canvas is 1.16x as
+             wide as it is tall and shifted so the figure keeps its place: the idle animation swings an arm out to
+             ~0.57 of the height, and a narrower canvas cuts it off. */
+          <Avatar3D
+            model={profile.avatar.model}
+            poster={profile.avatar.poster}
+            alt={profile.avatar.alt}
+            sizes="45vh"
+            framing={profile.avatar.framing}
+            fieldOfView="43deg"
+            animated
+            className="pointer-events-none absolute bottom-0 right-0 z-0 hidden aspect-[116/100] h-full translate-x-[21%] lg:block"
+          />
+        ) : null}
+
         {profile.avatar ? (
           <Avatar3D
             model={profile.avatar.model}
@@ -121,7 +125,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
           />
         ) : null}
 
-        <div className={`col-span-12 flex flex-col gap-6 ${hasAvatar ? 'lg:col-span-7' : 'lg:col-span-8'}`}>
+        <div className="col-span-12 flex flex-col gap-6 [container-type:inline-size] lg:col-span-8">
           <Reveal delay={0}>
             <p className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-2 font-mono text-xs text-muted-foreground">
               <span className="animate-pulse-dot h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
@@ -133,7 +137,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
 
           <h1 ref={headlineRef} className="reveal-words">
             <span className="eyebrow mb-4 block">{profile.name}</span>
-            <span className="t-hero block max-w-[14ch]">
+            {/* lg+: one line, sized to the column (the line is ~11.1em wide); smaller screens wrap as before. */}
+            <span className="t-hero block max-w-[14ch] lg:max-w-none lg:whitespace-nowrap lg:[font-size:min(var(--fs-hero),calc(100cqw/11.3))]">
               {roleWords.map((word, index) => (
                 <React.Fragment key={`${word}-${index}`}>
                   {index > 0 ? ' ' : null}
@@ -147,7 +152,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ profile }) => {
           </h1>
 
           <Reveal delay={200}>
-            <p className="t-lead max-w-[46ch] text-muted-foreground">{t('home.hero.subtitle')}</p>
+            <p className="t-lead max-w-[46ch] text-balance text-muted-foreground">{t('home.hero.subtitle')}</p>
           </Reveal>
           {hasAvatar ? actions : null}
         </div>
